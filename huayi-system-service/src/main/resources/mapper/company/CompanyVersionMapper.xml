@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyVersionMapper">
+    
+    <resultMap type="CompanyVersion" id="CompanyVersionResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="mpName"    column="mp_name"    />
+        <result property="companyVersion"    column="mp_version"    />
+        <result property="mpCode"    column="mp_code"    />
+        <result property="mpGroup"    column="mp_group"    />
+        <result property="mpType"    column="mp_type"    />
+        <result property="isBasic"    column="is_basic"    />
+        <result property="moduleIds"    column="module_ids"    />
+        <result property="merchant"    column="merchant"    />
+        <result property="card"    column="card"    />
+        <result property="storage"    column="storage"    />
+        <result property="traffic"    column="traffic"    />
+        <result property="store"    column="store"    />
+        <result property="originalPrice"    column="original_price"    />
+        <result property="price"    column="price"    />
+        <result property="limitDays"    column="limit_days"    />
+        <result property="level"    column="level"    />
+        <result property="privilege"    column="privilege"    />
+        <result property="description"    column="description"    />
+        <result property="isPublish"    column="is_publish"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectCompanyVersionVo">
+        select record_id, mp_name, mp_version, mp_code, mp_group, mp_type, is_basic, module_ids, merchant, card, storage, traffic, store, original_price, price, limit_days, level, privilege, description, is_publish, create_time from sys_version
+    </sql>
+	
+    <select id="selectCompanyVersionList" parameterType="CompanyVersion" resultMap="CompanyVersionResult">
+        <include refid="selectCompanyVersionVo"/>
+        <where>  
+            <if test="recordId != null "> and record_id = #{recordId}</if>
+             <if test="mpName != null  and mpName != '' "> and mp_name = #{mpName}</if>
+             <if test="companyVersion != null  and companyVersion != '' "> and mp_version = #{companyVersion}</if>
+             <if test="mpCode != null  and mpCode != '' "> and mp_code = #{mpCode}</if>
+             <if test="mpGroup != null  and mpGroup != '' "> and mp_group = #{mpGroup}</if>
+             <if test="mpType != null  and mpType != '' "> and mp_type = #{mpType}</if>
+             <if test="isBasic != null "> and is_basic = #{isBasic}</if>
+             <if test="moduleIds != null  and moduleIds != '' "> and module_ids = #{moduleIds}</if>
+             <if test="merchant != null  and merchant != '' "> and merchant = #{merchant}</if>
+             <if test="card != null  and card != '' "> and card = #{card}</if>
+             <if test="storage != null  and storage != '' "> and storage = #{storage}</if>
+             <if test="traffic != null  and traffic != '' "> and traffic = #{traffic}</if>
+             <if test="store != null  and store != '' "> and store = #{store}</if>
+             <if test="originalPrice != null "> and original_price = #{originalPrice}</if>
+             <if test="price != null "> and price = #{price}</if>
+             <if test="limitDays != null "> and limit_days = #{limitDays}</if>
+             <if test="level != null "> and level = #{level}</if>
+             <if test="privilege != null  and privilege != '' "> and privilege = #{privilege}</if>
+             <if test="description != null  and description != '' "> and description = #{description}</if>
+             <if test="isPublish != null "> and is_publish = #{isPublish}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyVersionById" parameterType="Integer" resultMap="CompanyVersionResult">
+        <include refid="selectCompanyVersionVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertCompanyVersion" parameterType="CompanyVersion" useGeneratedKeys="true" keyProperty="recordId">
+        insert into sys_version
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mpName != null  and mpName != ''  ">mp_name,</if>
+			<if test="companyVersion != null  and companyVersion != ''  ">mp_version,</if>
+			<if test="mpCode != null  and mpCode != ''  ">mp_code,</if>
+			<if test="mpGroup != null  and mpGroup != ''  ">mp_group,</if>
+			<if test="mpType != null  and mpType != ''  ">mp_type,</if>
+			<if test="isBasic != null  ">is_basic,</if>
+			<if test="moduleIds != null  and moduleIds != ''  ">module_ids,</if>
+			<if test="merchant != null  and merchant != ''  ">merchant,</if>
+			<if test="card != null  and card != ''  ">card,</if>
+			<if test="storage != null  and storage != ''  ">storage,</if>
+			<if test="traffic != null  and traffic != ''  ">traffic,</if>
+			<if test="store != null  and store != ''  ">store,</if>
+			<if test="originalPrice != null  ">original_price,</if>
+			<if test="price != null  ">price,</if>
+			<if test="limitDays != null  ">limit_days,</if>
+			<if test="level != null  ">level,</if>
+			<if test="privilege != null  and privilege != ''  ">privilege,</if>
+			<if test="description != null  and description != ''  ">description,</if>
+			<if test="isPublish != null  ">is_publish,</if>
+			<if test="createTime != null  ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mpName != null  and mpName != ''  ">#{mpName},</if>
+			<if test="companyVersion != null  and companyVersion != ''  ">#{companyVersion},</if>
+			<if test="mpCode != null  and mpCode != ''  ">#{mpCode},</if>
+			<if test="mpGroup != null  and mpGroup != ''  ">#{mpGroup},</if>
+			<if test="mpType != null  and mpType != ''  ">#{mpType},</if>
+			<if test="isBasic != null  ">#{isBasic},</if>
+			<if test="moduleIds != null  and moduleIds != ''  ">#{moduleIds},</if>
+			<if test="merchant != null  and merchant != ''  ">#{merchant},</if>
+			<if test="card != null  and card != ''  ">#{card},</if>
+			<if test="storage != null  and storage != ''  ">#{storage},</if>
+			<if test="traffic != null  and traffic != ''  ">#{traffic},</if>
+			<if test="store != null  and store != ''  ">#{store},</if>
+			<if test="originalPrice != null  ">#{originalPrice},</if>
+			<if test="price != null  ">#{price},</if>
+			<if test="limitDays != null  ">#{limitDays},</if>
+			<if test="level != null  ">#{level},</if>
+			<if test="privilege != null  and privilege != ''  ">#{privilege},</if>
+			<if test="description != null  and description != ''  ">#{description},</if>
+			<if test="isPublish != null  ">#{isPublish},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyVersion" parameterType="CompanyVersion">
+        update sys_version
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mpName != null  and mpName != ''  ">mp_name = #{mpName},</if>
+            <if test="companyVersion != null  and companyVersion != ''  ">mp_version = #{companyVersion},</if>
+            <if test="mpCode != null  and mpCode != ''  ">mp_code = #{mpCode},</if>
+            <if test="mpGroup != null  and mpGroup != ''  ">mp_group = #{mpGroup},</if>
+            <if test="mpType != null  and mpType != ''  ">mp_type = #{mpType},</if>
+            <if test="isBasic != null  ">is_basic = #{isBasic},</if>
+            <if test="moduleIds != null  and moduleIds != ''  ">module_ids = #{moduleIds},</if>
+            <if test="merchant != null  and merchant != ''  ">merchant = #{merchant},</if>
+            <if test="card != null  and card != ''  ">card = #{card},</if>
+            <if test="storage != null  and storage != ''  ">storage = #{storage},</if>
+            <if test="traffic != null  and traffic != ''  ">traffic = #{traffic},</if>
+            <if test="store != null  and store != ''  ">store = #{store},</if>
+            <if test="originalPrice != null  ">original_price = #{originalPrice},</if>
+            <if test="price != null  ">price = #{price},</if>
+            <if test="limitDays != null  ">limit_days = #{limitDays},</if>
+            <if test="level != null  ">level = #{level},</if>
+            <if test="privilege != null  and privilege != ''  ">privilege = #{privilege},</if>
+            <if test="description != null  and description != ''  ">description = #{description},</if>
+            <if test="isPublish != null  ">is_publish = #{isPublish},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+	<delete id="deleteCompanyVersionById" parameterType="Integer">
+        delete from sys_version where record_id = #{recordId}
+    </delete>
+	
+    <delete id="deleteCompanyVersionByIds" parameterType="String">
+        delete from sys_version where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+    
+</mapper>

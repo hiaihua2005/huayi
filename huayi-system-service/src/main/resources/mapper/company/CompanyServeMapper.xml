@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyServeMapper">
+    
+    <resultMap type="CompanyServe" id="CompanyServeResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="mpId"    column="mp_id"    />
+        <result property="mpCode"    column="mp_code"    />
+        <result property="mpName"    column="mp_name"    />
+        <result property="mpGroup"    column="mp_group"    />
+        <result property="mpType"    column="mp_type"    />
+        <result property="merchant"    column="merchant"    />
+        <result property="card"    column="card"    />
+        <result property="storage"    column="storage"    />
+        <result property="traffic"    column="traffic"    />
+        <result property="store"    column="store"    />
+        <result property="applyTime"    column="apply_time"    />
+        <result property="endingTime"    column="ending_time"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="orderPrice"    column="order_price"    />
+        <result property="editionCode"    column="edition_code"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="deadline"    column="deadline"    />
+    </resultMap>
+	
+	<sql id="selectCompanyServeVo">
+        select record_id, company_id, mp_id, mp_code, mp_name, mp_group, mp_type, merchant, card, storage, traffic, store, apply_time, ending_time, is_del, order_no, order_price, edition_code, create_time, deadline from sys_serve
+    </sql>
+	
+    <select id="selectCompanyServeList" parameterType="CompanyServe" resultMap="CompanyServeResult">
+        <include refid="selectCompanyServeVo"/>
+        <where>  
+            <if test="recordId != null "> and record_id = #{recordId}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="mpId != null "> and mp_id = #{mpId}</if>
+             <if test="mpCode != null  and mpCode != '' "> and mp_code = #{mpCode}</if>
+             <if test="mpName != null  and mpName != '' "> and mp_name = #{mpName}</if>
+             <if test="mpGroup != null  and mpGroup != '' "> and mp_group = #{mpGroup}</if>
+             <if test="mpType != null  and mpType != '' "> and mp_type = #{mpType}</if>
+             <if test="merchant != null  and merchant != '' "> and merchant = #{merchant}</if>
+             <if test="card != null  and card != '' "> and card = #{card}</if>
+             <if test="storage != null  and storage != '' "> and storage = #{storage}</if>
+             <if test="traffic != null  and traffic != '' "> and traffic = #{traffic}</if>
+             <if test="store != null  and store != '' "> and store = #{store}</if>
+             <if test="applyTime != null "> and apply_time = #{applyTime}</if>
+             <if test="endingTime != null "> and ending_time = #{endingTime}</if>
+             <if test="isDel != null "> and is_del = #{isDel}</if>
+             <if test="orderNo != null  and orderNo != '' "> and order_no = #{orderNo}</if>
+             <if test="orderPrice != null "> and order_price = #{orderPrice}</if>
+             <if test="editionCode != null  and editionCode != '' "> and edition_code = #{editionCode}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="deadline != null  and deadline != '' "> and deadline = #{deadline}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyServeById" parameterType="Integer" resultMap="CompanyServeResult">
+        <include refid="selectCompanyServeVo"/>
+        where record_id = #{recordId}
+    </select>
+
+
+    <select id="selectStandardCompanyServe" parameterType="Integer" resultMap="CompanyServeResult">
+        <include refid="selectCompanyServeVo"/>
+        where company_id = #{companyId} and is_del=0
+    </select>
+        
+    <insert id="insertCompanyServe" parameterType="CompanyServe" useGeneratedKeys="true" keyProperty="recordId">
+        insert into sys_serve
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="companyId != null  ">company_id,</if>
+			<if test="mpId != null  ">mp_id,</if>
+			<if test="mpCode != null  and mpCode != ''  ">mp_code,</if>
+			<if test="mpName != null  and mpName != ''  ">mp_name,</if>
+			<if test="mpGroup != null  and mpGroup != ''  ">mp_group,</if>
+			<if test="mpType != null  and mpType != ''  ">mp_type,</if>
+			<if test="merchant != null  and merchant != ''  ">merchant,</if>
+			<if test="card != null  and card != ''  ">card,</if>
+			<if test="storage != null  and storage != ''  ">storage,</if>
+			<if test="traffic != null  and traffic != ''  ">traffic,</if>
+			<if test="store != null  and store != ''  ">store,</if>
+			<if test="applyTime != null  ">apply_time,</if>
+			<if test="endingTime != null  ">ending_time,</if>
+			<if test="isDel != null  ">is_del,</if>
+			<if test="orderNo != null  and orderNo != ''  ">order_no,</if>
+			<if test="orderPrice != null  ">order_price,</if>
+			<if test="editionCode != null  and editionCode != ''  ">edition_code,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="deadline != null  and deadline != ''  ">deadline,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="mpId != null  ">#{mpId},</if>
+			<if test="mpCode != null  and mpCode != ''  ">#{mpCode},</if>
+			<if test="mpName != null  and mpName != ''  ">#{mpName},</if>
+			<if test="mpGroup != null  and mpGroup != ''  ">#{mpGroup},</if>
+			<if test="mpType != null  and mpType != ''  ">#{mpType},</if>
+			<if test="merchant != null  and merchant != ''  ">#{merchant},</if>
+			<if test="card != null  and card != ''  ">#{card},</if>
+			<if test="storage != null  and storage != ''  ">#{storage},</if>
+			<if test="traffic != null  and traffic != ''  ">#{traffic},</if>
+			<if test="store != null  and store != ''  ">#{store},</if>
+			<if test="applyTime != null  ">#{applyTime},</if>
+			<if test="endingTime != null  ">#{endingTime},</if>
+			<if test="isDel != null  ">#{isDel},</if>
+			<if test="orderNo != null  and orderNo != ''  ">#{orderNo},</if>
+			<if test="orderPrice != null  ">#{orderPrice},</if>
+			<if test="editionCode != null  and editionCode != ''  ">#{editionCode},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="deadline != null  and deadline != ''  ">#{deadline},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyServe" parameterType="CompanyServe">
+        update sys_serve
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="mpId != null  ">mp_id = #{mpId},</if>
+            <if test="mpCode != null  and mpCode != ''  ">mp_code = #{mpCode},</if>
+            <if test="mpName != null  and mpName != ''  ">mp_name = #{mpName},</if>
+            <if test="mpGroup != null  and mpGroup != ''  ">mp_group = #{mpGroup},</if>
+            <if test="mpType != null  and mpType != ''  ">mp_type = #{mpType},</if>
+            <if test="merchant != null  and merchant != ''  ">merchant = #{merchant},</if>
+            <if test="card != null  and card != ''  ">card = #{card},</if>
+            <if test="storage != null  and storage != ''  ">storage = #{storage},</if>
+            <if test="traffic != null  and traffic != ''  ">traffic = #{traffic},</if>
+            <if test="store != null  and store != ''  ">store = #{store},</if>
+            <if test="applyTime != null  ">apply_time = #{applyTime},</if>
+            <if test="endingTime != null  ">ending_time = #{endingTime},</if>
+            <if test="isDel != null  ">is_del = #{isDel},</if>
+            <if test="orderNo != null  and orderNo != ''  ">order_no = #{orderNo},</if>
+            <if test="orderPrice != null  ">order_price = #{orderPrice},</if>
+            <if test="editionCode != null  and editionCode != ''  ">edition_code = #{editionCode},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="deadline != null  and deadline != ''  ">deadline = #{deadline},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+	<delete id="deleteCompanyServeById" parameterType="Integer">
+        delete from sys_serve where record_id = #{recordId}
+    </delete>
+	
+    <delete id="deleteCompanyServeByIds" parameterType="String">
+        delete from sys_serve where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+    
+</mapper>

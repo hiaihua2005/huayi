@@ -1,0 +1,104 @@
+package ${basePackage}.web.controller.${moduleName};
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.huayi.common.annotation.Log;
+import com.huayi.common.enums.BusinessType;
+import ${package}.domain.${className};
+import ${package}.service.I${className}Service;
+import com.huayi.framework.web.base.BaseController;
+import com.huayi.common.page.TableDataInfo;
+import com.huayi.common.base.AjaxResult;
+import com.huayi.common.utils.poi.ExcelUtil;
+
+/**
+ * ${tableComment} 信息操作处理
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Controller
+@RequestMapping("/${moduleName}/${classname}")
+public class ${className}Controller extends BaseController
+{
+    private String prefix = "${moduleName}/${classname}";
+	
+	@Autowired
+	private I${className}Service ${classname}Service;
+
+	/**
+	 * 查询${tableComment}列表
+	 */
+	@PostMapping("/list")
+	@ResponseBody
+	public TableDataInfo list(${className} ${classname})
+	{
+		startPage();
+        List<${className}> list = ${classname}Service.select${className}List(${classname});
+		return getDataTable(list);
+	}
+	
+	
+	/**
+	 * 导出${tableComment}列表
+	 */
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(${className} ${classname})
+    {
+    	List<${className}> list = ${classname}Service.select${className}List(${classname});
+        ExcelUtil<${className}> util = new ExcelUtil<${className}>(${className}.class);
+        return util.exportExcel(list, "${classname}");
+    }
+	
+
+	/**
+	 * 新增保存${tableComment}
+	 */
+	@Log(title = "${tableComment}", businessType = BusinessType.INSERT)
+	@PostMapping("/save")
+	@ResponseBody
+	public AjaxResult save(${className} ${classname})
+	{		
+		return toAjax(${classname}Service.insert${className}(${classname}));
+	}
+
+	/**
+	 * 获取${tableComment}
+	 */
+	@PostMapping("/info/{${primaryKey.attrname}}")
+	@ResponseBody
+	public AjaxResult info(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}, ModelMap mmap)
+	{
+		${className} ${classname} = ${classname}Service.select${className}ById(${primaryKey.attrname});
+	    return toAjax(true,${classname});
+	}
+	
+	/**
+	 * 修改保存${tableComment}
+	 */
+	@Log(title = "${tableComment}", businessType = BusinessType.UPDATE)
+	@PostMapping("/edit")
+	@ResponseBody
+	public AjaxResult edit(${className} ${classname})
+	{		
+		return toAjax(${classname}Service.update${className}(${classname}));
+	}
+	
+	/**
+	 * 删除${tableComment}
+	 */
+	@Log(title = "${tableComment}", businessType = BusinessType.DELETE)
+	@PostMapping( "/remove")
+	@ResponseBody
+	public AjaxResult remove(String ids)
+	{		
+		return toAjax(${classname}Service.delete${className}ByIds(ids));
+	}
+	
+}

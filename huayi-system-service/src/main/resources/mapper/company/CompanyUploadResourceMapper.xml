@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyUploadResourceMapper">
+    
+    <resultMap type="CompanyUploadResource" id="CompanyUploadResourceResult">
+        <result property="resourceId"    column="resource_id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="storage"    column="storage"    />
+        <result property="groupId"    column="group_id"    />
+        <result property="md5"    column="md5"    />
+        <result property="syncType"    column="sync_type"    />
+        <result property="fileLocal"    column="file_local"    />
+        <result property="fileCovers"    column="file_covers"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="objectName"    column="object_name"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="extension"    column="extension"    />
+        <result property="isUser"    column="is_user"    />
+        <result property="isRecycle"    column="is_recycle"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="macid"    column="macid"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectCompanyUploadResourceVo">
+        select resource_id, company_id, storage, group_id, md5, sync_type, file_local, file_covers, file_url, file_name, object_name, file_size, file_type, extension, is_user, is_recycle, is_delete, macid, create_time from sys_upload_resource
+    </sql>
+	
+    <select id="selectCompanyUploadResourceList" parameterType="CompanyUploadResource" resultMap="CompanyUploadResourceResult">
+        <include refid="selectCompanyUploadResourceVo"/>
+        <where>  
+            <if test="resourceId != null  and resourceId != '' "> and resource_id = #{resourceId}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="storage != null  and storage != '' "> and storage = #{storage}</if>
+             <if test="groupId != null "> and group_id = #{groupId}</if>
+             <if test="md5 != null  and md5 != '' "> and md5 = #{md5}</if>
+             <if test="syncType != null "> and sync_type = #{syncType}</if>
+             <if test="fileLocal != null  and fileLocal != '' "> and file_local = #{fileLocal}</if>
+             <if test="fileCovers != null  and fileCovers != '' "> and file_covers = #{fileCovers}</if>
+             <if test="fileUrl != null  and fileUrl != '' "> and file_url = #{fileUrl}</if>
+             <if test="fileName != null  and fileName != '' "> and file_name = #{fileName}</if>
+             <if test="objectName != null  and objectName != '' "> and object_name = #{objectName}</if>
+             <if test="fileSize != null "> and file_size = #{fileSize}</if>
+             <if test="fileType != null  and fileType != '' "> and file_type = #{fileType}</if>
+             <if test="extension != null  and extension != '' "> and extension = #{extension}</if>
+             <if test="isUser != null "> and is_user = #{isUser}</if>
+             <if test="isRecycle != null "> and is_recycle = #{isRecycle}</if>
+             <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+             <if test="macid != null  and macid != '' "> and macid = #{macid}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyUploadResourceById" parameterType="String" resultMap="CompanyUploadResourceResult">
+        <include refid="selectCompanyUploadResourceVo"/>
+        where resource_id = #{resourceId}
+    </select>
+        
+    <insert id="insertCompanyUploadResource" parameterType="CompanyUploadResource">
+        insert into sys_upload_resource
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="resourceId != null  and resourceId != ''  ">resource_id,</if>
+			<if test="companyId != null  ">company_id,</if>
+			<if test="storage != null  and storage != ''  ">storage,</if>
+			<if test="groupId != null  ">group_id,</if>
+			<if test="md5 != null  and md5 != ''  ">md5,</if>
+			<if test="syncType != null  ">sync_type,</if>
+			<if test="fileLocal != null  and fileLocal != ''  ">file_local,</if>
+			<if test="fileCovers != null  and fileCovers != ''  ">file_covers,</if>
+			<if test="fileUrl != null  and fileUrl != ''  ">file_url,</if>
+			<if test="fileName != null  and fileName != ''  ">file_name,</if>
+			<if test="objectName != null  and objectName != ''  ">object_name,</if>
+			<if test="fileSize != null  ">file_size,</if>
+			<if test="fileType != null  and fileType != ''  ">file_type,</if>
+			<if test="extension != null  and extension != ''  ">extension,</if>
+			<if test="isUser != null  ">is_user,</if>
+			<if test="isRecycle != null  ">is_recycle,</if>
+			<if test="isDelete != null  ">is_delete,</if>
+			<if test="macid != null  and macid != ''  ">macid,</if>
+			<if test="createTime != null  ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="resourceId != null  and resourceId != ''  ">#{resourceId},</if>
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="storage != null  and storage != ''  ">#{storage},</if>
+			<if test="groupId != null  ">#{groupId},</if>
+			<if test="md5 != null  and md5 != ''  ">#{md5},</if>
+			<if test="syncType != null  ">#{syncType},</if>
+			<if test="fileLocal != null  and fileLocal != ''  ">#{fileLocal},</if>
+			<if test="fileCovers != null  and fileCovers != ''  ">#{fileCovers},</if>
+			<if test="fileUrl != null  and fileUrl != ''  ">#{fileUrl},</if>
+			<if test="fileName != null  and fileName != ''  ">#{fileName},</if>
+			<if test="objectName != null  and objectName != ''  ">#{objectName},</if>
+			<if test="fileSize != null  ">#{fileSize},</if>
+			<if test="fileType != null  and fileType != ''  ">#{fileType},</if>
+			<if test="extension != null  and extension != ''  ">#{extension},</if>
+			<if test="isUser != null  ">#{isUser},</if>
+			<if test="isRecycle != null  ">#{isRecycle},</if>
+			<if test="isDelete != null  ">#{isDelete},</if>
+			<if test="macid != null  and macid != ''  ">#{macid},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyUploadResource" parameterType="CompanyUploadResource">
+        update sys_upload_resource
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="storage != null  and storage != ''  ">storage = #{storage},</if>
+            <if test="groupId != null  ">group_id = #{groupId},</if>
+            <if test="md5 != null  and md5 != ''  ">md5 = #{md5},</if>
+            <if test="syncType != null  ">sync_type = #{syncType},</if>
+            <if test="fileLocal != null  and fileLocal != ''  ">file_local = #{fileLocal},</if>
+            <if test="fileCovers != null  and fileCovers != ''  ">file_covers = #{fileCovers},</if>
+            <if test="fileUrl != null  and fileUrl != ''  ">file_url = #{fileUrl},</if>
+            <if test="fileName != null  and fileName != ''  ">file_name = #{fileName},</if>
+            <if test="objectName != null  and objectName != ''  ">object_name = #{objectName},</if>
+            <if test="fileSize != null  ">file_size = #{fileSize},</if>
+            <if test="fileType != null  and fileType != ''  ">file_type = #{fileType},</if>
+            <if test="extension != null  and extension != ''  ">extension = #{extension},</if>
+            <if test="isUser != null  ">is_user = #{isUser},</if>
+            <if test="isRecycle != null  ">is_recycle = #{isRecycle},</if>
+            <if test="isDelete != null  ">is_delete = #{isDelete},</if>
+            <if test="macid != null  and macid != ''  ">macid = #{macid},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where resource_id = #{resourceId}
+    </update>
+
+	<delete id="deleteCompanyUploadResourceById" parameterType="String">
+        delete from sys_upload_resource where resource_id = #{resourceId}
+    </delete>
+	
+    <delete id="deleteCompanyUploadResourceByIds" parameterType="String">
+        delete from sys_upload_resource where resource_id in 
+        <foreach item="resourceId" collection="array" open="(" separator="," close=")">
+            #{resourceId}
+        </foreach>
+    </delete>
+    
+</mapper>

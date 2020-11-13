@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.scrm.mapper.CustomerMapper">
+    
+    <resultMap type="Customer" id="CustomerResult">
+        <result property="customerId"    column="customer_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="cardId"    column="card_id"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="remarkName"    column="remark_name"    />
+        <result property="gender"    column="gender"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="wxCode"    column="wx_code"    />
+        <result property="email"    column="email"    />
+        <result property="remark"    column="remark"    />
+        <result property="customerPhone"    column="customer_phone"    />
+        <result property="customerAddress"    column="customer_address"    />
+        <result property="customerCompanyName"    column="customer_company_name"    />
+        <result property="customerTitle"    column="customer_title"    />
+        <result property="customerLogo"    column="customer_logo"    />
+        <result property="sourceTypeId"    column="source_type_id"    />
+        <result property="sourceRecordId"    column="source_record_id"    />
+        <result property="ascriptionId"    column="ascription_id"    />
+        <result property="customerState"    column="customer_state"    />
+        <result property="turnoverAmount"    column="turnover_amount"    />
+        <result property="customerRemark"    column="customer_remark"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="firstStaffId"    column="first_staff_id"    />
+        <result property="staffId"    column="staff_id"    />
+        <result property="lastFollowTime"    column="last_follow_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="exclusiveUpdateTime"    column="exclusive_update_time"    />
+    </resultMap>
+	
+	<sql id="selectCustomerVo">
+        select customer_id, user_id, card_id, customer_name, remark_name, gender, birthday, wx_code, email, remark, customer_phone, customer_address, customer_company_name, customer_title, customer_logo, source_type_id, source_record_id, ascription_id, customer_state, turnover_amount, customer_remark, company_id, first_staff_id, staff_id, last_follow_time, create_time, is_del, exclusive_update_time from t_customer
+    </sql>
+	
+    <select id="selectCustomerList" parameterType="Customer" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        <where>  
+            <if test="customerId != null "> and customer_id = #{customerId}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="cardId != null "> and card_id = #{cardId}</if>
+             <if test="customerName != null  and customerName != '' "> and customer_name = #{customerName}</if>
+             <if test="remarkName != null  and remarkName != '' "> and remark_name = #{remarkName}</if>
+             <if test="gender != null "> and gender = #{gender}</if>
+             <if test="birthday != null  and birthday != '' "> and birthday = #{birthday}</if>
+             <if test="wxCode != null  and wxCode != '' "> and wx_code = #{wxCode}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="customerPhone != null  and customerPhone != '' "> and customer_phone = #{customerPhone}</if>
+             <if test="customerAddress != null  and customerAddress != '' "> and customer_address = #{customerAddress}</if>
+             <if test="customerCompanyName != null  and customerCompanyName != '' "> and customer_company_name = #{customerCompanyName}</if>
+             <if test="customerTitle != null  and customerTitle != '' "> and customer_title = #{customerTitle}</if>
+             <if test="customerLogo != null  and customerLogo != '' "> and customer_logo = #{customerLogo}</if>
+             <if test="sourceTypeId != null "> and source_type_id = #{sourceTypeId}</if>
+             <if test="sourceRecordId != null "> and source_record_id = #{sourceRecordId}</if>
+             <if test="ascriptionId != null "> and ascription_id = #{ascriptionId}</if>
+             <if test="customerState != null "> and customer_state = #{customerState}</if>
+             <if test="turnoverAmount != null "> and turnover_amount = #{turnoverAmount}</if>
+             <if test="customerRemark != null  and customerRemark != '' "> and customer_remark = #{customerRemark}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="firstStaffId != null "> and first_staff_id = #{firstStaffId}</if>
+             <if test="staffId != null "> and staff_id = #{staffId}</if>
+             <if test="lastFollowTime != null "> and last_follow_time = #{lastFollowTime}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="isDel != null "> and is_del = #{isDel}</if>
+             <if test="exclusiveUpdateTime != null "> and exclusive_update_time = #{exclusiveUpdateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCustomerById" parameterType="Integer" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        where customer_id = #{customerId}
+    </select>
+        
+    <insert id="insertCustomer" parameterType="Customer" useGeneratedKeys="true" keyProperty="customerId">
+        insert into t_customer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null  ">user_id,</if>
+			<if test="cardId != null  ">card_id,</if>
+			<if test="customerName != null  and customerName != ''  ">customer_name,</if>
+			<if test="remarkName != null  and remarkName != ''  ">remark_name,</if>
+			<if test="gender != null  ">gender,</if>
+			<if test="birthday != null  and birthday != ''  ">birthday,</if>
+			<if test="wxCode != null  and wxCode != ''  ">wx_code,</if>
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="customerPhone != null  and customerPhone != ''  ">customer_phone,</if>
+			<if test="customerAddress != null  and customerAddress != ''  ">customer_address,</if>
+			<if test="customerCompanyName != null  and customerCompanyName != ''  ">customer_company_name,</if>
+			<if test="customerTitle != null  and customerTitle != ''  ">customer_title,</if>
+			<if test="customerLogo != null  and customerLogo != ''  ">customer_logo,</if>
+			<if test="sourceTypeId != null  ">source_type_id,</if>
+			<if test="sourceRecordId != null  ">source_record_id,</if>
+			<if test="ascriptionId != null  ">ascription_id,</if>
+			<if test="customerState != null  ">customer_state,</if>
+			<if test="turnoverAmount != null  ">turnover_amount,</if>
+			<if test="customerRemark != null  and customerRemark != ''  ">customer_remark,</if>
+			<if test="companyId != null  ">company_id,</if>
+			<if test="firstStaffId != null  ">first_staff_id,</if>
+			<if test="staffId != null  ">staff_id,</if>
+			<if test="lastFollowTime != null  ">last_follow_time,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="isDel != null  ">is_del,</if>
+			<if test="exclusiveUpdateTime != null  ">exclusive_update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null  ">#{userId},</if>
+			<if test="cardId != null  ">#{cardId},</if>
+			<if test="customerName != null  and customerName != ''  ">#{customerName},</if>
+			<if test="remarkName != null  and remarkName != ''  ">#{remarkName},</if>
+			<if test="gender != null  ">#{gender},</if>
+			<if test="birthday != null  and birthday != ''  ">#{birthday},</if>
+			<if test="wxCode != null  and wxCode != ''  ">#{wxCode},</if>
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="customerPhone != null  and customerPhone != ''  ">#{customerPhone},</if>
+			<if test="customerAddress != null  and customerAddress != ''  ">#{customerAddress},</if>
+			<if test="customerCompanyName != null  and customerCompanyName != ''  ">#{customerCompanyName},</if>
+			<if test="customerTitle != null  and customerTitle != ''  ">#{customerTitle},</if>
+			<if test="customerLogo != null  and customerLogo != ''  ">#{customerLogo},</if>
+			<if test="sourceTypeId != null  ">#{sourceTypeId},</if>
+			<if test="sourceRecordId != null  ">#{sourceRecordId},</if>
+			<if test="ascriptionId != null  ">#{ascriptionId},</if>
+			<if test="customerState != null  ">#{customerState},</if>
+			<if test="turnoverAmount != null  ">#{turnoverAmount},</if>
+			<if test="customerRemark != null  and customerRemark != ''  ">#{customerRemark},</if>
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="firstStaffId != null  ">#{firstStaffId},</if>
+			<if test="staffId != null  ">#{staffId},</if>
+			<if test="lastFollowTime != null  ">#{lastFollowTime},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="isDel != null  ">#{isDel},</if>
+			<if test="exclusiveUpdateTime != null  ">#{exclusiveUpdateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCustomer" parameterType="Customer">
+        update t_customer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="cardId != null  ">card_id = #{cardId},</if>
+            <if test="customerName != null  and customerName != ''  ">customer_name = #{customerName},</if>
+            <if test="remarkName != null  and remarkName != ''  ">remark_name = #{remarkName},</if>
+            <if test="gender != null  ">gender = #{gender},</if>
+            <if test="birthday != null  and birthday != ''  ">birthday = #{birthday},</if>
+            <if test="wxCode != null  and wxCode != ''  ">wx_code = #{wxCode},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="customerPhone != null  and customerPhone != ''  ">customer_phone = #{customerPhone},</if>
+            <if test="customerAddress != null  and customerAddress != ''  ">customer_address = #{customerAddress},</if>
+            <if test="customerCompanyName != null  and customerCompanyName != ''  ">customer_company_name = #{customerCompanyName},</if>
+            <if test="customerTitle != null  and customerTitle != ''  ">customer_title = #{customerTitle},</if>
+            <if test="customerLogo != null  and customerLogo != ''  ">customer_logo = #{customerLogo},</if>
+            <if test="sourceTypeId != null  ">source_type_id = #{sourceTypeId},</if>
+            <if test="sourceRecordId != null  ">source_record_id = #{sourceRecordId},</if>
+            <if test="ascriptionId != null  ">ascription_id = #{ascriptionId},</if>
+            <if test="customerState != null  ">customer_state = #{customerState},</if>
+            <if test="turnoverAmount != null  ">turnover_amount = #{turnoverAmount},</if>
+            <if test="customerRemark != null  and customerRemark != ''  ">customer_remark = #{customerRemark},</if>
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="firstStaffId != null  ">first_staff_id = #{firstStaffId},</if>
+            <if test="staffId != null  ">staff_id = #{staffId},</if>
+            <if test="lastFollowTime != null  ">last_follow_time = #{lastFollowTime},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="isDel != null  ">is_del = #{isDel},</if>
+            <if test="exclusiveUpdateTime != null  ">exclusive_update_time = #{exclusiveUpdateTime},</if>
+        </trim>
+        where customer_id = #{customerId}
+    </update>
+
+	<delete id="deleteCustomerById" parameterType="Integer">
+        delete from t_customer where customer_id = #{customerId}
+    </delete>
+	
+    <delete id="deleteCustomerByIds" parameterType="String">
+        delete from t_customer where customer_id in 
+        <foreach item="customerId" collection="array" open="(" separator="," close=")">
+            #{customerId}
+        </foreach>
+    </delete>
+    
+</mapper>

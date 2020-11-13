@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyUploadGroupMapper">
+    
+    <resultMap type="CompanyUploadGroup" id="CompanyUploadGroupResult">
+        <result property="groupId"    column="group_id"    />
+        <result property="groupType"    column="group_type"    />
+        <result property="groupName"    column="group_name"    />
+        <result property="fileNums"    column="file_nums"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="sort"    column="sort"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="macid"    column="macid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectCompanyUploadGroupVo">
+        select group_id, group_type, group_name, file_nums, parent_id, company_id, sort, is_delete, macid, create_time, update_time from sys_upload_group
+    </sql>
+	
+    <select id="selectCompanyUploadGroupList" parameterType="CompanyUploadGroup" resultMap="CompanyUploadGroupResult">
+        <include refid="selectCompanyUploadGroupVo"/>
+        <where>  
+            <if test="groupId != null "> and group_id = #{groupId}</if>
+             <if test="groupType != null  and groupType != '' "> and group_type = #{groupType}</if>
+             <if test="groupName != null  and groupName != '' "> and group_name = #{groupName}</if>
+             <if test="fileNums != null "> and file_nums = #{fileNums}</if>
+             <if test="parentId != null "> and parent_id = #{parentId}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="sort != null "> and sort = #{sort}</if>
+             <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+             <if test="macid != null  and macid != '' "> and macid = #{macid}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyUploadGroupById" parameterType="Integer" resultMap="CompanyUploadGroupResult">
+        <include refid="selectCompanyUploadGroupVo"/>
+        where group_id = #{groupId}
+    </select>
+        
+    <insert id="insertCompanyUploadGroup" parameterType="CompanyUploadGroup" useGeneratedKeys="true" keyProperty="groupId">
+        insert into sys_upload_group
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="groupType != null  and groupType != ''  ">group_type,</if>
+			<if test="groupName != null  and groupName != ''  ">group_name,</if>
+			<if test="fileNums != null  ">file_nums,</if>
+			<if test="parentId != null  ">parent_id,</if>
+			<if test="companyId != null  ">company_id,</if>
+			<if test="sort != null  ">sort,</if>
+			<if test="isDelete != null  ">is_delete,</if>
+			<if test="macid != null  and macid != ''  ">macid,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="groupType != null  and groupType != ''  ">#{groupType},</if>
+			<if test="groupName != null  and groupName != ''  ">#{groupName},</if>
+			<if test="fileNums != null  ">#{fileNums},</if>
+			<if test="parentId != null  ">#{parentId},</if>
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="sort != null  ">#{sort},</if>
+			<if test="isDelete != null  ">#{isDelete},</if>
+			<if test="macid != null  and macid != ''  ">#{macid},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyUploadGroup" parameterType="CompanyUploadGroup">
+        update sys_upload_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupType != null  and groupType != ''  ">group_type = #{groupType},</if>
+            <if test="groupName != null  and groupName != ''  ">group_name = #{groupName},</if>
+            <if test="fileNums != null  ">file_nums = #{fileNums},</if>
+            <if test="parentId != null  ">parent_id = #{parentId},</if>
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="sort != null  ">sort = #{sort},</if>
+            <if test="isDelete != null  ">is_delete = #{isDelete},</if>
+            <if test="macid != null  and macid != ''  ">macid = #{macid},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where group_id = #{groupId}
+    </update>
+
+	<delete id="deleteCompanyUploadGroupById" parameterType="Integer">
+        delete from sys_upload_group where group_id = #{groupId}
+    </delete>
+	
+    <delete id="deleteCompanyUploadGroupByIds" parameterType="String">
+        delete from sys_upload_group where group_id in 
+        <foreach item="groupId" collection="array" open="(" separator="," close=")">
+            #{groupId}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyApplyMapper">
+    
+    <resultMap type="CompanyApply" id="CompanyApplyResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="shopLogo"    column="shop_logo"    />
+        <result property="macid"    column="macid"    />
+        <result property="mallName"    column="mall_name"    />
+        <result property="mallRemark"    column="mall_remark"    />
+        <result property="userName"    column="user_name"    />
+        <result property="password"    column="password"    />
+        <result property="status"    column="status"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="wxappId"    column="wxapp_id"    />
+        <result property="adminId"    column="admin_id"    />
+        <result property="endingTime"    column="ending_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+	
+	<sql id="selectCompanyApplyVo">
+        select record_id, company_id, shop_id, shop_logo, macid, mall_name, mall_remark, user_name, password, status, is_delete, wxapp_id, admin_id, ending_time, create_time, update_time from sys_company_apply
+    </sql>
+	
+    <select id="selectCompanyApplyList" parameterType="CompanyApply" resultMap="CompanyApplyResult">
+        <include refid="selectCompanyApplyVo"/>
+        <where>  
+            <if test="recordId != null "> and record_id = #{recordId}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="shopId != null "> and shop_id = #{shopId}</if>
+             <if test="shopLogo != null  and shopLogo != '' "> and shop_logo = #{shopLogo}</if>
+             <if test="macid != null  and macid != '' "> and macid = #{macid}</if>
+             <if test="mallName != null  and mallName != '' "> and mall_name = #{mallName}</if>
+             <if test="mallRemark != null  and mallRemark != '' "> and mall_remark = #{mallRemark}</if>
+             <if test="userName != null  and userName != '' "> and user_name = #{userName}</if>
+             <if test="password != null  and password != '' "> and password = #{password}</if>
+             <if test="status != null "> and status = #{status}</if>
+             <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+             <if test="wxappId != null "> and wxapp_id = #{wxappId}</if>
+             <if test="adminId != null "> and admin_id = #{adminId}</if>
+             <if test="endingTime != null "> and ending_time = #{endingTime}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyApplyById" parameterType="Integer" resultMap="CompanyApplyResult">
+        <include refid="selectCompanyApplyVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertCompanyApply" parameterType="CompanyApply" useGeneratedKeys="true" keyProperty="recordId">
+        insert into sys_company_apply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="companyId != null  ">company_id,</if>
+			<if test="shopId != null  ">shop_id,</if>
+			<if test="shopLogo != null  and shopLogo != ''  ">shop_logo,</if>
+			<if test="macid != null  and macid != ''  ">macid,</if>
+			<if test="mallName != null  and mallName != ''  ">mall_name,</if>
+			<if test="mallRemark != null  and mallRemark != ''  ">mall_remark,</if>
+			<if test="userName != null  and userName != ''  ">user_name,</if>
+			<if test="password != null  and password != ''  ">password,</if>
+			<if test="status != null  ">status,</if>
+			<if test="isDelete != null  ">is_delete,</if>
+			<if test="wxappId != null  ">wxapp_id,</if>
+			<if test="adminId != null  ">admin_id,</if>
+			<if test="endingTime != null  ">ending_time,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="shopId != null  ">#{shopId},</if>
+			<if test="shopLogo != null  and shopLogo != ''  ">#{shopLogo},</if>
+			<if test="macid != null  and macid != ''  ">#{macid},</if>
+			<if test="mallName != null  and mallName != ''  ">#{mallName},</if>
+			<if test="mallRemark != null  and mallRemark != ''  ">#{mallRemark},</if>
+			<if test="userName != null  and userName != ''  ">#{userName},</if>
+			<if test="password != null  and password != ''  ">#{password},</if>
+			<if test="status != null  ">#{status},</if>
+			<if test="isDelete != null  ">#{isDelete},</if>
+			<if test="wxappId != null  ">#{wxappId},</if>
+			<if test="adminId != null  ">#{adminId},</if>
+			<if test="endingTime != null  ">#{endingTime},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyApply" parameterType="CompanyApply">
+        update sys_company_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="shopId != null  ">shop_id = #{shopId},</if>
+            <if test="shopLogo != null  and shopLogo != ''  ">shop_logo = #{shopLogo},</if>
+            <if test="macid != null  and macid != ''  ">macid = #{macid},</if>
+            <if test="mallName != null  and mallName != ''  ">mall_name = #{mallName},</if>
+            <if test="mallRemark != null  and mallRemark != ''  ">mall_remark = #{mallRemark},</if>
+            <if test="userName != null  and userName != ''  ">user_name = #{userName},</if>
+            <if test="password != null  and password != ''  ">password = #{password},</if>
+            <if test="status != null  ">status = #{status},</if>
+            <if test="isDelete != null  ">is_delete = #{isDelete},</if>
+            <if test="wxappId != null  ">wxapp_id = #{wxappId},</if>
+            <if test="adminId != null  ">admin_id = #{adminId},</if>
+            <if test="endingTime != null  ">ending_time = #{endingTime},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+	<delete id="deleteCompanyApplyById" parameterType="Integer">
+        delete from sys_company_apply where record_id = #{recordId}
+    </delete>
+	
+    <delete id="deleteCompanyApplyByIds" parameterType="String">
+        delete from sys_company_apply where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+    
+</mapper>

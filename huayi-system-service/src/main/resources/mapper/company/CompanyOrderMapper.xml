@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyOrderMapper">
+    
+    <resultMap type="CompanyOrder" id="CompanyOrderResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="mpCode"    column="mp_code"    />
+        <result property="mpType"    column="mp_type"    />
+        <result property="totalPrice"    column="total_price"    />
+        <result property="orderPrice"    column="order_price"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="couponMoney"    column="coupon_money"    />
+        <result property="pointsMoney"    column="points_money"    />
+        <result property="pointsNum"    column="points_num"    />
+        <result property="payType"    column="pay_type"    />
+        <result property="payStatus"    column="pay_status"    />
+        <result property="payTime"    column="pay_time"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="isSettled"    column="is_settled"    />
+        <result property="transactionId"    column="transaction_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderObversion"    column="order_obversion"    />
+        <result property="companyId"    column="company_id"    />
+    </resultMap>
+	
+	<sql id="selectCompanyOrderVo">
+        select order_id, order_no, mp_code, mp_type, total_price, order_price, order_num, coupon_id, coupon_money, points_money, points_num, pay_type, pay_status, pay_time, order_status, is_settled, transaction_id, user_id, is_delete, create_time, update_time, order_obversion, company_id from sys_order
+    </sql>
+	
+    <select id="selectCompanyOrderList" parameterType="CompanyOrder" resultMap="CompanyOrderResult">
+        <include refid="selectCompanyOrderVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+             <if test="orderNo != null  and orderNo != '' "> and order_no = #{orderNo}</if>
+             <if test="mpCode != null  and mpCode != '' "> and mp_code = #{mpCode}</if>
+             <if test="mpType != null  and mpType != '' "> and mp_type = #{mpType}</if>
+             <if test="totalPrice != null "> and total_price = #{totalPrice}</if>
+             <if test="orderPrice != null "> and order_price = #{orderPrice}</if>
+             <if test="orderNum != null "> and order_num = #{orderNum}</if>
+             <if test="couponId != null "> and coupon_id = #{couponId}</if>
+             <if test="couponMoney != null "> and coupon_money = #{couponMoney}</if>
+             <if test="pointsMoney != null "> and points_money = #{pointsMoney}</if>
+             <if test="pointsNum != null "> and points_num = #{pointsNum}</if>
+             <if test="payType != null "> and pay_type = #{payType}</if>
+             <if test="payStatus != null "> and pay_status = #{payStatus}</if>
+             <if test="payTime != null "> and pay_time = #{payTime}</if>
+             <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+             <if test="isSettled != null "> and is_settled = #{isSettled}</if>
+             <if test="transactionId != null  and transactionId != '' "> and transaction_id = #{transactionId}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="orderObversion != null "> and order_obversion = #{orderObversion}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyOrderById" parameterType="Integer" resultMap="CompanyOrderResult">
+        <include refid="selectCompanyOrderVo"/>
+        where order_id = #{orderId}
+    </select>
+        
+    <insert id="insertCompanyOrder" parameterType="CompanyOrder" useGeneratedKeys="true" keyProperty="orderId">
+        insert into sys_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null  and orderNo != ''  ">order_no,</if>
+			<if test="mpCode != null  and mpCode != ''  ">mp_code,</if>
+			<if test="mpType != null  and mpType != ''  ">mp_type,</if>
+			<if test="totalPrice != null  ">total_price,</if>
+			<if test="orderPrice != null  ">order_price,</if>
+			<if test="orderNum != null  ">order_num,</if>
+			<if test="couponId != null  ">coupon_id,</if>
+			<if test="couponMoney != null  ">coupon_money,</if>
+			<if test="pointsMoney != null  ">points_money,</if>
+			<if test="pointsNum != null  ">points_num,</if>
+			<if test="payType != null  ">pay_type,</if>
+			<if test="payStatus != null  ">pay_status,</if>
+			<if test="payTime != null  ">pay_time,</if>
+			<if test="orderStatus != null  ">order_status,</if>
+			<if test="isSettled != null  ">is_settled,</if>
+			<if test="transactionId != null  and transactionId != ''  ">transaction_id,</if>
+			<if test="userId != null  ">user_id,</if>
+			<if test="isDelete != null  ">is_delete,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="updateTime != null  ">update_time,</if>
+			<if test="orderObversion != null  ">order_obversion,</if>
+			<if test="companyId != null  ">company_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null  and orderNo != ''  ">#{orderNo},</if>
+			<if test="mpCode != null  and mpCode != ''  ">#{mpCode},</if>
+			<if test="mpType != null  and mpType != ''  ">#{mpType},</if>
+			<if test="totalPrice != null  ">#{totalPrice},</if>
+			<if test="orderPrice != null  ">#{orderPrice},</if>
+			<if test="orderNum != null  ">#{orderNum},</if>
+			<if test="couponId != null  ">#{couponId},</if>
+			<if test="couponMoney != null  ">#{couponMoney},</if>
+			<if test="pointsMoney != null  ">#{pointsMoney},</if>
+			<if test="pointsNum != null  ">#{pointsNum},</if>
+			<if test="payType != null  ">#{payType},</if>
+			<if test="payStatus != null  ">#{payStatus},</if>
+			<if test="payTime != null  ">#{payTime},</if>
+			<if test="orderStatus != null  ">#{orderStatus},</if>
+			<if test="isSettled != null  ">#{isSettled},</if>
+			<if test="transactionId != null  and transactionId != ''  ">#{transactionId},</if>
+			<if test="userId != null  ">#{userId},</if>
+			<if test="isDelete != null  ">#{isDelete},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="updateTime != null  ">#{updateTime},</if>
+			<if test="orderObversion != null  ">#{orderObversion},</if>
+			<if test="companyId != null  ">#{companyId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyOrder" parameterType="CompanyOrder">
+        update sys_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNo != null  and orderNo != ''  ">order_no = #{orderNo},</if>
+            <if test="mpCode != null  and mpCode != ''  ">mp_code = #{mpCode},</if>
+            <if test="mpType != null  and mpType != ''  ">mp_type = #{mpType},</if>
+            <if test="totalPrice != null  ">total_price = #{totalPrice},</if>
+            <if test="orderPrice != null  ">order_price = #{orderPrice},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
+            <if test="couponId != null  ">coupon_id = #{couponId},</if>
+            <if test="couponMoney != null  ">coupon_money = #{couponMoney},</if>
+            <if test="pointsMoney != null  ">points_money = #{pointsMoney},</if>
+            <if test="pointsNum != null  ">points_num = #{pointsNum},</if>
+            <if test="payType != null  ">pay_type = #{payType},</if>
+            <if test="payStatus != null  ">pay_status = #{payStatus},</if>
+            <if test="payTime != null  ">pay_time = #{payTime},</if>
+            <if test="orderStatus != null  ">order_status = #{orderStatus},</if>
+            <if test="isSettled != null  ">is_settled = #{isSettled},</if>
+            <if test="transactionId != null  and transactionId != ''  ">transaction_id = #{transactionId},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="isDelete != null  ">is_delete = #{isDelete},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateTime != null  ">update_time = #{updateTime},</if>
+            <if test="orderObversion != null  ">order_obversion = #{orderObversion},</if>
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+	<delete id="deleteCompanyOrderById" parameterType="Integer">
+        delete from sys_order where order_id = #{orderId}
+    </delete>
+	
+    <delete id="deleteCompanyOrderByIds" parameterType="String">
+        delete from sys_order where order_id in 
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+    
+</mapper>

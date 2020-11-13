@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.company.mapper.CompanyStaffMapper">
+    
+    <resultMap type="CompanyStaff" id="CompanyStaffResult">
+        <result property="staffId"    column="staff_id"    />
+        <result property="jobNumber"    column="job_number"    />
+        <result property="userId"    column="user_id"    />
+        <result property="shopId"    column="shop_id"    />
+        <result property="cardId"    column="card_id"    />
+        <result property="macid"    column="macid"    />
+        <result property="staffName"    column="staff_name"    />
+        <result property="staffAvatar"    column="staff_avatar"    />
+        <result property="phone"    column="phone"    />
+        <result property="showPhone"    column="show_phone"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="title"    column="title"    />
+        <result property="skills"    column="skills"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="fromType"    column="from_type"    />
+        <result property="fromRemark"    column="from_remark"    />
+        <result property="sort"    column="sort"    />
+        <result property="joinTime"    column="join_time"    />
+        <result property="leaveTime"    column="leave_time"    />
+        <result property="applyStatus"    column="apply_status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="isDel"    column="is_del"    />
+    </resultMap>
+	
+	<sql id="selectCompanyStaffVo">
+        select staff_id, job_number, user_id, shop_id, card_id, macid, staff_name, staff_avatar, phone, show_phone, company_id, title, skills, dept_name, dept_id, from_type, from_remark, sort, join_time, leave_time, apply_status, create_time, is_del from sys_staff
+    </sql>
+	
+    <select id="selectCompanyStaffList" parameterType="CompanyStaff" resultMap="CompanyStaffResult">
+        <include refid="selectCompanyStaffVo"/>
+        <where>  
+            <if test="staffId != null "> and staff_id = #{staffId}</if>
+             <if test="jobNumber != null  and jobNumber != '' "> and job_number = #{jobNumber}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="shopId != null "> and shop_id = #{shopId}</if>
+             <if test="cardId != null "> and card_id = #{cardId}</if>
+             <if test="macid != null  and macid != '' "> and macid = #{macid}</if>
+             <if test="staffName != null  and staffName != '' "> and staff_name = #{staffName}</if>
+             <if test="staffAvatar != null  and staffAvatar != '' "> and staff_avatar = #{staffAvatar}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="showPhone != null  and showPhone != '' "> and show_phone = #{showPhone}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="title != null  and title != '' "> and title = #{title}</if>
+             <if test="skills != null  and skills != '' "> and skills = #{skills}</if>
+             <if test="deptName != null  and deptName != '' "> and dept_name like '%'||#{deptName}||'%' </if>
+             <if test="deptId != null "> and dept_id = #{deptId}</if>
+             <if test="fromType != null "> and from_type = #{fromType}</if>
+             <if test="fromRemark != null  and fromRemark != '' "> and from_remark = #{fromRemark}</if>
+             <if test="sort != null "> and sort = #{sort}</if>
+             <if test="joinTime != null "> and join_time = #{joinTime}</if>
+             <if test="leaveTime != null "> and leave_time = #{leaveTime}</if>
+             <if test="applyStatus != null "> and apply_status = #{applyStatus}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="isDel != null "> and is_del = #{isDel}</if>
+         </where>
+    </select>
+    
+    <select id="selectCompanyStaffById" parameterType="Integer" resultMap="CompanyStaffResult">
+        <include refid="selectCompanyStaffVo"/>
+        where staff_id = #{staffId}
+    </select>
+        
+    <insert id="insertCompanyStaff" parameterType="CompanyStaff" useGeneratedKeys="true" keyProperty="staffId">
+        insert into sys_staff
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="jobNumber != null  and jobNumber != ''  ">job_number,</if>
+			<if test="userId != null  ">user_id,</if>
+			<if test="shopId != null  ">shop_id,</if>
+			<if test="cardId != null  ">card_id,</if>
+			<if test="macid != null  and macid != ''  ">macid,</if>
+			<if test="staffName != null  and staffName != ''  ">staff_name,</if>
+			<if test="staffAvatar != null  and staffAvatar != ''  ">staff_avatar,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="showPhone != null  and showPhone != ''  ">show_phone,</if>
+			<if test="companyId != null  ">company_id,</if>
+			<if test="title != null  and title != ''  ">title,</if>
+			<if test="skills != null  and skills != ''  ">skills,</if>
+			<if test="deptName != null  and deptName != ''  ">dept_name,</if>
+			<if test="deptId != null  ">dept_id,</if>
+			<if test="fromType != null  ">from_type,</if>
+			<if test="fromRemark != null  and fromRemark != ''  ">from_remark,</if>
+			<if test="sort != null  ">sort,</if>
+			<if test="joinTime != null  ">join_time,</if>
+			<if test="leaveTime != null  ">leave_time,</if>
+			<if test="applyStatus != null  ">apply_status,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="isDel != null  ">is_del,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="jobNumber != null  and jobNumber != ''  ">#{jobNumber},</if>
+			<if test="userId != null  ">#{userId},</if>
+			<if test="shopId != null  ">#{shopId},</if>
+			<if test="cardId != null  ">#{cardId},</if>
+			<if test="macid != null  and macid != ''  ">#{macid},</if>
+			<if test="staffName != null  and staffName != ''  ">#{staffName},</if>
+			<if test="staffAvatar != null  and staffAvatar != ''  ">#{staffAvatar},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="showPhone != null  and showPhone != ''  ">#{showPhone},</if>
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="title != null  and title != ''  ">#{title},</if>
+			<if test="skills != null  and skills != ''  ">#{skills},</if>
+			<if test="deptName != null  and deptName != ''  ">#{deptName},</if>
+			<if test="deptId != null  ">#{deptId},</if>
+			<if test="fromType != null  ">#{fromType},</if>
+			<if test="fromRemark != null  and fromRemark != ''  ">#{fromRemark},</if>
+			<if test="sort != null  ">#{sort},</if>
+			<if test="joinTime != null  ">#{joinTime},</if>
+			<if test="leaveTime != null  ">#{leaveTime},</if>
+			<if test="applyStatus != null  ">#{applyStatus},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="isDel != null  ">#{isDel},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateCompanyStaff" parameterType="CompanyStaff">
+        update sys_staff
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobNumber != null  and jobNumber != ''  ">job_number = #{jobNumber},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="shopId != null  ">shop_id = #{shopId},</if>
+            <if test="cardId != null  ">card_id = #{cardId},</if>
+            <if test="macid != null  and macid != ''  ">macid = #{macid},</if>
+            <if test="staffName != null  and staffName != ''  ">staff_name = #{staffName},</if>
+            <if test="staffAvatar != null  and staffAvatar != ''  ">staff_avatar = #{staffAvatar},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="showPhone != null  and showPhone != ''  ">show_phone = #{showPhone},</if>
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="title != null  and title != ''  ">title = #{title},</if>
+            <if test="skills != null  and skills != ''  ">skills = #{skills},</if>
+            <if test="deptName != null  and deptName != ''  ">dept_name = #{deptName},</if>
+            <if test="deptId != null  ">dept_id = #{deptId},</if>
+            <if test="fromType != null  ">from_type = #{fromType},</if>
+            <if test="fromRemark != null  and fromRemark != ''  ">from_remark = #{fromRemark},</if>
+            <if test="sort != null  ">sort = #{sort},</if>
+            <if test="joinTime != null  ">join_time = #{joinTime},</if>
+            <if test="leaveTime != null  ">leave_time = #{leaveTime},</if>
+            <if test="applyStatus != null  ">apply_status = #{applyStatus},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="isDel != null  ">is_del = #{isDel},</if>
+        </trim>
+        where staff_id = #{staffId}
+    </update>
+
+	<delete id="deleteCompanyStaffById" parameterType="Integer">
+        delete from sys_staff where staff_id = #{staffId}
+    </delete>
+	
+    <delete id="deleteCompanyStaffByIds" parameterType="String">
+        delete from sys_staff where staff_id in 
+        <foreach item="staffId" collection="array" open="(" separator="," close=")">
+            #{staffId}
+        </foreach>
+    </delete>
+    
+</mapper>

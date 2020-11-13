@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huayi.scrm.mapper.ContactMapper">
+    
+    <resultMap type="Contact" id="ContactResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="macid"    column="macid"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="cardId"    column="card_id"    />
+        <result property="friendId"    column="friend_id"    />
+        <result property="friendCardId"    column="friend_card_id"    />
+        <result property="friendName"    column="friend_name"    />
+        <result property="friendAvatar"    column="friend_avatar"    />
+        <result property="friendPhone"    column="friend_phone"    />
+        <result property="friendSex"    column="friend_sex"    />
+        <result property="friendCompany"    column="friend_company"    />
+        <result property="friendJobTitle"    column="friend_job_title"    />
+        <result property="friendAddress"    column="friend_address"    />
+        <result property="fromType"    column="from_type"    />
+        <result property="contactClass"    column="contact_class"    />
+        <result property="friendState"    column="friend_state"    />
+        <result property="heart"    column="heart"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+	
+	<sql id="selectContactVo">
+        select record_id, macid, company_id, user_id, card_id, friend_id, friend_card_id, friend_name, friend_avatar, friend_phone, friend_sex, friend_company, friend_job_title, friend_address, from_type, contact_class, friend_state, heart, is_del, remark, create_time from t_contacts
+    </sql>
+	
+    <select id="selectContactList" parameterType="Contact" resultMap="ContactResult">
+        <include refid="selectContactVo"/>
+        <where>  
+            <if test="recordId != null "> and record_id = #{recordId}</if>
+             <if test="macid != null  and macid != '' "> and macid = #{macid}</if>
+             <if test="companyId != null "> and company_id = #{companyId}</if>
+             <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="cardId != null "> and card_id = #{cardId}</if>
+             <if test="friendId != null "> and friend_id = #{friendId}</if>
+             <if test="friendCardId != null "> and friend_card_id = #{friendCardId}</if>
+             <if test="friendName != null  and friendName != '' "> and friend_name = #{friendName}</if>
+             <if test="friendAvatar != null  and friendAvatar != '' "> and friend_avatar = #{friendAvatar}</if>
+             <if test="friendPhone != null  and friendPhone != '' "> and friend_phone = #{friendPhone}</if>
+             <if test="friendSex != null "> and friend_sex = #{friendSex}</if>
+             <if test="friendCompany != null  and friendCompany != '' "> and friend_company = #{friendCompany}</if>
+             <if test="friendJobTitle != null  and friendJobTitle != '' "> and friend_job_title = #{friendJobTitle}</if>
+             <if test="friendAddress != null  and friendAddress != '' "> and friend_address = #{friendAddress}</if>
+             <if test="fromType != null "> and from_type = #{fromType}</if>
+             <if test="contactClass != null  and contactClass != '' "> and contact_class = #{contactClass}</if>
+             <if test="friendState != null "> and friend_state = #{friendState}</if>
+             <if test="heart != null "> and heart = #{heart}</if>
+             <if test="isDel != null "> and is_del = #{isDel}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+         </where>
+    </select>
+    
+    <select id="selectContactById" parameterType="Integer" resultMap="ContactResult">
+        <include refid="selectContactVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertContact" parameterType="Contact" useGeneratedKeys="true" keyProperty="recordId">
+        insert into t_contacts
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="macid != null  and macid != ''  ">macid,</if>
+			<if test="companyId != null  ">company_id,</if>
+			<if test="userId != null  ">user_id,</if>
+			<if test="cardId != null  ">card_id,</if>
+			<if test="friendId != null  ">friend_id,</if>
+			<if test="friendCardId != null  ">friend_card_id,</if>
+			<if test="friendName != null  and friendName != ''  ">friend_name,</if>
+			<if test="friendAvatar != null  and friendAvatar != ''  ">friend_avatar,</if>
+			<if test="friendPhone != null  and friendPhone != ''  ">friend_phone,</if>
+			<if test="friendSex != null  ">friend_sex,</if>
+			<if test="friendCompany != null  and friendCompany != ''  ">friend_company,</if>
+			<if test="friendJobTitle != null  and friendJobTitle != ''  ">friend_job_title,</if>
+			<if test="friendAddress != null  and friendAddress != ''  ">friend_address,</if>
+			<if test="fromType != null  ">from_type,</if>
+			<if test="contactClass != null  and contactClass != ''  ">contact_class,</if>
+			<if test="friendState != null  ">friend_state,</if>
+			<if test="heart != null  ">heart,</if>
+			<if test="isDel != null  ">is_del,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="createTime != null  ">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="macid != null  and macid != ''  ">#{macid},</if>
+			<if test="companyId != null  ">#{companyId},</if>
+			<if test="userId != null  ">#{userId},</if>
+			<if test="cardId != null  ">#{cardId},</if>
+			<if test="friendId != null  ">#{friendId},</if>
+			<if test="friendCardId != null  ">#{friendCardId},</if>
+			<if test="friendName != null  and friendName != ''  ">#{friendName},</if>
+			<if test="friendAvatar != null  and friendAvatar != ''  ">#{friendAvatar},</if>
+			<if test="friendPhone != null  and friendPhone != ''  ">#{friendPhone},</if>
+			<if test="friendSex != null  ">#{friendSex},</if>
+			<if test="friendCompany != null  and friendCompany != ''  ">#{friendCompany},</if>
+			<if test="friendJobTitle != null  and friendJobTitle != ''  ">#{friendJobTitle},</if>
+			<if test="friendAddress != null  and friendAddress != ''  ">#{friendAddress},</if>
+			<if test="fromType != null  ">#{fromType},</if>
+			<if test="contactClass != null  and contactClass != ''  ">#{contactClass},</if>
+			<if test="friendState != null  ">#{friendState},</if>
+			<if test="heart != null  ">#{heart},</if>
+			<if test="isDel != null  ">#{isDel},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateContact" parameterType="Contact">
+        update t_contacts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="macid != null  and macid != ''  ">macid = #{macid},</if>
+            <if test="companyId != null  ">company_id = #{companyId},</if>
+            <if test="userId != null  ">user_id = #{userId},</if>
+            <if test="cardId != null  ">card_id = #{cardId},</if>
+            <if test="friendId != null  ">friend_id = #{friendId},</if>
+            <if test="friendCardId != null  ">friend_card_id = #{friendCardId},</if>
+            <if test="friendName != null  and friendName != ''  ">friend_name = #{friendName},</if>
+            <if test="friendAvatar != null  and friendAvatar != ''  ">friend_avatar = #{friendAvatar},</if>
+            <if test="friendPhone != null  and friendPhone != ''  ">friend_phone = #{friendPhone},</if>
+            <if test="friendSex != null  ">friend_sex = #{friendSex},</if>
+            <if test="friendCompany != null  and friendCompany != ''  ">friend_company = #{friendCompany},</if>
+            <if test="friendJobTitle != null  and friendJobTitle != ''  ">friend_job_title = #{friendJobTitle},</if>
+            <if test="friendAddress != null  and friendAddress != ''  ">friend_address = #{friendAddress},</if>
+            <if test="fromType != null  ">from_type = #{fromType},</if>
+            <if test="contactClass != null  and contactClass != ''  ">contact_class = #{contactClass},</if>
+            <if test="friendState != null  ">friend_state = #{friendState},</if>
+            <if test="heart != null  ">heart = #{heart},</if>
+            <if test="isDel != null  ">is_del = #{isDel},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+	<delete id="deleteContactById" parameterType="Integer">
+        delete from t_contacts where record_id = #{recordId}
+    </delete>
+	
+    <delete id="deleteContactByIds" parameterType="String">
+        delete from t_contacts where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+    
+</mapper>
