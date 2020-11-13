@@ -196,11 +196,12 @@ public class ShiroConfig
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
-        filterChainDefinitionMap.put("/login", "anon,captchaValidate");
+        filterChainDefinitionMap.put(loginUrl, "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
         Map<String, Filter> filters = new LinkedHashMap<>();
+//        filters.put("cors",new CorsFilter());
 //        filters.put("anon", new AnonymousFilter());
         filters.put("captchaValidate", captchaValidateFilter());
         JwtFilter jwtFilter = new JwtFilter();
@@ -210,9 +211,9 @@ public class ShiroConfig
         filters.put("logout", logoutFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
-        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put(loginUrl, "anon");
         filterChainDefinitionMap.put("/logout", "logout");
-        filterChainDefinitionMap.put("/**", "jwt");
+        filterChainDefinitionMap.put("/api/**", "jwt");
 //        // 所有请求需要认证
 //        filterChainDefinitionMap.put("/**", "user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

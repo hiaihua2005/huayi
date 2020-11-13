@@ -25,7 +25,7 @@ import com.huayi.system.service.ISysUserService;
  * 
  * @author huayi
  */
-@Service
+@Service(value = "sysUserService")
 public class SysUserServiceImpl implements ISysUserService
 {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);

@@ -1,6 +1,11 @@
 package com.huayi.framework.util;
 
+import com.huayi.common.constant.Constants;
+import com.huayi.common.utils.ServletUtils;
+import com.huayi.common.utils.spring.SpringUtils;
+import com.huayi.framework.jwt.JwtUtil;
 import com.huayi.framework.shiro.realm.MyShiroRealm;
+import com.huayi.system.service.ISysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.mgt.RealmSecurityManager;
@@ -10,6 +15,8 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import com.huayi.common.utils.StringUtils;
 import com.huayi.common.utils.bean.BeanUtils;
 import com.huayi.system.domain.SysUser;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * shiro 工具类
@@ -37,6 +44,24 @@ public class ShiroUtils
         {
             user = new SysUser();
             BeanUtils.copyBeanProp(user, obj);
+        }
+        return user;
+    }
+
+    public static SysUser getSysUser(HttpServletRequest request)
+    {
+        if(request==null) {
+            request = ServletUtils.getRequest();
+        }
+        String token = request.getHeader(Constants.ACCESS_TOKEN);//Access-Token
+        String loginName = JwtUtil.getUsername(token);
+        ISysUserService sysUserService = SpringUtils.getBean("sysUserService");
+        SysUser sysUser = sysUserService.selectUserByLoginName(loginName);
+        SysUser user = null;
+        if (StringUtils.isNotNull(sysUser))
+        {
+            user = new SysUser();
+            BeanUtils.copyBeanProp(user, sysUser);
         }
         return user;
     }

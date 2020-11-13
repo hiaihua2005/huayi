@@ -17,9 +17,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class SysUser implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
-	/** 用户ID */
-	private Long id;
+
 	/** 用户ID */
 	private Long userId;
 	/** 企业id */
@@ -67,15 +65,7 @@ public class SysUser implements Serializable
 	/** 备注 */
 	private String remark;
 
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
 
-	public Long getId()
-	{
-		return id;
-	}
 	public void setUserId(Long userId)
 	{
 		this.userId = userId;
@@ -294,9 +284,9 @@ public class SysUser implements Serializable
 	}
 
 
+	@Override
 	public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
             .append("userId", getUserId())
             .append("companyId", getCompanyId())
             .append("deptId", getDeptId())

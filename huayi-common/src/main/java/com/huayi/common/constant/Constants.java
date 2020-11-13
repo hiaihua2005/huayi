@@ -111,7 +111,7 @@ public class Constants
     /**
      * token的key
      */
-    public static String ACCESS_TOKEN = "Access-Token";
+    public static String ACCESS_TOKEN = "Authorization";
 
     /**
      * 登录用户规则缓存
