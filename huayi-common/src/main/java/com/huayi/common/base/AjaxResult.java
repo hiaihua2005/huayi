@@ -109,7 +109,7 @@ public class AjaxResult<T> implements Serializable
      */
     public static AjaxResult success(Object data)
     {
-        return AjaxResult.success("操作成功",null);
+        return AjaxResult.success("操作成功",data);
     }
 
 

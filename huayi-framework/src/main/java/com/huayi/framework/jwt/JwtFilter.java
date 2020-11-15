@@ -97,34 +97,39 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         // 提交给realm进行登入,如果错误他会抛出异常并被捕获, 反之则代表登入成功,返回true
         getSubject(request, response).login(jwtToken);return true;
     }
-
-    /**
-     * 对跨域提供支持
-     */
-    @Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        log.info("JwtFilter-->>>preHandle-Method:init()");
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
-//        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-//        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+//
+//    /**
+//     * 对跨域提供支持
+//     */
+//    @Override
+//    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+//        log.info("JwtFilter-->>>preHandle-Method:init()");
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+////        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+////        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+////        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+////        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
+////        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+////            httpServletResponse.setStatus(HttpStatus.OK.value());
+////            return false;
+////        }
+//        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*"); // 设置允许所有跨域访问
+//        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS,DELETE");
+//        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+//        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,Authorization,token,X-Total-Count");
+//        //httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+//        // 该字段可选。CORS请求时，XMLHttpRequest对象的getResponseHeader()方法只能拿到6个基本字段：
+//        // Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma
+//        // 如果想拿到其他字段，就必须在Access-Control-Expose-Headers里面指定。如X-Total-Count。
+//        //Access-Control-Request-Headers
+//        httpServletResponse.addHeader("Access-Control-Expose-Headers","X-Total-Count");
 //        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
 //        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
 //            httpServletResponse.setStatus(HttpStatus.OK.value());
 //            return false;
 //        }
-        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*"); // 设置允许所有跨域访问
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS,DELETE");
-        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,Authorization,token");
-        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
-        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
-            httpServletResponse.setStatus(HttpStatus.OK.value());
-            return false;
-        }
-
-        return super.preHandle(request, response);
-    }
+//
+//        return super.preHandle(request, response);
+//    }
 }

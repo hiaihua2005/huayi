@@ -72,6 +72,10 @@ public class ShiroConfig
     @Value("${shiro.user.loginUrl}")
     private String loginUrl;
 
+    // 登录地址
+    @Value("${shiro.mock.mockUrl}")
+    private String mockUrl;
+
     // 权限认证失败地址
     @Value("${shiro.user.unauthorizedUrl}")
     private String unauthorizedUrl;
@@ -195,6 +199,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
+        //JSON结果模拟接口
+        filterChainDefinitionMap.put(mockUrl,"anon");
         // 不需要拦截的访问
         filterChainDefinitionMap.put(loginUrl, "anon,captchaValidate");
         // 系统权限列表

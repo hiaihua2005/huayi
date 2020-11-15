@@ -44,6 +44,7 @@ public class CorsConfig {
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setMaxAge(3600L);
         corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.addExposedHeader("X-Total-Count,token,Authorization");
         return corsConfiguration;
     }
 
