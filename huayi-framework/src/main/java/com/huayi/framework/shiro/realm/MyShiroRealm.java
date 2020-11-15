@@ -1,6 +1,7 @@
 package com.huayi.framework.shiro.realm;
 
 import com.google.common.base.Strings;
+import com.huayi.common.constant.UserConstants;
 import com.huayi.framework.jwt.JwtToken;
 import com.huayi.framework.jwt.JwtUtil;
 import com.huayi.framework.shiro.service.SysLoginService;
@@ -86,7 +87,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         if (sysUser == null) {
             throw new AuthenticationException("用户不存在!");
         }// 判断用户状态
-        if (sysUser.getStatus()=="0") {
+        if (sysUser.getStatus()== UserConstants.USER_BLOCKED) {
             throw new AuthenticationException("账号已被禁用,请联系管理员!");
         }
         return new SimpleAuthenticationInfo(sysUser,token, ByteSource.Util.bytes(sysUser.getSalt()),getName());

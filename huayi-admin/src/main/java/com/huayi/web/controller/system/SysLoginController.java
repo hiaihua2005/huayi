@@ -1,7 +1,9 @@
 package com.huayi.web.controller.system;
 
 import com.huayi.common.constant.Constants;
+import com.huayi.common.constant.UserConstants;
 import com.huayi.common.json.JSONObject;
+import com.huayi.framework.beans.LoginUser;
 import com.huayi.framework.cache.ShardedRedisPool;
 import com.huayi.framework.cache.ShardedRedisUtil;
 import com.huayi.framework.jwt.JwtUtil;
@@ -17,6 +19,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.huayi.common.base.AjaxResult;
@@ -41,19 +44,19 @@ public class SysLoginController extends BaseController
 
     @PostMapping("/biz/user/login")
     @ResponseBody
-    public AjaxResult ajaxLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
-       if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+    public AjaxResult ajaxLogin(@RequestBody LoginUser loginUser) {
+       if(StringUtils.isEmpty(loginUser.getUsername()) || StringUtils.isEmpty(loginUser.getPassword())) {
            return error("请输入登录信息");
        }
-        SysUser user=sysLoginService.login(username,password);
+        SysUser user=sysLoginService.login(loginUser.getUsername(),loginUser.getPassword());
         if (user == null) {
             return error("该用户不存在");
         }
-        if (user.getStatus()=="0") {
+        if (user.getStatus()== UserConstants.USER_BLOCKED) {
             return error("账号已被禁用,请联系管理员!");
         }
         // 生成token
-        String token = JwtUtil.sign(username, password);
+        String token = JwtUtil.sign(loginUser.getUsername(),loginUser.getPassword());
         ShardedRedisUtil.set(Constants.PREFIX_USER_TOKEN + token, token,JwtUtil.EXPIRE_TIME / 1000);
         JSONObject obj = new JSONObject();
         obj.put("token", token);

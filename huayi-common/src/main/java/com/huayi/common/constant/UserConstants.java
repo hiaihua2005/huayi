@@ -7,6 +7,7 @@ package com.huayi.common.constant;
  */
 public class UserConstants
 {
+
     /** 正常状态 */
     public static final String NORMAL = "0";
 
