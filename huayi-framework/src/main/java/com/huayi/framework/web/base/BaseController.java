@@ -65,7 +65,7 @@ public class BaseController
     {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(0);
-        rspData.setRows(list);
+        rspData.setList(list);
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }

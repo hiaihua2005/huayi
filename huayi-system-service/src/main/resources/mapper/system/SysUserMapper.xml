@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="isDel"    column="is_del"    />
         <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
         <collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
     </resultMap>
@@ -50,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectSysUserVo">
         select u.user_id, u.company_id, u.dept_id, u.login_name, u.user_name, u.user_type,
          u.phone, u.email, u.sex, u.avatar, u.password, u.salt, u.status, u.login_ip,
-         u.login_date,u.create_by, u.create_time, u.update_by, u.update_time, u.remark,
+         u.login_date,u.create_by, u.create_time, u.update_by, u.update_time, u.remark,u.is_del,
          d.dept_id, d.parent_id, d.dept_name, d.order_num, d.status as dept_status,
        		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
 		from sys_user u
@@ -86,9 +87,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
-    <select id="selectUserById" parameterType="Integer" resultMap="SysUserResult">
+    <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
-        where user_id = #{id}
+        where u.user_id = #{id}
     </select>
         
     <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="id">
@@ -113,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateBy != null  and updateBy != ''  ">update_by,</if>
 			<if test="updateTime != null  ">update_time,</if>
 			<if test="remark != null  and remark != ''  ">remark,</if>
+            <if test="isDel != null  and is_del != ''  ">isDel,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="companyId != null  ">#{companyId},</if>
@@ -134,6 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="updateBy != null  and updateBy != ''  ">#{updateBy},</if>
 			<if test="updateTime != null  ">#{updateTime},</if>
 			<if test="remark != null  and remark != ''  ">#{remark},</if>
+            <if test="isDel != null  and is_del != ''  ">isDel,</if>
          </trim>
     </insert>
 	 
@@ -159,6 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
             <if test="updateTime != null  ">update_time = #{updateTime},</if>
             <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="isDel != null  and is_del != ''  ">is_del = #{isDel},</if>
         </trim>
         where user_id = #{id}
     </update>

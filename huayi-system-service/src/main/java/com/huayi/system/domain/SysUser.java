@@ -64,6 +64,8 @@ public class SysUser implements Serializable
 	private Date updateTime;
 	/** 备注 */
 	private String remark;
+	/** 是否删除 **/
+	private String isDel;
 
 
 	public void setUserId(Long userId)
@@ -283,6 +285,13 @@ public class SysUser implements Serializable
 		return userId != null && (1L == userId || 0L == userId);
 	}
 
+	public String getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
 
 	@Override
 	public String toString() {

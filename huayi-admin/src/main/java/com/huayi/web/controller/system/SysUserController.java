@@ -55,6 +55,15 @@ public class SysUserController extends BaseController
         return getDataTable(list);
     }
 
+
+    @PostMapping("/info/{userId}")
+    @ResponseBody
+    public AjaxResult list(@PathVariable("userId") Long userId)
+    {
+        SysUser user = userService.selectUserById(userId);
+        return success(user);
+    }
+
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
