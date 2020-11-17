@@ -39,13 +39,8 @@ public class ShiroUtils
     public static SysUser getSysUser()
     {
         SysUser user = null;
-        Object obj = getSubject().getPrincipal();
-        if (StringUtils.isNotNull(obj))
-        {
-            user = new SysUser();
-            BeanUtils.copyBeanProp(user, obj);
-        }
-        return user;
+        HttpServletRequest request = ServletUtils.getRequest();
+        return getSysUser(request);
     }
 
     public static SysUser getSysUser(HttpServletRequest request)
@@ -54,6 +49,9 @@ public class ShiroUtils
             request = ServletUtils.getRequest();
         }
         String token = request.getHeader(Constants.ACCESS_TOKEN);//Access-Token
+        if(StringUtils.isEmpty(token)) {
+            return null;
+        }
         String loginName = JwtUtil.getUsername(token);
         ISysUserService sysUserService = SpringUtils.getBean("sysUserService");
         SysUser sysUser = sysUserService.selectUserByLoginName(loginName);

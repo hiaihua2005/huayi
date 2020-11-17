@@ -21,51 +21,74 @@ public interface ISysUserService
     /**
      * 通过用户名查询用户
      *
-     * @param userName 用户名
+     * @param loginName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByLoginName(String userName);
+    public SysUser selectUserByLoginName(String loginName);
 
     /**
      * 通过手机号码查询用户
      *
-     * @param phoneNumber 手机号码
+     *
+     * @param companyId  公司ID
+     * @param phone 手机号码
      * @return 用户对象信息
      */
-    public SysUser selectUserByPhone(String phoneNumber);
+    public SysUser selectUserByPhone(Long companyId,String phone);
 
     /**
      * 通过邮箱查询用户
-     * 
+     *
+     * @param companyId  公司ID
      * @param email 邮箱
      * @return 用户对象信息
      */
-    public SysUser selectUserByEmail(String email);
+    public SysUser selectUserByEmail(Long companyId,String email);
+
+
+    /**
+     * 通过手机号码查询用户
+     *
+     *
+     * @param phone 手机号码
+     * @return 用户对象信息
+     */
+    public List<SysUser> selectUserByPhone(String phone);
+
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param email 邮箱
+     * @return 用户对象信息
+     */
+    public List<SysUser> selectUserByEmail(String email);
 
     /**
      * 通过用户ID查询用户
-     * 
+     * @param companyId  公司ID
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
+    public SysUser selectUserById(Long companyId,Long userId);
 
     /**
      * 通过用户ID删除用户
-     * 
+     *
+     @ param companyId  公司ID
      * @param userId 用户ID
      * @return 结果
      */
-    public int deleteUserById(Long userId);
+    public int deleteUserById(Long companyId,Long userId);
 
     /**
      * 批量删除用户信息
-     * 
+     *
+     * @param companyId 公司ID
      * @param ids 需要删除的数据ID
      * @return 结果
      * @throws Exception 异常
      */
-    public int deleteUserByIds(String ids) throws Exception;
+    public int deleteUserByIds(Long companyId,String ids) throws Exception;
 
     /**
      * 保存用户信息
@@ -125,22 +148,24 @@ public interface ISysUserService
 
     /**
      * 根据用户ID查询用户所属角色组
-     * 
+     *
+     * @param companyId 公司ID
      * @param userId 用户ID
      * @return 结果
      */
-    public String selectUserRoleGroup(Long userId);
+    public String selectUserRoleGroup(Long companyId,Long userId);
 
 
     /**
      * 导入用户数据
-     * 
+     *
+     * @param companyId 公司ID
      * @param userList 用户数据列表
      * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
      * @param operName 操作用户
      * @return 结果
      */
-    public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+    public String importUser(Long companyId,List<SysUser> userList, Boolean isUpdateSupport, String operName);
 
     /**
      * 用户状态修改

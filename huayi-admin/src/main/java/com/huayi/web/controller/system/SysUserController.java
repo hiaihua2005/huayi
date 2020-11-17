@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.huayi.common.annotation.Log;
 import com.huayi.common.base.AjaxResult;
@@ -24,6 +20,8 @@ import com.huayi.framework.web.base.BaseController;
 import com.huayi.system.domain.SysUser;
 import com.huayi.system.service.ISysRoleService;
 import com.huayi.system.service.ISysUserService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户信息
@@ -48,8 +46,10 @@ public class SysUserController extends BaseController
 
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(SysUser user)
+    public TableDataInfo list(HttpServletRequest request,SysUser user)
     {
+        SysUser currentUser = ShiroUtils.getSysUser(request);
+        user.setCompanyId(currentUser.getCompanyId());
         startPage();
         List<SysUser> list = userService.selectUserList(user);
         return getDataTable(list);
@@ -58,9 +58,10 @@ public class SysUserController extends BaseController
 
     @PostMapping("/info/{userId}")
     @ResponseBody
-    public AjaxResult list(@PathVariable("userId") Long userId)
+    public AjaxResult info(HttpServletRequest request,@PathVariable("userId") Long userId)
     {
-        SysUser user = userService.selectUserById(userId);
+        SysUser currentUser = getSysUser();
+        SysUser user = userService.selectUserById(currentUser.getCompanyId(),userId);
         return success(user);
     }
 
@@ -69,6 +70,7 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult export(SysUser user)
     {
+        SysUser currentUser = getSysUser();
         List<SysUser> list = userService.selectUserList(user);
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         return util.exportExcel(list, "用户数据");
@@ -79,10 +81,11 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
+        SysUser currentUser = getSysUser();
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         List<SysUser> userList = util.importExcel(file.getInputStream());
         String operName = getSysUser().getLoginName();
-        String message = userService.importUser(userList, updateSupport, operName);
+        String message = userService.importUser(currentUser.getCompanyId(),userList, updateSupport, operName);
         return AjaxResult.success(message);
     }
 
@@ -113,21 +116,28 @@ public class SysUserController extends BaseController
     @PostMapping("/edit")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public AjaxResult editSave(SysUser user)
+    public AjaxResult editSave(@RequestBody  SysUser editUser)
     {
-        if (StringUtils.isNotNull(user.getUserId()) && user.getLoginName().equals("admin"))
+        SysUser currentUser = getSysUser();
+        if (StringUtils.isNotNull(editUser.getUserId()) && editUser.getLoginName().equals("admin"))
         {
             return error("不允许修改超级管理员用户");
         }
-        user.setUpdateBy(ShiroUtils.getLoginName());
-        return toAjax(userService.updateUser(user));
+        editUser.setCompanyId(currentUser.getCompanyId());
+        SysUser currentOpereationUser = ShiroUtils.getSysUser();
+        editUser.setUpdateBy(currentOpereationUser.getLoginName());
+        //更新用户信息
+        int updateResult = userService.updateUser(editUser);
+        //更新用户角色
+        return toAjax(updateResult);
     }
 
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @GetMapping("/resetPwd/{userId}")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap)
     {
-        mmap.put("user", userService.selectUserById(userId));
+        SysUser currentUser = getSysUser();
+        mmap.put("user", userService.selectUserById(currentUser.getCompanyId(),userId));
         return prefix + "/resetPwd";
     }
 
@@ -136,6 +146,8 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult resetPwdSave(SysUser user)
     {
+        SysUser currentUser = getSysUser();
+        user.setCompanyId(currentUser.getCompanyId());
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user.getPassword(), user.getSalt()));
         return toAjax(userService.resetUserPwd(user));
@@ -146,12 +158,11 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        try
-        {
-            return toAjax(userService.deleteUserByIds(ids));
+        SysUser currentUser = getSysUser();
+        try  {
+            return toAjax(userService.deleteUserByIds(currentUser.getCompanyId(),ids));
         }
-        catch (Exception e)
-        {
+        catch (Exception e)  {
             return error(e.getMessage());
         }
     }

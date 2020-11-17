@@ -20,6 +20,8 @@ import com.huayi.common.utils.ServletUtils;
 import com.huayi.system.domain.SysUser;
 import com.huayi.system.service.ISysUserService;
 
+import java.util.List;
+
 /**
  * 登录校验方法
  * 
@@ -72,12 +74,18 @@ public class SysLoginService
 
         if (user == null && maybeMobilePhoneNumber(loginName))
         {
-            user = userService.selectUserByPhone(loginName);
+            List<SysUser> userList = userService.selectUserByPhone(loginName);
+            if(userList!=null && userList.size() ==1 ) {
+                user = userList.get(0);
+            }
         }
 
         if (user == null && maybeEmail(loginName))
         {
-            user = userService.selectUserByEmail(loginName);
+            List<SysUser> userList = userService.selectUserByEmail(loginName);
+            if(userList!=null && userList.size() ==1 ) {
+                user = userList.get(0);
+            }
         }
         if (user == null)
         {

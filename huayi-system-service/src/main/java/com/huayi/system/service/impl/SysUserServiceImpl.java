@@ -2,6 +2,10 @@ package com.huayi.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.huayi.company.condition.system.SysUserBatchDeleteCondition;
+import com.huayi.company.condition.system.SysUserCondition;
+import io.jsonwebtoken.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,79 +57,127 @@ public class SysUserServiceImpl implements ISysUserService
     @DataScope(tableAlias = "u")
     public List<SysUser> selectUserList(SysUser user)
     {
+        if(user ==null || user.getCompanyId()==null) {
+            return null;
+        }
         return userMapper.selectUserList(user);
     }
 
     /**
      * 通过用户名查询用户
      *
-     * @param userName 用户名
+     * @param loginName 用户名
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserByLoginName(String userName)
+    public SysUser selectUserByLoginName(String loginName)
     {
-        return userMapper.selectUserByLoginName(userName);
+        return userMapper.selectUserByLoginName(loginName);
     }
 
     /**
      * 通过手机号码查询用户
-     * 
-     * @param phoneNumber 手机号码
+     *
+     * @param companyId 公司ID
+     * @param phone 手机号码
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserByPhone(String phoneNumber)
+    public SysUser selectUserByPhone(Long companyId,String phone)
     {
-        return userMapper.selectUserByPhone(phoneNumber);
+        SysUserCondition condition = new SysUserCondition();
+        condition.setCompanyId(companyId);
+        condition.setPhone(phone);
+        return userMapper.selectUserByPhone(condition);
     }
 
     /**
      * 通过邮箱查询用户
-     * 
+     *
+     * @param companyId 公司ID
      * @param email 邮箱
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserByEmail(String email)
+    public SysUser selectUserByEmail(Long companyId,String email)
     {
-        return userMapper.selectUserByEmail(email);
+        SysUserCondition condition = new SysUserCondition();
+        condition.setCompanyId(companyId);
+        condition.setEmail(email);
+        return userMapper.selectUserByEmail(condition);
+    }
+
+    /**
+     * 通过手机号码查询用户
+     *
+     * @param phone 手机号码
+     * @return 用户对象信息
+     */
+    @Override
+    public List<SysUser> selectUserByPhone(String phone)
+    {
+        SysUserCondition condition = new SysUserCondition();
+        condition.setPhone(phone);
+        return userMapper.selectUserListByPhone(condition);
+    }
+
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param email 邮箱
+     * @return 用户对象信息
+     */
+    @Override
+    public List<SysUser> selectUserByEmail(String email)
+    {
+        SysUserCondition condition = new SysUserCondition();
+        condition.setEmail(email);
+        return userMapper.selectUserListByEmail(condition);
     }
 
     /**
      * 通过用户ID查询用户
-     * 
+     *
+     * @param companyId 公司ID
      * @param userId 用户ID
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserById(Long userId)
+    public SysUser selectUserById(Long companyId,Long userId)
     {
-        return userMapper.selectUserById(userId);
+        SysUserCondition condition = new SysUserCondition();
+        condition.setCompanyId(companyId);
+        condition.setUserId(userId);
+        return userMapper.selectUserById(condition);
     }
 
     /**
      * 通过用户ID删除用户
-     * 
+     *
+     * @param companyId 公司ID
      * @param userId 用户ID
      * @return 结果
      */
     @Override
-    public int deleteUserById(Long userId)
+    public int deleteUserById(Long companyId,Long userId)
     {
+        SysUserCondition condition = new SysUserCondition();
+        condition.setCompanyId(companyId);
+        condition.setUserId(userId);
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
-        return userMapper.deleteUserById(userId);
+        return userMapper.deleteUserById(condition);
     }
 
     /**
      * 批量删除用户信息
-     * 
+     *
+     * @param companyId 公司ID
      * @param ids 需要删除的数据ID
      * @return 结果
      */
     @Override
-    public int deleteUserByIds(String ids) throws BusinessException
+    public int deleteUserByIds(Long companyId,String ids) throws BusinessException
     {
         Long[] userIds = Convert.toLongArray(ids);
         for (Long userId : userIds)
@@ -135,12 +187,15 @@ public class SysUserServiceImpl implements ISysUserService
                 throw new BusinessException("不允许删除超级管理员用户");
             }
         }
-        return userMapper.deleteUserByIds(userIds);
+        SysUserBatchDeleteCondition condition = new SysUserBatchDeleteCondition();
+        condition.setCompanyId(companyId);
+        condition.setUserId(Strings.split(ids,","));
+        return userMapper.deleteUserByIds(condition);
     }
 
     /**
      * 新增保存用户信息
-     * 
+     *
      * @param user 用户信息
      * @return 结果
      */
@@ -248,8 +303,14 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public String checkPhoneUnique(SysUser user)
     {
+        if(user.getCompanyId()==null || user.getCompanyId().longValue()<=0) {
+            return UserConstants.USER_PHONE_NO_PARAM;
+        }
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        SysUser info = userMapper.checkPhoneUnique(user.getPhone());
+        SysUserCondition condition = new SysUserCondition();
+        condition.setCompanyId(user.getCompanyId());
+        condition.setPhone(user.getPhone());
+        SysUser info = userMapper.checkPhoneUnique(condition);
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
             return UserConstants.USER_PHONE_NOT_UNIQUE;
@@ -267,7 +328,10 @@ public class SysUserServiceImpl implements ISysUserService
     public String checkEmailUnique(SysUser user)
     {
         Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        SysUser info = userMapper.checkEmailUnique(user.getEmail());
+        SysUserCondition condition = new SysUserCondition();
+        condition.setCompanyId(user.getCompanyId());
+        condition.setPhone(user.getEmail());
+        SysUser info = userMapper.checkEmailUnique(condition);
         if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
         {
             return UserConstants.USER_EMAIL_NOT_UNIQUE;
@@ -277,12 +341,13 @@ public class SysUserServiceImpl implements ISysUserService
 
     /**
      * 查询用户所属角色组
-     * 
+     *
+     * @param  companyId 公司ID
      * @param userId 用户ID
      * @return 结果
      */
     @Override
-    public String selectUserRoleGroup(Long userId)
+    public String selectUserRoleGroup(Long companyId,Long userId)
     {
         List<SysRole> list = roleMapper.selectRolesByUserId(userId);
         StringBuffer idsStr = new StringBuffer();
@@ -307,7 +372,7 @@ public class SysUserServiceImpl implements ISysUserService
      * @return 结果
      */
     @Override
-    public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName)
+    public String importUser(Long companyId,List<SysUser> userList, Boolean isUpdateSupport, String operName)
     {
         if (StringUtils.isNull(userList) || userList.size() == 0)
         {

@@ -66,7 +66,7 @@ public class SysProfileController extends BaseController
             user.setPassword(passwordService.encryptPassword(newPassword, user.getSalt()));
             if (userService.resetUserPwd(user) > 0)
             {
-                setSysUser(userService.selectUserById(user.getUserId()));
+                setSysUser(userService.selectUserById(user.getCompanyId(),user.getUserId()));
                 return success();
             }
             return error();
@@ -92,7 +92,7 @@ public class SysProfileController extends BaseController
         currentUser.setSex(user.getSex());
         if (userService.updateUserInfo(currentUser) > 0)
         {
-            setSysUser(userService.selectUserById(currentUser.getUserId()));
+            setSysUser(userService.selectUserById(currentUser.getCompanyId(),currentUser.getUserId()));
             return success();
         }
         return error();
@@ -115,7 +115,7 @@ public class SysProfileController extends BaseController
                 currentUser.setAvatar(avatar);
                 if (userService.updateUserInfo(currentUser) > 0)
                 {
-                    setSysUser(userService.selectUserById(currentUser.getUserId()));
+                    setSysUser(userService.selectUserById(currentUser.getCompanyId(),currentUser.getUserId()));
                     return success();
                 }
             }

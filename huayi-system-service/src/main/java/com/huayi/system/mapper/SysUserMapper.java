@@ -1,6 +1,9 @@
 package com.huayi.system.mapper;
 
 import java.util.List;
+
+import com.huayi.company.condition.system.SysUserBatchDeleteCondition;
+import com.huayi.company.condition.system.SysUserCondition;
 import com.huayi.system.domain.SysUser;
 
 /**
@@ -19,60 +22,56 @@ public interface SysUserMapper
     public List<SysUser> selectUserList(SysUser sysUser);
 
     /**
-     * 通过用户名查询用户
-     * 
-     * @param userName 用户名
-     * @return 用户对象信息
-     */
-    public SysUser selectUserByLoginName(String userName);
-
-    /**
      * 通过手机号码查询用户
      * 
-     * @param phoneNumber 手机号码
-     * @return 用户对象信息
+     * @param condition 查询条件
      */
-    public SysUser selectUserByPhone(String phoneNumber);
+    public SysUser selectUserByPhone(SysUserCondition condition);
 
     /**
      * 通过邮箱查询用户
-     * 
-     * @param email 邮箱
-     * @return 用户对象信息
+     *
+     * @param condition 查询条件
      */
-    public SysUser selectUserByEmail(String email);
+    public SysUser selectUserByEmail(SysUserCondition condition);
+
+    /**
+     * 通过手机号码查询用户
+     *
+     * @param condition 查询条件
+     */
+    public List<SysUser> selectUserListByPhone(SysUserCondition condition);
+
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param condition 查询条件
+     */
+    public List<SysUser> selectUserListByEmail(SysUserCondition condition);
 
     /**
      * 通过用户ID查询用户
-     * 
-     * @param userId 用户ID
+     *
+     * @param condition
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
-
-//    /**
-//     * 通过用户ID查询用户
-//     *
-//     * @param userId 用户ID
-//     * @return 用户对象信息
-//     */
-//    public SysUser selectSysUserVo(Long userId);
+    public SysUser selectUserById(SysUserCondition condition);
 
     /**
      * 通过用户ID删除用户
-     * 
-     * @param userId 用户ID
+     *
+     * @param condition 查询条件
      * @return 结果
      */
-    public int deleteUserById(Long userId);
+    public int deleteUserById(SysUserCondition condition);
 
     /**
      * 批量删除用户信息
-     * 
-     * @param ids 需要删除的数据ID
+     *
+     * @param condition 删除条件
      * @return 结果
      */
-    public int deleteUserByIds(Long[] ids);
+    public int deleteUserByIds(SysUserBatchDeleteCondition condition);
 
     /**
      * 修改用户信息
@@ -91,26 +90,36 @@ public interface SysUserMapper
     public int insertUser(SysUser user);
 
     /**
+     * 校验手机号码是否唯一
+     *
+     * @param condition 查询条件
+     * @return 结果
+     */
+    public SysUser checkPhoneUnique(SysUserCondition condition);
+
+    /**
+     * 校验email是否唯一
+     *
+     * @param condition 查询条件
+     * @return 结果
+     */
+    public SysUser checkEmailUnique(SysUserCondition condition);
+
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param loginName 用户名
+     * @return 用户对象信息
+     */
+    public SysUser selectUserByLoginName(String loginName);
+
+    /**
      * 校验用户名称是否唯一
-     * 
+     *
      * @param loginName 登录名称
      * @return 结果
      */
     public int checkLoginNameUnique(String loginName);
 
-    /**
-     * 校验手机号码是否唯一
-     *
-     * @param phonenumber 手机号码
-     * @return 结果
-     */
-    public SysUser checkPhoneUnique(String phonenumber);
-
-    /**
-     * 校验email是否唯一
-     *
-     * @param email 用户邮箱
-     * @return 结果
-     */
-    public SysUser checkEmailUnique(String email);
 }

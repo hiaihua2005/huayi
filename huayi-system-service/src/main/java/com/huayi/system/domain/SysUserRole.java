@@ -3,6 +3,8 @@ package com.huayi.system.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.time.LocalDateTime;
+
 /**
  * 用户和角色关联 sys_user_role
  * 
@@ -15,6 +17,16 @@ public class SysUserRole
     
     /** 角色ID */
     private Long roleId;
+
+    /** 公司ID */
+    private String companyId;
+
+    /** 创建时间 */
+    private LocalDateTime createTime;
+
+    /** 创建人 */
+    private String createUser;
+
 
     public Long getUserId()
     {
@@ -36,11 +48,36 @@ public class SysUserRole
         this.roleId = roleId;
     }
 
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("userId", getUserId())
             .append("roleId", getRoleId())
+            .append("companyId", getCompanyId())
             .toString();
     }
 }
