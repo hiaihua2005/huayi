@@ -1,6 +1,6 @@
-package com.huayi.company.condition.system;
+package com.huayi.system.condition.system;
 
-import com.huayi.company.condition.PageCondition;
+import com.huayi.system.condition.PageCondition;
 
 import java.io.Serializable;
 

@@ -128,7 +128,6 @@ public class SysUserController extends BaseController
         editUser.setUpdateBy(currentOpereationUser.getLoginName());
         //更新用户信息
         int updateResult = userService.updateUser(editUser);
-        //更新用户角色
         return toAjax(updateResult);
     }
 

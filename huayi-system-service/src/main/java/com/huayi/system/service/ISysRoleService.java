@@ -3,6 +3,7 @@ package com.huayi.system.service;
 import java.util.List;
 import java.util.Set;
 import com.huayi.system.domain.SysRole;
+import com.huayi.system.domain.SysUserRole;
 
 /**
  * 角色业务层
@@ -122,4 +123,15 @@ public interface ISysRoleService
      * @return 结果
      */
     public int changeStatus(SysRole role);
+
+    public int updateRoleByUserId(Long companyId,Long userId,Long[] roleIds);
+
+    public int deleteUserRoleByUserId(Long companyId,Long userId);
+
+    /**
+     * 更新用户角色(新增）
+     * @param userRoleList
+     * @return
+     */
+    public int batchUserRole(List<SysUserRole> userRoleList);
 }

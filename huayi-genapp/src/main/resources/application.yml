@@ -1,7 +1,7 @@
 # 项目相关配置
-tianyi:
+huayi:
   # 名称
-  name: TianYi
+  name: HuaYi
   # 版本
   version: 3.2.0
   # 版权年份
@@ -29,7 +29,7 @@ server:
 # 日志配置
 logging:
   level:
-    com.tianyi: debug
+    com.huayi: debug
     org.springframework: WARN
     org.spring.springboot.dao: debug
 

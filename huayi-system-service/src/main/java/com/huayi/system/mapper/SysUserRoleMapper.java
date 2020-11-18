@@ -1,6 +1,9 @@
 package com.huayi.system.mapper;
 
 import java.util.List;
+
+import com.huayi.system.condition.system.SysRoleUserUpdateCondition;
+import com.huayi.system.condition.system.SysUserRoleCondition;
 import com.huayi.system.domain.SysUserRole;
 
 /**
@@ -13,10 +16,10 @@ public interface SysUserRoleMapper
     /**
      * 通过用户ID删除用户和角色关联
      * 
-     * @param userId 用户ID
+     * @param condition
      * @return 结果
      */
-    public int deleteUserRoleByUserId(Long userId);
+    public int deleteUserRoleByUserId(SysUserRoleCondition condition);
 
     /**
      * 批量删除用户和角色关联
@@ -41,4 +44,8 @@ public interface SysUserRoleMapper
      * @return 结果
      */
     public int batchUserRole(List<SysUserRole> userRoleList);
+
+    public int deleteUserRoleIn(SysRoleUserUpdateCondition condition);
+
+    public List<SysUserRole> selectUserRoleList(SysRoleUserUpdateCondition condition);
 }

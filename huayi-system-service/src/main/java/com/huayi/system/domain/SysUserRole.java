@@ -19,7 +19,7 @@ public class SysUserRole
     private Long roleId;
 
     /** 公司ID */
-    private String companyId;
+    private Long companyId;
 
     /** 创建时间 */
     private LocalDateTime createTime;
@@ -48,11 +48,11 @@ public class SysUserRole
         this.roleId = roleId;
     }
 
-    public String getCompanyId() {
+    public Long getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(String companyId) {
+    public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
 

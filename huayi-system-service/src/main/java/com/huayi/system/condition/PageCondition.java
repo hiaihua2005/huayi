@@ -1,4 +1,4 @@
-package com.huayi.company.condition;
+package com.huayi.system.condition;
 
 import java.io.Serializable;
 

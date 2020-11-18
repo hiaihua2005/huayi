@@ -12,25 +12,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="createUser"     column="create_user"      />
 	</resultMap>
 
-	<delete id="deleteUserRoleByUserId" parameterType="com.huayi.company.condition.system.SysUserRoleCondition">
+	<delete id="deleteUserRoleByUserId" parameterType="com.huayi.system.condition.system.SysUserRoleCondition">
 		delete from sys_user_role where company_id=#{companyId} and user_id=#{userId}
 	</delete>
 	
-	<select id="countUserRoleByRoleId" parameterType="com.huayi.company.condition.system.SysUserRoleCondition" resultType="Integer">
+	<select id="countUserRoleByRoleId" parameterType="com.huayi.system.condition.system.SysUserRoleCondition" resultType="Integer">
 	    select count(1) from sys_user_role where company_id=#{companyId} and role_id=#{roleId}
 	</select>
+
+
+
+	<!--left join sys_dept d on u.dept_id = d.dept_id  t_company_department -->
+	<sql id="selectSysRoleUserVo">
+        select u.user_id, u.company_id, u.role_id
+		from sys_user_role u
+    </sql>
+
+	<select id="selectUserRoleList" parameterType="com.huayi.system.condition.system.SysRoleUserUpdateCondition" resultMap="SysUserRoleResult">
+		select u.user_id, u.company_id, u.role_id
+		from sys_user_role u where user_id=#{userId} and role_id in
+		<foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+	</select>
+
 	
-	<delete id="deleteUserRole" parameterType="com.huayi.company.condition.system.SysUserRoleCondition">
- 		delete from sys_user_role where company_id=#{companyId} and user_id in
- 		<foreach collection="array" item="userId" open="(" separator="," close=")">
- 			#{userId}
+	<delete id="deleteUserRole" parameterType="com.huayi.system.condition.system.SysUserRoleCondition">
+ 		delete from sys_user_role where company_id=#{companyId} and role_id in
+ 		<foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+ 			#{roleId}
         </foreach> 
  	</delete>
+
+	<delete id="deleteUserRoleIn" parameterType="com.huayi.system.condition.system.SysUserRoleCondition">
+		delete from sys_user_role where company_id=#{companyId} and role_id in
+		<foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+	</delete>
 	
 	<insert id="batchUserRole">
 		insert into sys_user_role(company_id,user_id, role_id,create_time,create_user) values
 		<foreach item="item" index="index" collection="list" separator=",">
-			(#{item.companyId},#{item.userId},#{item.roleId},#{item.create_time},#{item.create_user})
+			(#{item.companyId},#{item.userId},#{item.roleId},#{item.createTime},#{item.createUser})
 		</foreach>
 	</insert>
 	

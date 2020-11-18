@@ -2,8 +2,8 @@ package com.huayi.system.mapper;
 
 import java.util.List;
 
-import com.huayi.company.condition.system.SysUserBatchDeleteCondition;
-import com.huayi.company.condition.system.SysUserCondition;
+import com.huayi.system.condition.system.SysUserBatchDeleteCondition;
+import com.huayi.system.condition.system.SysUserCondition;
 import com.huayi.system.domain.SysUser;
 
 /**

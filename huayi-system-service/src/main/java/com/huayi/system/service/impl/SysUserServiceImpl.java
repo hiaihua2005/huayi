@@ -3,8 +3,9 @@ package com.huayi.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.huayi.company.condition.system.SysUserBatchDeleteCondition;
-import com.huayi.company.condition.system.SysUserCondition;
+import com.huayi.system.condition.system.SysUserBatchDeleteCondition;
+import com.huayi.system.condition.system.SysUserCondition;
+import com.huayi.system.service.ISysRoleService;
 import io.jsonwebtoken.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class SysUserServiceImpl implements ISysUserService
 
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private ISysRoleService roleService;
 
 
     /**
@@ -165,7 +166,7 @@ public class SysUserServiceImpl implements ISysUserService
         condition.setCompanyId(companyId);
         condition.setUserId(userId);
         // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
+        roleService.deleteUserRoleByUserId(companyId,userId);
         return userMapper.deleteUserById(condition);
     }
 
@@ -218,12 +219,35 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public int updateUser(SysUser user)
     {
-        Long userId = user.getUserId();
-        // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
-        // 新增用户与角色管理
-        insertUserRole(user);
+        //更新用户角色关系
+        roleService.updateRoleByUserId(user.getCompanyId(),user.getUserId(),user.getRoleIds());
         return userMapper.updateUser(user);
+    }
+
+    /**
+     * 新增用户角色信息
+     *
+     * @param user 用户对象
+     */
+    public void insertUserRole(SysUser user)
+    {
+        Long[] roles = user.getRoleIds();
+        if (StringUtils.isNotNull(roles))
+        {
+            // 新增用户与角色管理
+            List<SysUserRole> list = new ArrayList<SysUserRole>();
+            for (Long roleId : roles)
+            {
+                SysUserRole ur = new SysUserRole();
+                ur.setUserId(user.getUserId());
+                ur.setRoleId(roleId);
+                list.add(ur);
+            }
+            if (list.size() > 0)
+            {
+                roleService.batchUserRole(list);
+            }
+        }
     }
 
     /**
@@ -248,32 +272,6 @@ public class SysUserServiceImpl implements ISysUserService
     public int resetUserPwd(SysUser user)
     {
         return updateUserInfo(user);
-    }
-
-    /**
-     * 新增用户角色信息
-     * 
-     * @param user 用户对象
-     */
-    public void insertUserRole(SysUser user)
-    {
-        Long[] roles = user.getRoleIds();
-        if (StringUtils.isNotNull(roles))
-        {
-            // 新增用户与角色管理
-            List<SysUserRole> list = new ArrayList<SysUserRole>();
-            for (Long roleId : roles)
-            {
-                SysUserRole ur = new SysUserRole();
-                ur.setUserId(user.getUserId());
-                ur.setRoleId(roleId);
-                list.add(ur);
-            }
-            if (list.size() > 0)
-            {
-                userRoleMapper.batchUserRole(list);
-            }
-        }
     }
 
 

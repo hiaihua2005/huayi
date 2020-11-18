@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
-    <select id="selectUserById" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserById" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.company_id=#{companyId} and u.user_id = #{userId}
     </select>
@@ -166,32 +166,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where company_id=#{companyId} and user_id = #{userId}
     </update>
 
-    <select id="selectUserByPhone" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserByPhone" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.company_id=#{companyId} and u.phone = #{phone}
     </select>
 
-    <select id="selectUserByLoginName" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserByLoginName" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.login_name = #{loginName}
     </select>
 
-    <select id="selectUserByPhoneNumber" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserByPhoneNumber" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.phone = #{phone}
     </select>
 
-    <select id="selectUserByEmail" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserByEmail" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.company_id=#{companyId} and u.email = #{email}
     </select>
 
-    <select id="selectUserListByPhoneNumber" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserListByPhoneNumber" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.phone = #{phone}
     </select>
 
-    <select id="selectUserListByEmail" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="selectUserListByEmail" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
         <include refid="selectSysUserVo"/>
         where u.email = #{email}
     </select>
@@ -200,19 +200,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(1) from sys_user where login_name=#{loginName}
 	</select>
 
-    <select id="checkPhoneUnique" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="checkPhoneUnique" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
 		select user_id, phonenumber from sys_user where company_id=#{companyId} and phone=#{phone}
 	</select>
 
-    <select id="checkEmailUnique" parameterType="com.huayi.company.condition.system.SysUserCondition" resultMap="SysUserResult">
+    <select id="checkEmailUnique" parameterType="com.huayi.system.condition.system.SysUserCondition" resultMap="SysUserResult">
 		select user_id, email from sys_user where company_id=#{companyId} and email=#{email}
 	</select>
 
-	<delete id="deleteUserById" parameterType="com.huayi.company.condition.system.SysUserCondition">
+	<delete id="deleteUserById" parameterType="com.huayi.system.condition.system.SysUserCondition">
         delete from sys_user where company_id=#{companyId} and  user_id = #{userId}
     </delete>
 	
-    <delete id="deleteUserByIds" parameterType="com.huayi.company.condition.system.SysUserBatchDeleteCondition">
+    <delete id="deleteUserByIds" parameterType="com.huayi.system.condition.system.SysUserBatchDeleteCondition">
         delete from sys_user where company_id=#{companyId} and user_id in
         <foreach item="userId" collection="array" open="(" separator="," close=")">
             #{id}

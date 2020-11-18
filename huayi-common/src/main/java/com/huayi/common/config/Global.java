@@ -78,7 +78,7 @@ public class Global
      */
     public static String getName()
     {
-        return StringUtils.nvl(getConfig("huayi.name"), "TianYi");
+        return StringUtils.nvl(getConfig("huayi.name"), "HuaYi");
     }
 
     /**

@@ -1,12 +1,17 @@
 package com.huayi.system.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.huayi.system.condition.system.SysRoleUserUpdateCondition;
+import com.huayi.system.condition.system.SysUserRoleCondition;
+import com.huayi.system.domain.SysUserRole;
 import com.huayi.system.mapper.SysUserRoleMapper;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.huayi.common.annotation.DataScope;
@@ -280,5 +285,65 @@ public class SysRoleServiceImpl implements ISysRoleService
     public int changeStatus(SysRole role)
     {
         return roleMapper.updateRole(role);
+    }
+
+    @Override
+    public int updateRoleByUserId(Long companyId, Long userId, Long[] roleIds) {
+        if(userId==null) {
+            return -1;
+        }
+        if(roleIds==null || roleIds.length==0) {
+            return -1;
+        }
+        //先查出数据库当前存储的已设置角色列表
+        SysRoleUserUpdateCondition condition = new SysRoleUserUpdateCondition();
+        condition.setCompanyId(companyId);
+        condition.setRoleIds(roleIds);
+        condition.setUserId(userId);
+        List<SysUserRole> roleList = userRoleMapper.selectUserRoleList(condition);
+        //比对角色--存在存储的;不存在的;其他的
+        List<Long> notInList = new ArrayList<Long>();//目前数据库存储的角色ID在新列表不存在的,此类要删
+        List<Long> inList = new ArrayList<Long>();//存在列表，此类不动
+
+        for(SysUserRole role:roleList) {
+            if(ArrayUtils.contains(roleIds,role.getRoleId())) {
+                inList.add(role.getRoleId());
+            }else {
+                notInList.add(role.getRoleId());
+            }
+            roleIds = ArrayUtils.removeElement(roleIds,role.getRoleId());
+        }
+        if(notInList.size()>0) {
+            Long[] deleteIds = new Long[notInList.size()];
+            notInList.toArray(deleteIds);
+            condition.setRoleIds(deleteIds);
+            userRoleMapper.deleteUserRoleIn(condition);
+        }
+        if(roleIds.length>0) {
+            List<SysUserRole> list = new ArrayList<SysUserRole>();
+            for (Long roleId : roleIds) {
+                SysUserRole item = new SysUserRole();
+                item.setCompanyId(companyId);
+                item.setUserId(userId);
+                item.setRoleId(roleId);
+                item.setCreateTime(LocalDateTime.now());
+                list.add(item);
+            }
+            return userRoleMapper.batchUserRole(list);
+        }
+        return 0;
+    }
+
+    @Override
+    public int deleteUserRoleByUserId(Long companyId,Long userId) {
+        SysUserRoleCondition condition = new SysUserRoleCondition();
+        condition.setCompanyId(companyId);
+        condition.setUserId(userId);
+        return userRoleMapper.deleteUserRoleByUserId(condition);
+    }
+
+    @Override
+    public int batchUserRole(List<SysUserRole> userRoleList) {
+        return userRoleMapper.batchUserRole(userRoleList);
     }
 }
