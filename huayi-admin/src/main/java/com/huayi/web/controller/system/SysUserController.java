@@ -39,12 +39,6 @@ public class SysUserController extends BaseController
 {
     private String prefix = "biz/user";
 
-    @Reference
-    ICardService cardService;
-    @Reference
-    ITestMe testMe;
-
-
     @Autowired
     private ISysUserService userService;
 
@@ -129,10 +123,6 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult editSave(@RequestBody  SysUser editUser)
     {
-        String result = cardService.sayHello("22222");
-        log.debug("cardservice:"+result);
-        String testMeResult = testMe.testMe();
-        log.debug("testMe:"+testMeResult);
         SysUser currentUser = getSysUser();
         if (StringUtils.isNotNull(editUser.getUserId()) && editUser.getLoginName().equals("admin"))
         {
