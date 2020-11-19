@@ -9,7 +9,7 @@ import com.huayi.system.domain.SysUser;
 /**
  * 用户表 数据层
  * 
- * @author ruoyi
+ * @author huayi
  */
 public interface SysUserMapper
 {

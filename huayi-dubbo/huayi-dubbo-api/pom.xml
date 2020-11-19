@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 	<packaging>jar</packaging>
 
-    <artifactId>huayi-admin</artifactId>
+  <artifactId>huayi-dubbo-api</artifactId>
 	
 	<description>
 	    web服务入口
@@ -43,31 +43,6 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
-
-		<!-- 核心模块-->
-        <dependency>
-            <groupId>com.huayi</groupId>
-            <artifactId>huayi-framework</artifactId>
-            <version>${huayi.version}</version>
-        </dependency>
-        <!-- api配置-->
-        <dependency>
-            <groupId>com.huayi</groupId>
-            <artifactId>huayi-scrm-service</artifactId>
-            <version>${huayi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.huayi</groupId>
-            <artifactId>huayi-dubbo-api</artifactId>
-            <version>${huayi.version}</version>
-        </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>com.huayi</groupId>-->
-            <!--<artifactId>huayi-dubbo-api</artifactId>-->
-            <!--<version>${huayi.version}</version>-->
-        <!--</dependency>-->
-
 
 
         <dependency>
@@ -135,13 +110,15 @@
 
     </dependencies>
 
+    <!-- 如果没有该配置，devtools不会生效 -->
+    <!--
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-					<fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+					<fork>true</fork>
 				</configuration>
                 <executions>
                     <execution>
@@ -151,6 +128,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>   
                 <groupId>org.apache.maven.plugins</groupId>   
                 <artifactId>maven-war-plugin</artifactId>   
@@ -159,9 +137,10 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warName>${artifactId}</warName>
                 </configuration>   
-		   </plugin>   
+		   </plugin>
         </plugins>
         <finalName>${artifactId}</finalName>
     </build>
+    -->
 	
 </project>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.huayi.framework.util.ShiroUtils;
 import com.huayi.service.ICardService;
+import com.huayi.service.ITestMe;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 用户信息
  * 
- * @author ruoyi
+ * @author huayi
  */
 @Controller
 @RequestMapping("/biz/user")
@@ -40,6 +41,8 @@ public class SysUserController extends BaseController
 
     @Reference
     ICardService cardService;
+    @Reference
+    ITestMe testMe;
 
 
     @Autowired
@@ -128,6 +131,8 @@ public class SysUserController extends BaseController
     {
         String result = cardService.sayHello("22222");
         log.debug("cardservice:"+result);
+        String testMeResult = testMe.testMe();
+        log.debug("testMe:"+testMeResult);
         SysUser currentUser = getSysUser();
         if (StringUtils.isNotNull(editUser.getUserId()) && editUser.getLoginName().equals("admin"))
         {
