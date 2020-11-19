@@ -2,6 +2,7 @@ package com.huayi.web.controller.system;
 
 import java.util.List;
 
+import com.huayi.framework.util.ShiroUtils;
 import com.huayi.system.domain.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,6 @@ import com.huayi.common.annotation.Log;
 import com.huayi.common.base.AjaxResult;
 import com.huayi.common.base.Ztree;
 import com.huayi.common.enums.BusinessType;
-import com.huayi.framework.util.ShiroUtils;
 import com.huayi.framework.web.base.BaseController;
 import com.huayi.system.domain.SysMenu;
 import com.huayi.system.service.ISysMenuService;

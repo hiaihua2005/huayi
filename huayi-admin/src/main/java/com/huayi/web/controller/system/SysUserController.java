@@ -2,6 +2,10 @@ package com.huayi.web.controller.system;
 
 import java.util.List;
 
+import com.huayi.framework.util.ShiroUtils;
+import com.huayi.service.ICardService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +19,6 @@ import com.huayi.common.page.TableDataInfo;
 import com.huayi.common.utils.StringUtils;
 import com.huayi.common.utils.poi.ExcelUtil;
 import com.huayi.framework.shiro.service.SysPasswordService;
-import com.huayi.framework.util.ShiroUtils;
 import com.huayi.framework.web.base.BaseController;
 import com.huayi.system.domain.SysUser;
 import com.huayi.system.service.ISysRoleService;
@@ -30,9 +33,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/biz/user")
+@Slf4j
 public class SysUserController extends BaseController
 {
     private String prefix = "biz/user";
+
+    @Reference
+    ICardService cardService;
+
 
     @Autowired
     private ISysUserService userService;
@@ -118,6 +126,8 @@ public class SysUserController extends BaseController
     @ResponseBody
     public AjaxResult editSave(@RequestBody  SysUser editUser)
     {
+        String result = cardService.sayHello("22222");
+        log.debug("cardservice:"+result);
         SysUser currentUser = getSysUser();
         if (StringUtils.isNotNull(editUser.getUserId()) && editUser.getLoginName().equals("admin"))
         {

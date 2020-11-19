@@ -4,30 +4,21 @@ import com.huayi.common.constant.Constants;
 import com.huayi.common.constant.UserConstants;
 import com.huayi.common.json.JSONObject;
 import com.huayi.framework.beans.LoginUser;
-import com.huayi.framework.cache.ShardedRedisPool;
 import com.huayi.framework.cache.ShardedRedisUtil;
 import com.huayi.framework.jwt.JwtUtil;
 import com.huayi.framework.shiro.service.SysLoginService;
 import com.huayi.framework.util.ShiroUtils;
 import com.huayi.framework.web.base.BaseController;
 import com.huayi.system.domain.SysUser;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.huayi.common.base.AjaxResult;
 import com.huayi.common.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 登录验证

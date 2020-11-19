@@ -11,6 +11,8 @@ huayi:
   # 获取ip地址开关
   addressEnabled: true
 
+
+
 # 开发环境配置
 server:
   # 服务端口
@@ -60,6 +62,22 @@ spring:
     restart:
       # 热部署开关
       enabled: true
+dubbo:
+  application:
+    id: system-admin-api
+    name: system-admin-api
+  server: true
+  registry:
+    address: 127.0.0.1:2181
+    protocol: zookeeper
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 20880
+    status: server
+  scan:
+    basePackages: com.huayi.service.impl
+
 
 # MyBatis
 mybatis:

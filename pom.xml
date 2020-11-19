@@ -48,6 +48,9 @@
 		<module>huayi-system-service</module>
 		<module>huayi-generator</module>
         <module>huayi-common</module>
+		<!--<module>huayi-dubbo/huayi-dubbo-api</module>-->
+		<!--<module>huayi-dubbo/huayi-dubbo-scrm</module>-->
+		<!--<module>huayi-dubbo/huayi-dubbo-wuliu</module>-->
 
     </modules>
     <packaging>pom</packaging>

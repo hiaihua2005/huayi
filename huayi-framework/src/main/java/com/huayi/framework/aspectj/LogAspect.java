@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import com.huayi.common.utils.IpUtils;
+import com.huayi.framework.cache.ShardedRedisUtil;
 import com.huayi.framework.manager.AsyncManager;
 import com.huayi.framework.manager.factory.AsyncFactory;
 import com.huayi.framework.util.ShiroUtils;

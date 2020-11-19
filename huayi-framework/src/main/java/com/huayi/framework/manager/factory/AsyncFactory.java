@@ -3,7 +3,6 @@ package com.huayi.framework.manager.factory;
 import java.util.TimerTask;
 
 import com.huayi.framework.util.LogUtils;
-import com.huayi.framework.util.ShiroUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.huayi.common.constant.Constants;
