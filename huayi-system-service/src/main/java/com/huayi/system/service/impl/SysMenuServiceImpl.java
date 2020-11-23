@@ -60,6 +60,29 @@ public class SysMenuServiceImpl implements ISysMenuService
     }
 
     /**
+     * 根据角色查询菜单
+     *
+     * @param role 角色信息
+     * @return 菜单列表
+     */
+    @Override
+    public List<SysMenu> selectMenusByRole(SysRole role)
+    {
+        List<SysMenu> menus = new LinkedList<SysMenu>();
+        //管理员显示所有菜单信息
+//        if (user.isAdmin())
+//        {
+//            menus = menuMapper.selectMenuNormalAll();
+//        }
+//        else
+//        {
+//            menus = menuMapper.selectMenusByUserId(user.getUserId());
+//        }
+        menus = menuMapper.selectMenusByRoleId(role.getRoleId());
+        return getChildPerms(menus, 0);
+    }
+
+    /**
      * 查询菜单集合
      * 
      * @return 所有菜单信息

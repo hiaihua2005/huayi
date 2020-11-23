@@ -24,6 +24,15 @@ public interface ISysMenuService
     public List<SysMenu> selectMenusByUser(SysUser user);
 
     /**
+     * 根据用户ID查询菜单
+     *
+     * @param role 角色信息
+     * @return 菜单列表
+     */
+    public List<SysMenu> selectMenusByRole(SysRole role);
+
+
+    /**
      * 查询系统菜单列表
      * 
      * @param menu 菜单信息

@@ -4,14 +4,11 @@ import java.util.List;
 
 import com.huayi.framework.util.ShiroUtils;
 import com.huayi.system.domain.SysRole;
+import com.huayi.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.huayi.common.annotation.Log;
 import com.huayi.common.base.AjaxResult;
 import com.huayi.common.base.Ztree;
@@ -19,6 +16,8 @@ import com.huayi.common.enums.BusinessType;
 import com.huayi.framework.web.base.BaseController;
 import com.huayi.system.domain.SysMenu;
 import com.huayi.system.service.ISysMenuService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 菜单信息
@@ -35,13 +34,29 @@ public class SysMenuController extends BaseController
     private ISysMenuService menuService;
 
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     @ResponseBody
-    public List<SysMenu> list(SysMenu menu)
+    public List<SysMenu> list(HttpServletRequest request,@RequestBody SysRole role)
     {
-        List<SysMenu> menuList = menuService.selectMenuList(menu);
-        return menuList;
+        SysUser currentUser = ShiroUtils.getSysUser(request);
+        List<SysMenu> menus = null;
+        if(role.getRoleId()!=null && role.getRoleId().longValue()>0) {
+            menus = menuService.selectMenusByRole(role);
+        }else {
+            menus = menuService.selectMenuAll();
+        }
+        return menus;
     }
+
+//
+//    @GetMapping("/roleMenus")
+//    @ResponseBody
+//    public List<SysMenu> list(HttpServletRequest request,@RequestBody SysRole role)
+//    {
+//        SysUser currentUser = ShiroUtils.getSysUser(request);
+//        List<SysMenu> roleMenus = menuService.selectMenusByRole(role);
+//        return roleMenus;
+//    }
 
     /**
      * 删除菜单
