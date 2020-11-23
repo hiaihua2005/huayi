@@ -2,6 +2,7 @@ package com.huayi.system.mapper;
 
 import java.util.List;
 
+import com.huayi.system.condition.system.SysRoleCondition;
 import com.huayi.system.condition.system.SysRoleUserUpdateCondition;
 import com.huayi.system.condition.system.SysUserRoleCondition;
 import com.huayi.system.domain.SysUserRole;
@@ -32,10 +33,10 @@ public interface SysUserRoleMapper
     /**
      * 通过角色ID查询角色使用数量
      * 
-     * @param roleId 角色ID
+     * @param condition 查询条件(roleId 角色ID)
      * @return 结果
      */
-    public int countUserRoleByRoleId(Long roleId);
+    public int countUserRoleByRoleId(SysRoleCondition condition);
 
     /**
      * 批量新增用户角色信息

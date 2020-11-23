@@ -3,6 +3,7 @@ package com.huayi.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.huayi.system.condition.system.SysRoleCondition;
 import com.huayi.system.condition.system.SysUserBatchDeleteCondition;
 import com.huayi.system.condition.system.SysUserCondition;
 import com.huayi.system.service.ISysRoleService;
@@ -347,7 +348,10 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public String selectUserRoleGroup(Long companyId,Long userId)
     {
-        List<SysRole> list = roleMapper.selectRolesByUserId(userId);
+        SysRoleCondition roleCondition = new SysRoleCondition();
+        roleCondition.setCompanyId(companyId);
+        roleCondition.setUserId(userId);
+        List<SysRole> list = roleMapper.selectRolesByUserId(roleCondition);
         StringBuffer idsStr = new StringBuffer();
         for (SysRole role : list)
         {

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.huayi.system.condition.system.SysRoleCondition;
+import com.huayi.system.condition.system.SysRoleDeleteCondition;
 import com.huayi.system.condition.system.SysRoleUserUpdateCondition;
 import com.huayi.system.condition.system.SysUserRoleCondition;
 import com.huayi.system.domain.SysUserRole;
@@ -47,26 +49,26 @@ public class SysRoleServiceImpl implements ISysRoleService
     /**
      * 根据条件分页查询角色数据
      * 
-     * @param role 角色信息
+     * @param condition 角色信息
      * @return 角色数据集合信息
      */
     @Override
     @DataScope(tableAlias = "u")
-    public List<SysRole> selectRoleList(SysRole role)
+    public List<SysRole> selectRoleList(SysRoleCondition condition)
     {
-        return roleMapper.selectRoleList(role);
+        return roleMapper.selectRoleList(condition);
     }
 
     /**
      * 根据用户ID查询权限
      * 
-     * @param userId 用户ID
+     * @param condition 角色条件(userId 用户ID)
      * @return 权限列表
      */
     @Override
-    public Set<String> selectRoleKeys(Long userId)
+    public Set<String> selectRoleKeys(SysRoleCondition condition)
     {
-        List<SysRole> perms = roleMapper.selectRolesByUserId(userId);
+        List<SysRole> perms = roleMapper.selectRolesByUserId(condition);
         Set<String> permsSet = new HashSet<>();
         for (SysRole perm : perms)
         {
@@ -81,14 +83,16 @@ public class SysRoleServiceImpl implements ISysRoleService
     /**
      * 根据用户ID查询角色
      * 
-     * @param userId 用户ID
+     * @param condition 查询条件
      * @return 角色列表
      */
     @Override
-    public List<SysRole> selectRolesByUserId(Long userId)
+    public List<SysRole> selectRolesByUserId(SysRoleCondition condition)
     {
-        List<SysRole> userRoles = roleMapper.selectRolesByUserId(userId);
-        List<SysRole> roles = selectRoleAll();
+        List<SysRole> userRoles = roleMapper.selectRolesByUserId(condition);
+        SysRoleCondition condition2 = new SysRoleCondition();
+        condition2.setCompanyId(condition.getCompanyId());
+        List<SysRole> roles = selectRoleAll(condition2);
         for (SysRole role : roles)
         {
             for (SysRole userRole : userRoles)
@@ -109,54 +113,57 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 角色列表
      */
     @Override
-    public List<SysRole> selectRoleAll()
+    public List<SysRole> selectRoleAll(SysRoleCondition condition)
     {
-        return selectRoleList(new SysRole());
+        return selectRoleList(condition);
     }
 
     /**
      * 通过角色ID查询角色
      * 
-     * @param roleId 角色ID
+     * @param condition 查询条件(roleId 角色ID)
      * @return 角色对象信息
      */
     @Override
-    public SysRole selectRoleById(Long roleId)
+    public SysRole selectRoleById(SysRoleCondition condition)
     {
-        return roleMapper.selectRoleById(roleId);
+        return roleMapper.selectRoleById(condition);
     }
 
     /**
      * 通过角色ID删除角色
      * 
-     * @param roleId 角色ID
+     * @param condition 查询条件(roleId 角色ID)
      * @return 结果
      */
     @Override
-    public boolean deleteRoleById(Long roleId)
+    public boolean deleteRoleById(SysRoleCondition condition)
     {
-        return roleMapper.deleteRoleById(roleId) > 0 ? true : false;
+        return roleMapper.deleteRoleById(condition) > 0 ? true : false;
     }
 
     /**
      * 批量删除角色信息
      * 
-     * @param ids 需要删除的数据ID
+     * @param condition 删除条件(roleIds 需要删除的数据ID)
      * @throws Exception
      */
     @Override
-    public int deleteRoleByIds(String ids) throws BusinessException
+    public int deleteRoleByIds(SysRoleDeleteCondition condition) throws BusinessException
     {
-        Long[] roleIds = Convert.toLongArray(ids);
+        Long[] roleIds = condition.getRoleIds();
         for (Long roleId : roleIds)
         {
-            SysRole role = selectRoleById(roleId);
-            if (countUserRoleByRoleId(roleId) > 0)
+            SysRoleCondition roleCondition = new SysRoleCondition();
+            roleCondition.setCompanyId(condition.getCompanyId());
+            roleCondition.setRoleId(roleId);
+            SysRole role = selectRoleById(roleCondition);
+            if (countUserRoleByRoleId(roleCondition) > 0)
             {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", role.getRoleName()));
             }
         }
-        return roleMapper.deleteRoleByIds(roleIds);
+        return roleMapper.deleteRoleByIds(condition);
     }
 
     /**
@@ -230,14 +237,14 @@ public class SysRoleServiceImpl implements ISysRoleService
     /**
      * 校验角色名称是否唯一
      * 
-     * @param role 角色信息
+     * @param condition 角色信息
      * @return 结果
      */
     @Override
-    public String checkRoleNameUnique(SysRole role)
+    public String checkRoleNameUnique(SysRoleCondition condition)
     {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleNameUnique(role.getRoleName());
+        Long roleId = StringUtils.isNull(condition.getRoleId()) ? -1L : condition.getRoleId();
+        SysRole info = roleMapper.checkRoleNameUnique(condition.getRoleName());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.ROLE_NAME_NOT_UNIQUE;
@@ -248,14 +255,14 @@ public class SysRoleServiceImpl implements ISysRoleService
     /**
      * 校验角色权限是否唯一
      * 
-     * @param role 角色信息
+     * @param condition 角色信息
      * @return 结果
      */
     @Override
-    public String checkRoleKeyUnique(SysRole role)
+    public String checkRoleKeyUnique(SysRoleCondition condition)
     {
-        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        Long roleId = StringUtils.isNull(condition.getRoleId()) ? -1L : condition.getRoleId();
+        SysRole info = roleMapper.checkRoleKeyUnique(condition.getRoleKey());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.ROLE_KEY_NOT_UNIQUE;
@@ -266,13 +273,13 @@ public class SysRoleServiceImpl implements ISysRoleService
     /**
      * 通过角色ID查询角色使用数量
      * 
-     * @param roleId 角色ID
+     * @param condition 查询条件（roleId 角色ID)
      * @return 结果
      */
     @Override
-    public int countUserRoleByRoleId(Long roleId)
+    public int countUserRoleByRoleId(SysRoleCondition condition)
     {
-        return userRoleMapper.countUserRoleByRoleId(roleId);
+        return userRoleMapper.countUserRoleByRoleId(condition);
     }
 
     /**

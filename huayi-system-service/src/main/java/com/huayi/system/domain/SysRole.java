@@ -18,6 +18,9 @@ public class SysRole extends BaseEntity
     @Excel(name = "角色序号")
     private Long roleId;
 
+    /** 公司Id */
+    private Long companyId;
+
     /** 角色名称 */
     @Excel(name = "角色名称")
     private String roleName;
@@ -58,6 +61,15 @@ public class SysRole extends BaseEntity
     public void setRoleId(Long roleId)
     {
         this.roleId = roleId;
+    }
+
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     public String getDataScope()
