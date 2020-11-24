@@ -72,16 +72,16 @@ public interface SysRoleMapper
     /**
      * 校验角色名称是否唯一
      * 
-     * @param roleName 角色名称
+     * @param condition (roleName 角色名称)
      * @return 角色信息
      */
-    public SysRole checkRoleNameUnique(String roleName);
+    public SysRole checkRoleNameUnique(SysRoleCondition condition);
     
     /**
      * 校验角色权限是否唯一
      * 
-     * @param roleKey 角色权限
+     * @param condition (roleKey 角色权限)
      * @return 角色信息
      */
-    public SysRole checkRoleKeyUnique(String roleKey);
+    public SysRole checkRoleKeyUnique(SysRoleCondition condition);
 }

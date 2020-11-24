@@ -2,6 +2,7 @@ package com.huayi.web.controller.system;
 
 import com.huayi.common.annotation.Log;
 import com.huayi.common.base.AjaxResult;
+import com.huayi.common.constant.UserConstants;
 import com.huayi.common.enums.BusinessType;
 import com.huayi.common.page.TableDataInfo;
 import com.huayi.common.utils.StringUtils;
@@ -47,6 +48,76 @@ public class SysRoleController extends BaseController
         condition.setCompanyId(currentUser.getCompanyId());
         List<SysRole> list = roleService.selectRoleAll(condition);
         return getDataTable(list);
+    }
+
+    @PostMapping("/info/{roleId}")
+    @ResponseBody
+    public AjaxResult info(HttpServletRequest request,@PathVariable("roleId") Long roleId)
+    {
+        SysUser currentUser = getSysUser();
+        SysRoleCondition condition = new SysRoleCondition();
+        condition.setCompanyId(currentUser.getCompanyId());
+        condition.setRoleId(roleId);
+        SysRole role = roleService.selectRoleById(condition);
+        return success(role);
+    }
+
+
+    /**
+     * 修改保存角色
+     */
+    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public AjaxResult editSave(HttpServletRequest request,@RequestBody  SysRole role)
+    {
+        SysUser currentUser = getSysUser();
+        role.setCompanyId(currentUser.getCompanyId());
+        role.setUpdateBy(currentUser.getUserName());
+        //更新角色信息
+        if(StringUtils.isEmpty(role.getRoleSort())) {
+            role.setRoleSort("0");
+        }
+        //更新角色信息
+        if(StringUtils.isEmpty(role.getStatus())) {
+            role.setStatus("0");
+        }
+        int updateResult = roleService.updateRole(role);
+        return toAjax(updateResult);
+    }
+
+    /**
+     * 新增保存角色
+     */
+    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public AjaxResult addSave(HttpServletRequest request,@RequestBody  SysRole role)
+    {
+        SysUser currentUser = getSysUser();
+        role.setCompanyId(currentUser.getCompanyId());
+        role.setCreateBy(currentUser.getUserName());
+        SysRoleCondition condition = new SysRoleCondition();
+        condition.setCompanyId(currentUser.getCompanyId());
+        condition.setRoleKey(role.getRoleKey());
+        condition.setRoleName(role.getRoleName());
+        String checkResult = roleService.checkRoleNameUnique(condition);
+        if(UserConstants.ROLE_NAME_NOT_UNIQUE == checkResult) {
+            return error("角色名称已存在");
+        }
+        checkResult = roleService.checkRoleKeyUnique(condition);
+        if(UserConstants.ROLE_KEY_NOT_UNIQUE == checkResult) {
+            return error("角色Key已存在");
+        }
+        if(StringUtils.isEmpty(role.getRoleSort())) {
+            role.setRoleSort("0");
+        }
+        if(StringUtils.isEmpty(role.getStatus())) {
+            role.setStatus("0");
+        }
+        return toAjax(roleService.insertRole(role));
     }
 
 

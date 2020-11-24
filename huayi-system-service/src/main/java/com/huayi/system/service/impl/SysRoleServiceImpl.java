@@ -173,8 +173,8 @@ public class SysRoleServiceImpl implements ISysRoleService
     public int insertRole(SysRole role)
     {
         // 新增角色信息
-        roleMapper.insertRole(role);
-        return insertRoleMenu(role);
+        return roleMapper.insertRole(role);
+        //return insertRoleMenu(role);
     }
 
     /**
@@ -187,10 +187,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     public int updateRole(SysRole role)
     {
         // 修改角色信息
-        roleMapper.updateRole(role);
-        // 删除角色与菜单关联
-        roleMenuMapper.deleteRoleMenuByRoleId(role.getRoleId());
-        return insertRoleMenu(role);
+        return roleMapper.updateRole(role);
     }
 
     /**
@@ -241,7 +238,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     public String checkRoleNameUnique(SysRoleCondition condition)
     {
         Long roleId = StringUtils.isNull(condition.getRoleId()) ? -1L : condition.getRoleId();
-        SysRole info = roleMapper.checkRoleNameUnique(condition.getRoleName());
+        SysRole info = roleMapper.checkRoleNameUnique(condition);
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.ROLE_NAME_NOT_UNIQUE;
@@ -259,7 +256,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     public String checkRoleKeyUnique(SysRoleCondition condition)
     {
         Long roleId = StringUtils.isNull(condition.getRoleId()) ? -1L : condition.getRoleId();
-        SysRole info = roleMapper.checkRoleKeyUnique(condition.getRoleKey());
+        SysRole info = roleMapper.checkRoleKeyUnique(condition);
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.ROLE_KEY_NOT_UNIQUE;
