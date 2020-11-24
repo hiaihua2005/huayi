@@ -17,6 +17,8 @@ public class PageCondition implements Serializable {
 
     /** 检索文字 */
     private String searchText;
+    /** 当前用户名称 */
+    private String currentUserName;
 
     public Integer getPageSize() {
         return pageSize;
@@ -40,5 +42,13 @@ public class PageCondition implements Serializable {
 
     public void setSearchText(String searchText) {
         this.searchText = searchText;
+    }
+
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    public void setCurrentUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
     }
 }

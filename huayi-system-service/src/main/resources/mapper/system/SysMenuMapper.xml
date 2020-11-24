@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by m.order_num
 	</select>
 
-	<select id="selectMenusByRoleId" parameterType="Long" resultMap="SysMenuResult">
+	<select id="selectMenusByRoleId" parameterType="com.huayi.system.condition.system.SysMenuCondition" resultMap="SysMenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.url, m.perms , m.menu_type, m.icon, m.order_num, m.create_time
 		from sys_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id

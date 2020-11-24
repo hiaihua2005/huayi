@@ -3,6 +3,8 @@ package com.huayi.system.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.time.LocalDateTime;
+
 /**
  * 角色和菜单关联 sys_role_menu
  * 
@@ -10,11 +12,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class SysRoleMenu
 {
+    /** 机构ID */
+    private Long companyId;
     /** 角色ID */
     private Long roleId;
     
     /** 菜单ID */
     private Long menuId;
+
+    private LocalDateTime createTime;
+
+    private String createUser;
 
     public Long getRoleId()
     {
@@ -34,6 +42,30 @@ public class SysRoleMenu
     public void setMenuId(Long menuId)
     {
         this.menuId = menuId;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 
     @Override

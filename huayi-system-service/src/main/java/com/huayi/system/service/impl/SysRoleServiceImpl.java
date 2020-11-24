@@ -7,10 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.huayi.system.condition.system.SysRoleCondition;
-import com.huayi.system.condition.system.SysRoleDeleteCondition;
-import com.huayi.system.condition.system.SysRoleUserUpdateCondition;
-import com.huayi.system.condition.system.SysUserRoleCondition;
+import com.huayi.system.condition.system.*;
 import com.huayi.system.domain.SysUserRole;
 import com.huayi.system.mapper.SysUserRoleMapper;
 import org.apache.commons.lang3.ArrayUtils;
@@ -352,5 +349,57 @@ public class SysRoleServiceImpl implements ISysRoleService
     @Override
     public int batchUserRole(List<SysUserRole> userRoleList) {
         return userRoleMapper.batchUserRole(userRoleList);
+    }
+
+    @Override
+    public int updateMenuByRoleId(SysRoleMenuCondition condition) {
+        if(condition.getRoleId()==null) {
+            return -1;
+        }
+        if(condition.getMenuIds()==null) {
+            return -1;
+        }
+        Long[] menuIds = condition.getMenuIds();
+        //先查出数据库当前存储的已设置角色列表
+        SysRoleMenuCondition checkCondition = new SysRoleMenuCondition();
+        checkCondition.setCompanyId(condition.getCompanyId());
+        checkCondition.setRoleId(condition.getRoleId());
+        checkCondition.setMenuIds(new Long[]{});
+        List<SysRoleMenu> roleList = roleMenuMapper.selectRoleMenuList(checkCondition);
+        //比对菜单--存在存储的;不存在的;其他的
+        List<Long> notInList = new ArrayList<Long>();//目前数据库存储的角色ID在新列表不存在的,此类要删
+        List<Long> inList = new ArrayList<Long>();//存在列表，此类不动
+
+        for(SysRoleMenu role:roleList) {
+            if(ArrayUtils.contains(menuIds,role.getMenuId())) {
+                inList.add(role.getMenuId());
+            }else {
+                notInList.add(role.getMenuId());
+            }
+            menuIds = ArrayUtils.removeElement(menuIds,role.getMenuId());
+        }
+        if(notInList.size()>0) {
+            Long[] deleteIds = new Long[notInList.size()];
+            notInList.toArray(deleteIds);
+            SysRoleMenuCondition deleteCondition = new SysRoleMenuCondition();
+            deleteCondition.setCompanyId(condition.getCompanyId());
+            deleteCondition.setRoleId(condition.getRoleId());
+            deleteCondition.setMenuIds(deleteIds);
+            roleMenuMapper.batchDeleteRoleMenu(deleteCondition);
+        }
+        if(menuIds.length>0) {
+            List<SysRoleMenu> list = new ArrayList<SysRoleMenu>();
+            for (Long menuId : menuIds) {
+                SysRoleMenu item = new SysRoleMenu();
+                item.setCompanyId(condition.getCompanyId());
+                item.setRoleId(condition.getRoleId());
+                item.setMenuId(menuId);
+                item.setCreateTime(LocalDateTime.now());
+                item.setCreateUser(condition.getCurrentUserName());
+                list.add(item);
+            }
+            return roleMenuMapper.batchRoleMenu(list);
+        }
+        return 0;
     }
 }

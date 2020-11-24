@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import com.huayi.common.base.Ztree;
+import com.huayi.system.condition.system.SysMenuCondition;
+import com.huayi.system.condition.system.SysRoleMenuCondition;
 import com.huayi.system.domain.SysMenu;
 import com.huayi.system.domain.SysUser;
 import com.huayi.system.domain.SysRole;
@@ -26,10 +28,18 @@ public interface ISysMenuService
     /**
      * 根据用户ID查询菜单
      *
-     * @param role 角色信息
+     * @param condition 角色信息
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenusByRole(SysRole role);
+    public List<SysMenu> selectMenusByRole(SysMenuCondition condition);
+
+    /**
+     * 根据用户ID查询菜单
+     *
+     * @param condition 角色信息
+     * @return 菜单列表
+     */
+    public List<Long> selectMenuIdByRole(SysRoleMenuCondition condition);
 
 
     /**

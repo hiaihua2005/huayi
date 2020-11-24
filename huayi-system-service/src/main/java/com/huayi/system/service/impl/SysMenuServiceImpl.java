@@ -9,6 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import com.huayi.system.condition.system.SysMenuCondition;
+import com.huayi.system.condition.system.SysRoleMenuCondition;
+import com.huayi.system.domain.SysRoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.huayi.common.base.Ztree;
@@ -62,11 +66,11 @@ public class SysMenuServiceImpl implements ISysMenuService
     /**
      * 根据角色查询菜单
      *
-     * @param role 角色信息
+     * @param condition 角色信息(roleId)
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenusByRole(SysRole role)
+    public List<SysMenu> selectMenusByRole(SysMenuCondition condition)
     {
         List<SysMenu> menus = new LinkedList<SysMenu>();
         //管理员显示所有菜单信息
@@ -78,8 +82,26 @@ public class SysMenuServiceImpl implements ISysMenuService
 //        {
 //            menus = menuMapper.selectMenusByUserId(user.getUserId());
 //        }
-        menus = menuMapper.selectMenusByRoleId(role.getRoleId());
+
+        menus = menuMapper.selectMenusByRoleId(condition);
         return getChildPerms(menus, 0);
+    }
+
+    /**
+     * 根据角色查询菜单
+     *
+     * @param condition 角色信息
+     * @return 菜单列表
+     */
+    @Override
+    public List<Long> selectMenuIdByRole(SysRoleMenuCondition condition)
+    {
+        List<Long> menus = new LinkedList<Long>();
+        List<SysRoleMenu> roleMenus = roleMenuMapper.selectRoleMenuList(condition);
+        for(SysRoleMenu menu: roleMenus) {
+            menus.add(menu.getMenuId());
+        }
+        return menus;
     }
 
     /**

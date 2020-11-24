@@ -3,6 +3,7 @@ package com.huayi.web.controller.system;
 import java.util.List;
 
 import com.huayi.framework.util.ShiroUtils;
+import com.huayi.system.condition.system.SysRoleMenuCondition;
 import com.huayi.system.domain.SysRole;
 import com.huayi.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +41,20 @@ public class SysMenuController extends BaseController
     {
         SysUser currentUser = ShiroUtils.getSysUser(request);
         List<SysMenu> menus = null;
-        if(role.getRoleId()!=null && role.getRoleId().longValue()>0) {
-            menus = menuService.selectMenusByRole(role);
-        }else {
-            menus = menuService.selectMenuAll();
-        }
+        menus = menuService.selectMenuAll();
         return menus;
     }
 
-//
-//    @GetMapping("/roleMenus")
-//    @ResponseBody
-//    public List<SysMenu> list(HttpServletRequest request,@RequestBody SysRole role)
-//    {
-//        SysUser currentUser = ShiroUtils.getSysUser(request);
-//        List<SysMenu> roleMenus = menuService.selectMenusByRole(role);
-//        return roleMenus;
-//    }
+
+    @PostMapping("/roleMenus")
+    @ResponseBody
+    public List<Long> roleMenus(HttpServletRequest request,@RequestBody SysRoleMenuCondition condition)
+    {
+        SysUser currentUser = ShiroUtils.getSysUser(request);
+        condition.setCompanyId(currentUser.getCompanyId());
+        List<Long> roleMenus = menuService.selectMenuIdByRole(condition);
+        return roleMenus;
+    }
 
     /**
      * 删除菜单

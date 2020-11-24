@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.huayi.system.condition.system.SysRoleCondition;
 import com.huayi.system.condition.system.SysRoleDeleteCondition;
+import com.huayi.system.condition.system.SysRoleMenuCondition;
 import com.huayi.system.domain.SysRole;
 import com.huayi.system.domain.SysUserRole;
 
@@ -137,4 +138,11 @@ public interface ISysRoleService
      * @return
      */
     public int batchUserRole(List<SysUserRole> userRoleList);
+
+    /**
+     * 更新角色权限菜单
+     * @param condition
+     * @return
+     */
+    int updateMenuByRoleId(SysRoleMenuCondition condition);
 }

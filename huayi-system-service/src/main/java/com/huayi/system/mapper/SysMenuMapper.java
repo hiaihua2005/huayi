@@ -1,6 +1,9 @@
 package com.huayi.system.mapper;
 
 import java.util.List;
+
+import com.huayi.system.condition.system.SysMenuCondition;
+import com.huayi.system.condition.system.SysRoleMenuCondition;
 import org.apache.ibatis.annotations.Param;
 import com.huayi.system.domain.SysMenu;
 
@@ -35,10 +38,12 @@ public interface SysMenuMapper
     /**
      * 根据角色ID查询菜单
      *
-     * @param roleId 角色ID
+     * @param condition 查询条件(companyId,roleId)
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenusByRoleId(Long roleId);
+    public List<SysMenu> selectMenusByRoleId(SysMenuCondition condition);
+
+    public List<SysMenu> selectMenusIdByRoleId(Long roleId);
 
     /**
      * 根据用户ID查询权限
