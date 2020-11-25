@@ -49,4 +49,17 @@ public interface SysUserRoleMapper
     public int deleteUserRoleIn(SysRoleUserUpdateCondition condition);
 
     public List<SysUserRole> selectUserRoleList(SysRoleUserUpdateCondition condition);
+
+    /**
+     * 查询指定角色下的角色用户关系列表
+     * @param condition
+     * @return
+     */
+    List<SysUserRole> selectUserRoleByRole(SysUserRoleCondition condition);
+
+    /**
+     * 删除指定角色下的用户关系
+     * @param userCondition
+     */
+    int deleteRoleUserByRole(SysUserRoleCondition userCondition);
 }

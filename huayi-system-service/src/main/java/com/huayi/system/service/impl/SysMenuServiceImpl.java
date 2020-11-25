@@ -73,18 +73,7 @@ public class SysMenuServiceImpl implements ISysMenuService
     @Override
     public List<SysMenu> selectMenusByRole(SysMenuCondition condition)
     {
-        List<SysMenu> menus = new LinkedList<SysMenu>();
-        //管理员显示所有菜单信息
-//        if (user.isAdmin())
-//        {
-//            menus = menuMapper.selectMenuNormalAll();
-//        }
-//        else
-//        {
-//            menus = menuMapper.selectMenusByUserId(user.getUserId());
-//        }
-
-        menus = menuMapper.selectMenusByRoleId(condition);
+        List<SysMenu> menus = menuMapper.selectMenusByRoleId(condition);
         return getChildPerms(menus, 0);
     }
 
@@ -264,6 +253,14 @@ public class SysMenuServiceImpl implements ISysMenuService
     @Override
     public int deleteMenuById(Long menuId)
     {
+        //检测各角色下该菜单引用记录列表
+        SysRoleMenuCondition sysRoleMenuCondition = new SysRoleMenuCondition();
+        sysRoleMenuCondition.setMenuIds(new Long[]{menuId});
+        List<SysRoleMenu> roleMenuList = roleMenuMapper.selectRoleMenuList(sysRoleMenuCondition);
+        //删除菜单
+        if(roleMenuList.size()>0) {
+            roleMenuMapper.deleteRoleMenuByRoleCondition(sysRoleMenuCondition);
+        }
         return menuMapper.deleteMenuById(menuId);
     }
 

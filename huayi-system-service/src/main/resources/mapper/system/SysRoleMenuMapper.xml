@@ -22,11 +22,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectRoleMenuList" parameterType="com.huayi.system.condition.system.SysRoleMenuCondition" resultMap="SysRoleMenuResult">
 		select r.company_id, r.menu_id, r.role_id
-		from sys_role_menu r where company_id=#{companyId} and role_id=#{roleId}
+		from sys_role_menu r where r.company_id>0
+		<if test="companyId != null and companyId>0  ">
+		   and company_id = #{companyId}
+		</if>
+		and role_id=#{roleId}
 	</select>
+
 	
 	<delete id="deleteRoleMenuByRoleCondition" parameterType="com.huayi.system.condition.system.SysRoleMenuCondition">
- 		delete from sys_role_menu where company_id=#{companyId} and role_id = #{roleId}
+ 		delete from sys_role_menu where r.company_id>0
+		<if test="companyId != null and companyId>0  ">
+			and company_id = #{companyId}
+		</if>
+ 		and role_id = #{roleId}
  	</delete>
 
 	<delete id="batchDeleteRoleMenu" parameterType="com.huayi.system.condition.system.SysRoleMenuCondition">

@@ -134,9 +134,30 @@ public class SysRoleServiceImpl implements ISysRoleService
      * @return 结果
      */
     @Override
-    public boolean deleteRoleById(SysRoleCondition condition)
+    public int deleteRoleById(SysRoleCondition condition)
     {
-        return roleMapper.deleteRoleById(condition) > 0 ? true : false;
+        //检测角色下用户
+        SysUserRoleCondition checkCondition = new SysUserRoleCondition();
+        condition.setCompanyId(condition.getCompanyId());
+        condition.setRoleId(condition.getRoleId());
+        List<SysUserRole> roleUserList = this.selectUserRoleByRole(checkCondition);
+
+        //检测角色下菜单
+        SysRoleMenuCondition menuCondition = new SysRoleMenuCondition();
+        menuCondition.setCompanyId(condition.getCompanyId());
+        menuCondition.setRoleId(condition.getRoleId());
+        List<SysRoleMenu> roleMenuList = roleMenuMapper.selectRoleMenuList(menuCondition);
+
+        //删除角色信息
+        if (roleUserList.size()>0)
+        {
+            userRoleMapper.deleteRoleUserByRole(checkCondition);
+        }
+        if(roleMenuList.size()>0) {
+            roleMenuMapper.deleteRoleMenuByRoleCondition(menuCondition);
+        }
+
+        return roleMapper.deleteRoleById(condition) ;
     }
 
     /**
@@ -398,5 +419,10 @@ public class SysRoleServiceImpl implements ISysRoleService
             return roleMenuMapper.batchRoleMenu(list);
         }
         return 0;
+    }
+
+    @Override
+    public List<SysUserRole> selectUserRoleByRole(SysUserRoleCondition condition) {
+        return userRoleMapper.selectUserRoleByRole(condition);
     }
 }

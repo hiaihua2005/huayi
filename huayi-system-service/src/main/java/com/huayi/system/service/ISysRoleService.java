@@ -6,6 +6,7 @@ import java.util.Set;
 import com.huayi.system.condition.system.SysRoleCondition;
 import com.huayi.system.condition.system.SysRoleDeleteCondition;
 import com.huayi.system.condition.system.SysRoleMenuCondition;
+import com.huayi.system.condition.system.SysUserRoleCondition;
 import com.huayi.system.domain.SysRole;
 import com.huayi.system.domain.SysUserRole;
 
@@ -61,7 +62,7 @@ public interface ISysRoleService
      * @param condition 查询条件（roleId 角色ID）
      * @return 结果
      */
-    public boolean deleteRoleById(SysRoleCondition condition);
+    public int deleteRoleById(SysRoleCondition condition);
 
     /**
      * 批量删除角色用户信息
@@ -145,4 +146,7 @@ public interface ISysRoleService
      * @return
      */
     int updateMenuByRoleId(SysRoleMenuCondition condition);
+
+    /** 查询指定角色下的用户 */
+    List<SysUserRole> selectUserRoleByRole(SysUserRoleCondition condition);
 }

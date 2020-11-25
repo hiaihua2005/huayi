@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</select>
 
+	<select id="selectUserRoleByRole" parameterType="com.huayi.system.condition.system.SysUserRoleCondition" resultMap="SysUserRoleResult">
+		select u.user_id, u.company_id, u.role_id
+		from sys_user_role u where company_id=#{companyId} and role_id= #{roleId}
+	</select>
+
 	
 	<delete id="deleteUserRole" parameterType="com.huayi.system.condition.system.SysUserRoleCondition">
  		delete from sys_user_role where company_id=#{companyId} and role_id in
@@ -50,6 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{roleId}
 		</foreach>
 	</delete>
+
+
+	<delete id="deleteRoleUserByRole" parameterType="com.huayi.system.condition.system.SysUserRoleCondition">
+		delete from sys_user_role where company_id=#{companyId} and role_id= #{roleId}
+	</delete>
+
 	
 	<insert id="batchUserRole">
 		insert into sys_user_role(company_id,user_id, role_id,create_time,create_user) values

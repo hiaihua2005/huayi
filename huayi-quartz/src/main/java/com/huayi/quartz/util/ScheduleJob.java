@@ -1,5 +1,6 @@
 package com.huayi.quartz.util;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.Future;
 
@@ -45,7 +46,7 @@ public class ScheduleJob extends QuartzJobBean
         jobLog.setJobGroup(job.getJobGroup());
         jobLog.setMethodName(job.getMethodName());
         jobLog.setMethodParams(job.getMethodParams());
-        jobLog.setCreateTime(new Date());
+        jobLog.setCreateTime(LocalDateTime.now());
 
         long startTime = System.currentTimeMillis();
 

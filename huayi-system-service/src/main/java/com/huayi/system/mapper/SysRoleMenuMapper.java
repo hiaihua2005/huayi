@@ -58,4 +58,5 @@ public interface SysRoleMenuMapper
      * @return
      */
     public List<SysRoleMenu> selectRoleMenuList(SysRoleMenuCondition condition);
+
 }

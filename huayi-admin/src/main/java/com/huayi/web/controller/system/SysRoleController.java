@@ -11,10 +11,10 @@ import com.huayi.framework.util.ShiroUtils;
 import com.huayi.framework.web.base.BaseController;
 import com.huayi.system.condition.system.SysRoleCondition;
 import com.huayi.system.condition.system.SysRoleMenuCondition;
+import com.huayi.system.condition.system.SysUserRoleCondition;
 import com.huayi.system.domain.SysRole;
-import com.huayi.system.domain.SysRoleMenu;
 import com.huayi.system.domain.SysUser;
-import com.huayi.system.service.ISysMenuService;
+import com.huayi.system.domain.SysUserRole;
 import com.huayi.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,6 +118,23 @@ public class SysRoleController extends BaseController
             role.setStatus("0");
         }
         return toAjax(roleService.insertRole(role));
+    }
+
+    /**
+     * 删除角色
+     */
+    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @PostMapping("/remove/{roleId}")
+    @ResponseBody
+    public AjaxResult remove(HttpServletRequest request,@PathVariable("roleId") Long roleId)
+    {
+        SysUser currentUser = ShiroUtils.getSysUser(request);
+        SysRoleCondition condition1 = new SysRoleCondition();
+        condition1.setCompanyId(currentUser.getCompanyId());
+        condition1.setRoleId(roleId);
+        int result = roleService.deleteRoleById(condition1);
+
+        return toAjax(result);
     }
 
 
