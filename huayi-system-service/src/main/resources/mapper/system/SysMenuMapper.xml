@@ -99,8 +99,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where t.menu_id = #{menuId}
 	</select>
 	
-	<select id="selectCountMenuByParentId" resultType="Integer">
-	    select count(1) from sys_menu where parent_id=#{menuId}  
+	<select id="selectCountMenuByParentId" parameterType="com.huayi.system.condition.system.SysMenuCondition" resultType="Integer">
+	    select count(menu_id) from sys_menu where parent_id=#{parentId}
 	</select>
 	
 	<select id="checkMenuNameUnique" parameterType="SysMenu" resultMap="SysMenuResult">

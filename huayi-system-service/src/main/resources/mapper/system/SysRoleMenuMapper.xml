@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from sys_role_menu where role_id=#{roleId}
 	</delete>
 	
-	<select id="selectCountRoleMenuByMenuId" resultType="Integer">
+	<select id="selectCountRoleMenuByMenuId" parameterType="com.huayi.system.condition.system.SysMenuCondition" resultType="Integer">
 	    select count(1) from sys_role_menu where menu_id=#{menuId}  
 	</select>
 

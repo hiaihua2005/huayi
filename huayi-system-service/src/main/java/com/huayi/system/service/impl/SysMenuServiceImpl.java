@@ -285,7 +285,9 @@ public class SysMenuServiceImpl implements ISysMenuService
     @Override
     public int selectCountMenuByParentId(Long parentId)
     {
-        return menuMapper.selectCountMenuByParentId(parentId);
+        SysMenuCondition condition = new SysMenuCondition();
+        condition.setParentId(parentId);
+        return menuMapper.selectCountMenuByParentId(condition);
     }
 
     /**
@@ -297,7 +299,9 @@ public class SysMenuServiceImpl implements ISysMenuService
     @Override
     public int selectCountRoleMenuByMenuId(Long menuId)
     {
-        return roleMenuMapper.selectCountRoleMenuByMenuId(menuId);
+        SysRoleMenuCondition condition = new SysRoleMenuCondition();
+        condition.setMenuIds(new Long[]{menuId});
+        return roleMenuMapper.selectCountRoleMenuByMenuId(condition);
     }
 
     /**

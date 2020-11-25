@@ -39,10 +39,10 @@ public interface SysRoleMenuMapper
     /**
      * 查询菜单使用数量
      * 
-     * @param menuId 菜单ID
+     * @param condition (menuId 菜单ID)
      * @return 结果
      */
-    public int selectCountRoleMenuByMenuId(Long menuId);
+    public int selectCountRoleMenuByMenuId(SysRoleMenuCondition condition);
     
     /**
      * 批量新增角色菜单信息

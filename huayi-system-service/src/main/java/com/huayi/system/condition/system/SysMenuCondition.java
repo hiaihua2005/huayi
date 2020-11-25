@@ -12,6 +12,8 @@ public class SysMenuCondition extends PageCondition {
 
     private Long userId;
 
+    private Long parentId;
+
 
     public Long getCompanyId() {
         return companyId;
@@ -43,5 +45,13 @@ public class SysMenuCondition extends PageCondition {
 
     public void setMenuId(Long menuId) {
         this.menuId = menuId;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }

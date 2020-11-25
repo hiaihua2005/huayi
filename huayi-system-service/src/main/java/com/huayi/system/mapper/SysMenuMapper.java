@@ -88,10 +88,10 @@ public interface SysMenuMapper
     /**
      * 查询菜单数量
      * 
-     * @param parentId 菜单父ID
+     * @param condition (parentId 菜单父ID)
      * @return 结果
      */
-    public int selectCountMenuByParentId(Long parentId);
+    public int selectCountMenuByParentId(SysMenuCondition condition);
 
     /**
      * 新增菜单信息

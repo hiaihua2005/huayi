@@ -8,6 +8,8 @@ public class SysRoleMenuCondition extends PageCondition {
 
     private Long roleId;
 
+    private Long menuId;
+
     private Long[] menuIds;
 
 
@@ -25,6 +27,14 @@ public class SysRoleMenuCondition extends PageCondition {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     public Long[] getMenuIds() {
