@@ -23,7 +23,7 @@ public interface ISysMenuService
      * @param user 用户信息
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenusByUser(SysUser user);
+    public List<SysMenu> selectMenusByUser(SysMenuCondition user);
 
     /**
      * 根据用户ID查询菜单
@@ -32,6 +32,7 @@ public interface ISysMenuService
      * @return 菜单列表
      */
     public List<SysMenu> selectMenusByRole(SysMenuCondition condition);
+
 
     /**
      * 根据用户ID查询菜单

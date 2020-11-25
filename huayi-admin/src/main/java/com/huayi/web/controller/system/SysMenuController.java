@@ -1,8 +1,10 @@
 package com.huayi.web.controller.system;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.huayi.framework.util.ShiroUtils;
+import com.huayi.system.condition.system.SysMenuCondition;
 import com.huayi.system.condition.system.SysRoleMenuCondition;
 import com.huayi.system.domain.SysRole;
 import com.huayi.system.domain.SysUser;
@@ -45,6 +47,18 @@ public class SysMenuController extends BaseController
         return menus;
     }
 
+    @PostMapping("/userMenu")
+    @ResponseBody
+    public List<SysMenu> userMenu(HttpServletRequest request)
+    {
+        SysUser currentUser = ShiroUtils.getSysUser(request);
+        SysMenuCondition condition = new SysMenuCondition();
+        condition.setCompanyId(currentUser.getCompanyId());
+        condition.setUserId(currentUser.getUserId());
+        List<SysMenu> roleMenus = menuService.selectMenusByUser(condition);
+        return roleMenus;
+    }
+
 
     @PostMapping("/roleMenus")
     @ResponseBody
@@ -54,6 +68,15 @@ public class SysMenuController extends BaseController
         condition.setCompanyId(currentUser.getCompanyId());
         List<Long> roleMenus = menuService.selectMenuIdByRole(condition);
         return roleMenus;
+    }
+
+    @PostMapping("/info/{menuId}")
+    @ResponseBody
+    public AjaxResult info(HttpServletRequest request,@PathVariable("menuId") Long menuId)
+    {
+        SysUser currentUser = getSysUser();
+        SysMenu menu = menuService.selectMenuById(menuId);
+        return success(menu);
     }
 
     /**
@@ -103,7 +126,7 @@ public class SysMenuController extends BaseController
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(SysMenu menu)
+    public AjaxResult addSave(HttpServletRequest request,@RequestBody SysMenu menu)
     {
         menu.setCreateBy(ShiroUtils.getLoginName());
         ShiroUtils.clearCachedAuthorizationInfo();
@@ -117,10 +140,12 @@ public class SysMenuController extends BaseController
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(SysMenu menu)
+    public AjaxResult editSave(HttpServletRequest request,@RequestBody SysMenu menu)
     {
+        SysUser currentUser = ShiroUtils.getSysUser(request);
         menu.setUpdateBy(ShiroUtils.getLoginName());
         ShiroUtils.clearCachedAuthorizationInfo();
+        menu.setUpdateTime(LocalDateTime.now());
         return toAjax(menuService.updateMenu(menu));
     }
 

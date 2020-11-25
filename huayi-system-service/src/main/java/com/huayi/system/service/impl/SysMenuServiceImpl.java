@@ -44,13 +44,14 @@ public class SysMenuServiceImpl implements ISysMenuService
     /**
      * 根据用户查询菜单
      * 
-     * @param user 用户信息
+     * @param condition 用户信息
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenusByUser(SysUser user)
+    public List<SysMenu> selectMenusByUser(SysMenuCondition condition)
     {
-        List<SysMenu> menus = new LinkedList<SysMenu>();
+        List<SysMenu> menus = menuMapper.selectMenusByUserId(condition);
+        return menus;
         // 管理员显示所有菜单信息
 //        if (user.isAdmin())
 //        {
@@ -60,7 +61,7 @@ public class SysMenuServiceImpl implements ISysMenuService
 //        {
 //            menus = menuMapper.selectMenusByUserId(user.getUserId());
 //        }
-        return getChildPerms(menus, 0);
+//        return getChildPerms(menus, 0);
     }
 
     /**

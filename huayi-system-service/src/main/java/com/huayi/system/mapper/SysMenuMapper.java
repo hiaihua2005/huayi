@@ -31,10 +31,10 @@ public interface SysMenuMapper
     /**
      * 根据用户ID查询菜单
      * 
-     * @param userId 用户ID
+     * @param condition 查询条件(userId 用户ID)
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenusByUserId(Long userId);
+    public List<SysMenu> selectMenusByUserId(SysMenuCondition condition);
     /**
      * 根据角色ID查询菜单
      *
