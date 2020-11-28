@@ -21,12 +21,6 @@ public class SysUserRole
     /** 公司ID */
     private Long companyId;
 
-    /** 创建时间 */
-    private LocalDateTime createTime;
-
-    /** 创建人 */
-    private String createUser;
-
 
     public Long getUserId()
     {
@@ -56,21 +50,6 @@ public class SysUserRole
         this.companyId = companyId;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
 
     @Override
     public String toString() {

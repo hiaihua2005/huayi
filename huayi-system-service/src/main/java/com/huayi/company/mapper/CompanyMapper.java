@@ -18,7 +18,7 @@ public interface CompanyMapper
      * @param recordId 企业ID
      * @return 企业信息
      */
-	public Company selectCompanyInfoById(Integer recordId);
+	public Company selectCompanyInfoById(Long recordId);
 	
 	/**
      * 查询企业列表
@@ -47,17 +47,10 @@ public interface CompanyMapper
 	/**
      * 删除企业
      * 
-     * @param recordId 企业ID
+     * @param companyId 企业ID
      * @return 结果
      */
-	public int deleteCompanyInfoById(Integer recordId);
-	
-	/**
-     * 批量删除企业
-     * 
-     * @param recordIds 需要删除的数据ID
-     * @return 结果
-     */
-	public int deleteCompanyInfoByIds(String[] recordIds);
+	public int deleteCompanyInfoById(Long companyId);
+
 	
 }

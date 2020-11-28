@@ -19,15 +19,19 @@ public class BaseEntity implements Serializable
     /** 搜索值 */
     private String searchValue;
 
-    /** 创建者 */
-    private String createBy;
+    /** 创建者Id */
+    private Long createUserId;
+    /** 创建者姓名 */
+    private String createUserName;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
-    /** 更新者 */
-    private String updateBy;
+    /** 更新者ID */
+    private String updateUserId;
+    /** 更新者姓名 */
+    private String updateUserName;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -49,34 +53,47 @@ public class BaseEntity implements Serializable
         this.searchValue = searchValue;
     }
 
-    public String getCreateBy()
-    {
-        return createBy;
-    }
 
-    public void setCreateBy(String createBy)
-    {
-        this.createBy = createBy;
-    }
-
-    public LocalDateTime getCreateTime()
-    {
-        return createTime;
-    }
 
     public void setCreateTime(LocalDateTime createTime)
     {
         this.createTime = createTime;
     }
 
-    public String getUpdateBy()
-    {
-        return updateBy;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
-    public void setUpdateBy(String updateBy)
-    {
-        this.updateBy = updateBy;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public String getUpdateUserId() {
+        return updateUserId;
+    }
+
+    public void setUpdateUserId(String updateUserId) {
+        this.updateUserId = updateUserId;
+    }
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
     }
 
     public LocalDateTime getUpdateTime()

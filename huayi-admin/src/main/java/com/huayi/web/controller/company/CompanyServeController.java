@@ -73,11 +73,11 @@ public class CompanyServeController extends BaseController
 	/**
 	 * 修改企业账号服务
 	 */
-	@PostMapping("/info/{recordId}")
+	@PostMapping("/info/{companyId}")
 	@ResponseBody
-	public AjaxResult info(@PathVariable("recordId") Integer recordId, ModelMap mmap)
+	public AjaxResult info(@PathVariable("recordId") Long companyId, ModelMap mmap)
 	{
-		CompanyServe companyServe = companyServeService.selectCompanyServeById(recordId);
+		CompanyServe companyServe = companyServeService.selectCompanyServeById(companyId);
 		return toAjax(true,companyServe);
 	}
 	

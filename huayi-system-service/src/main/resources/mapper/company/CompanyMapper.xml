@@ -5,14 +5,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.huayi.company.mapper.CompanyMapper">
     
     <resultMap type="Company" id="CompanyResult">
-        <result property="recordId"    column="record_id"    />
-        <result property="companyId"    column="company_id"    />
+        <id property="companyId"    column="company_id"    />
         <result property="companyName"    column="company_name"    />
         <result property="companyLogo"    column="company_logo"    />
         <result property="companyNotice"    column="company_notice"    />
-        <result property="defaultCardId"    column="default_card_id"    />
         <result property="macid"    column="macid"    />
-        <result property="userId"    column="user_id"    />
         <result property="industryId"    column="industry_id"    />
         <result property="phone"    column="phone"    />
         <result property="recruitPhone"    column="recruit_phone"    />
@@ -21,47 +18,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="companyLat"    column="company_lat"    />
         <result property="auditState"    column="audit_state"    />
         <result property="auditRemark"    column="audit_remark"    />
-        <result property="certStatus"    column="cert_status"    />
         <result property="sourceUrl"    column="source_url"    />
         <result property="companyKey"    column="company_key"    />
         <result property="companyType"    column="company_type"    />
         <result property="companyState"    column="company_state"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createUserName"    column="create_user_name"    />
         <result property="createTime"    column="create_time"    />
+        <result property="updateUserId"    column="update_user_id"    />
+        <result property="updateUserName"    column="update_user_name"    />
+        <result property="updateTime"    column="update_time"    />
         <result property="isAgent"    column="is_agent"    />
         <result property="isDel"    column="is_del"    />
         <result property="agentMoney"    column="agent_money"    />
         <result property="password"    column="password"    />
         <result property="editionCode"    column="edition_code"    />
-        <result property="editionName"    column="edition_name"    />
         <result property="deadline"    column="deadline"    />
         <result property="agentCompanyId"    column="agent_company_id"    />
-        <result property="editionGroup"    column="edition_group"    />
-        <result property="editionType"    column="edition_type"    />
         <result property="verifyStatus"    column="verify_status"    />
         <result property="verifyTime"    column="verify_time"    />
         <result property="verifyId"    column="verify_id"    />
     </resultMap>
 	
 	<sql id="selectCompanyVo">
-        select record_id, company_id, company_name, company_logo, company_notice, default_card_id,
-        macid, user_id, industry_id, phone, recruit_phone, company_address, company_lng, company_lat,
-        audit_state, audit_remark, cert_status, source_url, company_key, company_type, company_state, create_time, is_agent,
-        is_del, agent_money, password, edition_code, edition_name, deadline, agent_company_id, edition_group,
-        edition_type, verify_status, verify_time, verify_id
+        select company_id, company_name, company_logo, company_notice,
+        macid, industry_id, phone, recruit_phone, company_address, company_lng, company_lat,
+        audit_state, audit_remark, source_url, company_key, company_type, company_state,
+        create_user_id,create_user_name,create_time,
+        update_user_id,update_user_name,update_time,
+        is_agent,is_del, agent_money, password, edition_code, deadline,
+        agent_company_id, verify_status, verify_time, verify_id
         from sys_company
     </sql>
 	
     <select id="selectCompanyList" parameterType="Company" resultMap="CompanyResult">
         <include refid="selectCompanyVo"/>
         <where>  
-            <if test="recordId != null "> and record_id = #{recordId}</if>
              <if test="companyId != null "> and company_id = #{companyId}</if>
              <if test="companyName != null  and companyName != '' "> and company_name = #{companyName}</if>
              <if test="companyLogo != null  and companyLogo != '' "> and company_logo = #{companyLogo}</if>
              <if test="companyNotice != null  and companyNotice != '' "> and company_notice = #{companyNotice}</if>
-             <if test="defaultCardId != null "> and default_card_id = #{defaultCardId}</if>
              <if test="macid != null  and macid != '' "> and macid = #{macid}</if>
-             <if test="userId != null "> and user_id = #{userId}</if>
              <if test="industryId != null "> and industry_id = #{industryId}</if>
              <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
              <if test="recruitPhone != null  and recruitPhone != '' "> and recruit_phone = #{recruitPhone}</if>
@@ -70,43 +67,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="companyLat != null  and companyLat != '' "> and company_lat = #{companyLat}</if>
              <if test="auditState != null "> and audit_state = #{auditState}</if>
              <if test="auditRemark != null  and auditRemark != '' "> and audit_remark = #{auditRemark}</if>
-             <if test="certStatus != null "> and cert_status = #{certStatus}</if>
              <if test="sourceUrl != null  and sourceUrl != '' "> and source_url = #{sourceUrl}</if>
              <if test="companyKey != null  and companyKey != '' "> and company_key = #{companyKey}</if>
              <if test="companyType != null "> and company_type = #{companyType}</if>
              <if test="companyState != null "> and company_state = #{companyState}</if>
+             <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+             <if test="createUserName != null "> and create_user_name = #{createUserName}</if>
              <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateUserId != null "> and update_user_id = #{updateUserId}</if>
+             <if test="updateUserName != null "> and update_user_name = #{updateUserName}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
              <if test="isAgent != null "> and is_agent = #{isAgent}</if>
              <if test="isDel != null "> and is_del = #{isDel}</if>
              <if test="agentMoney != null "> and agent_money = #{agentMoney}</if>
              <if test="password != null  and password != '' "> and password = #{password}</if>
              <if test="editionCode != null  and editionCode != '' "> and edition_code = #{editionCode}</if>
-             <if test="editionName != null  and editionName != '' "> and edition_name = #{editionName}</if>
              <if test="deadline != null  and deadline != '' "> and deadline = #{deadline}</if>
              <if test="agentCompanyId != null "> and agent_company_id = #{agentCompanyId}</if>
-             <if test="editionGroup != null  and editionGroup != '' "> and edition_group = #{editionGroup}</if>
-             <if test="editionType != null  and editionType != '' "> and edition_type = #{editionType}</if>
              <if test="verifyStatus != null  and verifyStatus != '' "> and verify_status = #{verifyStatus}</if>
              <if test="verifyTime != null "> and verify_time = #{verifyTime}</if>
              <if test="verifyId != null  and verifyId != '' "> and verify_id = #{verifyId}</if>
          </where>
     </select>
     
-    <select id="selectCompanyById" parameterType="Integer" resultMap="CompanyResult">
+    <select id="selectCompanyById" parameterType="Long" resultMap="CompanyResult">
         <include refid="selectCompanyVo"/>
-        where record_id = #{recordId}
+        where company_id = #{companyId}
     </select>
         
-    <insert id="insertCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="recordId">
+    <insert id="insertCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="companyId">
         insert into sys_company
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="companyId != null  ">company_id,</if>
 			<if test="companyName != null  and companyName != ''  ">company_name,</if>
 			<if test="companyLogo != null  and companyLogo != ''  ">company_logo,</if>
 			<if test="companyNotice != null  and companyNotice != ''  ">company_notice,</if>
-			<if test="defaultCardId != null  ">default_card_id,</if>
 			<if test="macid != null  and macid != ''  ">macid,</if>
-			<if test="userId != null  ">user_id,</if>
 			<if test="industryId != null  ">industry_id,</if>
 			<if test="phone != null  and phone != ''  ">phone,</if>
 			<if test="recruitPhone != null  and recruitPhone != ''  ">recruit_phone,</if>
@@ -115,34 +111,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="companyLat != null  and companyLat != ''  ">company_lat,</if>
 			<if test="auditState != null  ">audit_state,</if>
 			<if test="auditRemark != null  and auditRemark != ''  ">audit_remark,</if>
-			<if test="certStatus != null  ">cert_status,</if>
 			<if test="sourceUrl != null  and sourceUrl != ''  ">source_url,</if>
 			<if test="companyKey != null  and companyKey != ''  ">company_key,</if>
 			<if test="companyType != null  ">company_type,</if>
 			<if test="companyState != null  ">company_state,</if>
-			<if test="createTime != null  ">create_time,</if>
+            <if test="createUserId != null  ">create_user_id,</if>
+			<if test="createUserName != null  ">create_user_name,</if>
 			<if test="isAgent != null  ">is_agent,</if>
 			<if test="isDel != null  ">is_del,</if>
 			<if test="agentMoney != null  ">agent_money,</if>
 			<if test="password != null  and password != ''  ">password,</if>
 			<if test="editionCode != null  and editionCode != ''  ">edition_code,</if>
-			<if test="editionName != null  and editionName != ''  ">edition_name,</if>
 			<if test="deadline != null  and deadline != ''  ">deadline,</if>
 			<if test="agentCompanyId != null  ">agent_company_id,</if>
-			<if test="editionGroup != null  and editionGroup != ''  ">edition_group,</if>
-			<if test="editionType != null  and editionType != ''  ">edition_type,</if>
 			<if test="verifyStatus != null  and verifyStatus != ''  ">verify_status,</if>
 			<if test="verifyTime != null  ">verify_time,</if>
 			<if test="verifyId != null  and verifyId != ''  ">verify_id,</if>
+			create_time
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="companyId != null  ">#{companyId},</if>
 			<if test="companyName != null  and companyName != ''  ">#{companyName},</if>
 			<if test="companyLogo != null  and companyLogo != ''  ">#{companyLogo},</if>
 			<if test="companyNotice != null  and companyNotice != ''  ">#{companyNotice},</if>
-			<if test="defaultCardId != null  ">#{defaultCardId},</if>
 			<if test="macid != null  and macid != ''  ">#{macid},</if>
-			<if test="userId != null  ">#{userId},</if>
 			<if test="industryId != null  ">#{industryId},</if>
 			<if test="phone != null  and phone != ''  ">#{phone},</if>
 			<if test="recruitPhone != null  and recruitPhone != ''  ">#{recruitPhone},</if>
@@ -151,38 +143,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="companyLat != null  and companyLat != ''  ">#{companyLat},</if>
 			<if test="auditState != null  ">#{auditState},</if>
 			<if test="auditRemark != null  and auditRemark != ''  ">#{auditRemark},</if>
-			<if test="certStatus != null  ">#{certStatus},</if>
 			<if test="sourceUrl != null  and sourceUrl != ''  ">#{sourceUrl},</if>
 			<if test="companyKey != null  and companyKey != ''  ">#{companyKey},</if>
 			<if test="companyType != null  ">#{companyType},</if>
 			<if test="companyState != null  ">#{companyState},</if>
-			<if test="createTime != null  ">#{createTime},</if>
+            <if test="createUserId != null  ">#{createUserId},</if>
+            <if test="createUserName != null  ">#{createUserName},</if>
 			<if test="isAgent != null  ">#{isAgent},</if>
 			<if test="isDel != null  ">#{isDel},</if>
 			<if test="agentMoney != null  ">#{agentMoney},</if>
 			<if test="password != null  and password != ''  ">#{password},</if>
 			<if test="editionCode != null  and editionCode != ''  ">#{editionCode},</if>
-			<if test="editionName != null  and editionName != ''  ">#{editionName},</if>
 			<if test="deadline != null  and deadline != ''  ">#{deadline},</if>
 			<if test="agentCompanyId != null  ">#{agentCompanyId},</if>
-			<if test="editionGroup != null  and editionGroup != ''  ">#{editionGroup},</if>
-			<if test="editionType != null  and editionType != ''  ">#{editionType},</if>
 			<if test="verifyStatus != null  and verifyStatus != ''  ">#{verifyStatus},</if>
 			<if test="verifyTime != null  ">#{verifyTime},</if>
 			<if test="verifyId != null  and verifyId != ''  ">#{verifyId},</if>
+			now()
          </trim>
     </insert>
 	 
     <update id="updateCompany" parameterType="Company">
         update sys_company
         <trim prefix="SET" suffixOverrides=",">
-            <if test="companyId != null  ">company_id = #{companyId},</if>
             <if test="companyName != null  and companyName != ''  ">company_name = #{companyName},</if>
             <if test="companyLogo != null  and companyLogo != ''  ">company_logo = #{companyLogo},</if>
             <if test="companyNotice != null  and companyNotice != ''  ">company_notice = #{companyNotice},</if>
-            <if test="defaultCardId != null  ">default_card_id = #{defaultCardId},</if>
             <if test="macid != null  and macid != ''  ">macid = #{macid},</if>
-            <if test="userId != null  ">user_id = #{userId},</if>
             <if test="industryId != null  ">industry_id = #{industryId},</if>
             <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
             <if test="recruitPhone != null  and recruitPhone != ''  ">recruit_phone = #{recruitPhone},</if>
@@ -191,38 +178,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="companyLat != null  and companyLat != ''  ">company_lat = #{companyLat},</if>
             <if test="auditState != null  ">audit_state = #{auditState},</if>
             <if test="auditRemark != null  and auditRemark != ''  ">audit_remark = #{auditRemark},</if>
-            <if test="certStatus != null  ">cert_status = #{certStatus},</if>
             <if test="sourceUrl != null  and sourceUrl != ''  ">source_url = #{sourceUrl},</if>
             <if test="companyKey != null  and companyKey != ''  ">company_key = #{companyKey},</if>
             <if test="companyType != null  ">company_type = #{companyType},</if>
             <if test="companyState != null  ">company_state = #{companyState},</if>
-            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="updateUserId != null  ">create_user_id = #{updateUserId},</if>
+            <if test="updateUserName != null  ">update_user_name = #{updateUserName},</if>
             <if test="isAgent != null  ">is_agent = #{isAgent},</if>
             <if test="isDel != null  ">is_del = #{isDel},</if>
             <if test="agentMoney != null  ">agent_money = #{agentMoney},</if>
             <if test="password != null  and password != ''  ">password = #{password},</if>
             <if test="editionCode != null  and editionCode != ''  ">edition_code = #{editionCode},</if>
-            <if test="editionName != null  and editionName != ''  ">edition_name = #{editionName},</if>
             <if test="deadline != null  and deadline != ''  ">deadline = #{deadline},</if>
             <if test="agentCompanyId != null  ">agent_company_id = #{agentCompanyId},</if>
-            <if test="editionGroup != null  and editionGroup != ''  ">edition_group = #{editionGroup},</if>
-            <if test="editionType != null  and editionType != ''  ">edition_type = #{editionType},</if>
             <if test="verifyStatus != null  and verifyStatus != ''  ">verify_status = #{verifyStatus},</if>
             <if test="verifyTime != null  ">verify_time = #{verifyTime},</if>
             <if test="verifyId != null  and verifyId != ''  ">verify_id = #{verifyId},</if>
+            now()
         </trim>
-        where record_id = #{recordId}
+        where company_id = #{companyId}
     </update>
 
-	<delete id="deleteCompanyById" parameterType="Integer">
-        delete from sys_company where record_id = #{recordId}
+	<delete id="deleteCompanyById" parameterType="Long">
+        delete from sys_company where company_id = #{companyId}
     </delete>
-	
-    <delete id="deleteCompanyByIds" parameterType="String">
-        delete from sys_company where record_id in
-        <foreach item="recordId" collection="array" open="(" separator="," close=")">
-            #{recordId}
-        </foreach>
-    </delete>
+
     
 </mapper>

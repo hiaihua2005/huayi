@@ -24,13 +24,13 @@ public class CompanyServiceImpl implements ICompanyService
 	/**
      * 查询企业信息
      * 
-     * @param recordId 企业ID
+     * @param companyId 企业ID
      * @return 企业信息
      */
     @Override
-	public Company selectCompanyInfoById(Integer recordId)
+	public Company selectCompanyInfoById(Long companyId)
 	{
-	    return companyMapper.selectCompanyInfoById(recordId);
+	    return companyMapper.selectCompanyInfoById(companyId);
 	}
 	
 	/**
@@ -71,14 +71,14 @@ public class CompanyServiceImpl implements ICompanyService
 
 	/**
      * 删除企业对象
-     * 
-     * @param ids 需要删除的数据ID
+     *
+     * @param id 需要删除的企业ID
      * @return 结果
      */
 	@Override
-	public int deleteCompanyInfoByIds(String ids)
+	public int deleteCompanyInfoById(Long id)
 	{
-		return companyMapper.deleteCompanyInfoByIds(Convert.toStrArray(ids));
+		return companyMapper.deleteCompanyInfoById(id);
 	}
 	
 }

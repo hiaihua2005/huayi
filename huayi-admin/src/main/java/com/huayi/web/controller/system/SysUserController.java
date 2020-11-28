@@ -1,5 +1,6 @@
 package com.huayi.web.controller.system;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.huayi.framework.util.ShiroUtils;
@@ -101,15 +102,18 @@ public class SysUserController extends BaseController
     @PostMapping("/add")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public AjaxResult addSave(SysUser user)
+    public AjaxResult addSave(HttpServletRequest request,SysUser user)
     {
+        SysUser currentUser = ShiroUtils.getSysUser(request);
         if (StringUtils.isNotNull(user.getUserId()) && user.getLoginName().equals("admin"))
         {
             return error("不允许修改超级管理员用户");
         }
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user.getPassword(), user.getSalt()));
-        user.setCreateBy(ShiroUtils.getLoginName());
+        user.setCreateUserId(currentUser.getUserId());
+        user.setCreateUserName(currentUser.getUserName());
+        user.setCreateTime(LocalDateTime.now());
         return toAjax(userService.insertUser(user));
     }
 
@@ -130,7 +134,9 @@ public class SysUserController extends BaseController
         }
         editUser.setCompanyId(currentUser.getCompanyId());
         SysUser currentOpereationUser = ShiroUtils.getSysUser();
-        editUser.setUpdateBy(currentOpereationUser.getLoginName());
+        editUser.setUpdateUserId(currentOpereationUser.getUpdateUserId());
+        editUser.setUpdateUserName(currentOpereationUser.getUserName());
+        editUser.setUpdateTime(LocalDateTime.now());
         //更新用户信息
         int updateResult = userService.updateUser(editUser);
         return toAjax(updateResult);

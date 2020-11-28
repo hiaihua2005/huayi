@@ -79,9 +79,9 @@ public class CompanyController extends BaseController
 	/**
 	 * 企业信息
 	 */
-	@PostMapping("/info/{recordId}")
+	@PostMapping("/info/{companyId}")
 	@ResponseBody
-	public AjaxResult info(@PathVariable("companyId") Integer companyId, ModelMap mmap)
+	public AjaxResult info(@PathVariable("companyId") Long companyId, ModelMap mmap)
 	{
 		if(companyId ==null || companyId.intValue()==0) {
 			return error(500,"新零售门户编号为空",null);
@@ -110,9 +110,9 @@ public class CompanyController extends BaseController
 	@Log(title = "企业", businessType = BusinessType.DELETE)
 	@PostMapping( "/remove")
 	@ResponseBody
-	public AjaxResult remove(String ids)
+	public AjaxResult remove(Long id)
 	{		
-		return toAjax(companyInfoService.deleteCompanyInfoByIds(ids));
+		return toAjax(companyInfoService.deleteCompanyInfoById(id));
 	}
 	
 }

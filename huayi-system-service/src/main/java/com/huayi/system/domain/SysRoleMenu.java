@@ -20,9 +20,7 @@ public class SysRoleMenu
     /** 菜单ID */
     private Long menuId;
 
-    private LocalDateTime createTime;
 
-    private String createUser;
 
     public Long getRoleId()
     {
@@ -52,21 +50,6 @@ public class SysRoleMenu
         this.companyId = companyId;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
 
     @Override
     public String toString() {

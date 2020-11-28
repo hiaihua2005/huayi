@@ -17,7 +17,7 @@ public interface CompanyServeMapper
      * @param recordId 企业账号服务ID
      * @return 企业账号服务信息
      */
-	public CompanyServe selectCompanyServeById(Integer recordId);
+	public CompanyServe selectCompanyServeById(Long recordId);
 	
 	/**
      * 查询企业账号服务列表
@@ -61,5 +61,5 @@ public interface CompanyServeMapper
 
     CompanyServe selectStandardServeByCompanyId(Integer companyId);
 
-	CompanyServe selectStandardCompanyServe(Integer companyId);
+	CompanyServe selectStandardCompanyServe(Long companyId);
 }

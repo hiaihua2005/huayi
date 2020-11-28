@@ -1,6 +1,7 @@
 package com.huayi.system.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -48,20 +49,24 @@ public class SysUser implements Serializable
 	private String loginIp;
 	/** 最后登陆时间 */
 	private Date loginDate;
-	/** 创建者 */
-	private String createBy;
+	/** 创建者ID */
+	private Long createUserId;
+	/** 创建者姓名 */
+	private String createUserName;
 	/** 创建时间 */
-	private Date createTime;
+	private LocalDateTime createTime;
 	/** 部门对象 */
 	private SysDept dept;
 	/** 角色组 */
 	private Long[] roleIds;
 
 	private List<SysRole> roles;
-	/** 更新者 */
-	private String updateBy;
+	/** 更新者ID */
+	private Long updateUserId;
+	/** 更新者姓名 */
+	private String updateUserName;
 	/** 更新时间 */
-	private Date updateTime;
+	private LocalDateTime updateTime;
 	/** 备注 */
 	private String remark;
 	/** 是否删除 **/
@@ -198,39 +203,22 @@ public class SysUser implements Serializable
 		return loginIp;
 	}
 
-	public void setCreateBy(String createBy) 
-	{
-		this.createBy = createBy;
-	}
-
-	public String getCreateBy() 
-	{
-		return createBy;
-	}
-	public void setCreateTime(Date createTime) 
+	public void setCreateTime(LocalDateTime createTime)
 	{
 		this.createTime = createTime;
 	}
 
-	public Date getCreateTime() 
+	public LocalDateTime getCreateTime()
 	{
 		return createTime;
 	}
-	public void setUpdateBy(String updateBy) 
-	{
-		this.updateBy = updateBy;
-	}
 
-	public String getUpdateBy() 
-	{
-		return updateBy;
-	}
-	public void setUpdateTime(Date updateTime) 
+	public void setUpdateTime(LocalDateTime updateTime)
 	{
 		this.updateTime = updateTime;
 	}
 
-	public Date getUpdateTime() 
+	public LocalDateTime getUpdateTime()
 	{
 		return updateTime;
 	}
@@ -280,6 +268,38 @@ public class SysUser implements Serializable
 		this.roleIds = roleIds;
 	}
 
+	public Long getCreateUserId() {
+		return createUserId;
+	}
+
+	public void setCreateUserId(Long createUserId) {
+		this.createUserId = createUserId;
+	}
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public Long getUpdateUserId() {
+		return updateUserId;
+	}
+
+	public void setUpdateUserId(Long updateUserId) {
+		this.updateUserId = updateUserId;
+	}
+
+	public String getUpdateUserName() {
+		return updateUserName;
+	}
+
+	public void setUpdateUserName(String updateUserName) {
+		this.updateUserName = updateUserName;
+	}
+
 	public static boolean isSuperAdmin(Long userId)
 	{
 		return userId != null && (1L == userId || 0L == userId);
@@ -311,9 +331,9 @@ public class SysUser implements Serializable
             .append("status", getStatus())
             .append("loginIp", getLoginIp())
             .append("loginDate", getLoginDate())
-            .append("createBy", getCreateBy())
+            .append("createUserName", getCreateUserName())
             .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
+            .append("updateBy", getUpdateUserName())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .toString();

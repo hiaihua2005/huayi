@@ -8,8 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="companyId"     column="company_id"      />
 		<result property="roleId"     column="role_id"      />
 		<result property="menuId"     column="menu_id"      />
-		<result property="createTime"     column="create_time"      />
-		<result property="createUser"     column="create_user"      />
 	</resultMap>
 
 	<delete id="deleteRoleMenuByRoleId" parameterType="Long">

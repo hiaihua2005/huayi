@@ -23,13 +23,13 @@ public class CompanyServeServiceImpl implements ICompanyServeService
 	/**
      * 查询企业账号服务信息
      * 
-     * @param recordId 企业账号服务ID
+     * @param companyId 企业账号服务ID
      * @return 企业账号服务信息
      */
     @Override
-	public CompanyServe selectCompanyServeById(Integer recordId)
+	public CompanyServe selectCompanyServeById(Long companyId)
 	{
-	    return companyServeMapper.selectCompanyServeById(recordId);
+	    return companyServeMapper.selectCompanyServeById(companyId);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class CompanyServeServiceImpl implements ICompanyServeService
 	}
 
 	@Override
-	public CompanyServe selectStandardCompanyServe(Integer companyId) {
+	public CompanyServe selectStandardCompanyServe(Long companyId) {
 		return companyServeMapper.selectStandardCompanyServe(companyId);
 	}
 

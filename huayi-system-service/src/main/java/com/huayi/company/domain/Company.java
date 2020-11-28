@@ -3,22 +3,23 @@ package com.huayi.company.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.huayi.common.base.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
     
 /**
- * 企业表 t_company_info
+ * 企业表 sys_company
  * 
  * @author huayi
  * @date 2020-08-15
  */
-public class Company implements Serializable
+public class Company  extends BaseEntity
 {
 	private static final long serialVersionUID = 1L;
 	
-	/** id */
-	private Integer recordId;
+
 	/** 企业id */
 	private Integer companyId;
 	/** 企业名称 */
@@ -27,12 +28,8 @@ public class Company implements Serializable
 	private String companyLogo;
 	/** 企业公告 */
 	private String companyNotice;
-	/** 企业默认名片 */
-	private Integer defaultCardId;
-	/** 商户号 */
+	/** 企业号 */
 	private String macid;
-	/** 企业归属人 */
-	private Integer userId;
 	/** 行业id */
 	private Integer industryId;
 	/** 企业电话 */
@@ -49,8 +46,6 @@ public class Company implements Serializable
 	private Integer auditState;
 	/** 审核描述 */
 	private String auditRemark;
-	/** 0未认证，1认证企业 */
-	private Integer certStatus;
 	/** 源码url */
 	private String sourceUrl;
 	/** 访问key */
@@ -59,8 +54,6 @@ public class Company implements Serializable
 	private Integer companyType;
 	/** 1正常，2禁用 */
 	private Integer companyState;
-	/** 创建时间 */
-	private Date createTime;
 	/** 1代理商 */
 	private Integer isAgent;
 	/** 1删除 */
@@ -71,16 +64,11 @@ public class Company implements Serializable
 	private String password;
 	/** 套餐版本编码 */
 	private String editionCode;
-	/** 套餐名称 */
-	private String editionName;
 	/** 套餐到期时间 */
 	private String deadline;
 	/** 企业归属代理商公司id */
 	private Integer agentCompanyId;
-	/** 版本 */
-	private String editionGroup;
-	/** 版本类型 */
-	private String editionType;
+
 	/** 认证状态(0草稿；2提交或待审核;3审核中;4打回或审核不通过,8审核完成或认证通过) */
 	private String verifyStatus;
 	/** 认证时间 */
@@ -88,16 +76,7 @@ public class Company implements Serializable
 	/** 认证资料表ID */
 	private String verifyId;
 
-	public void setRecordId(Integer recordId) 
-	{
-		this.recordId = recordId;
-	}
-
-	public Integer getRecordId() 
-	{
-		return recordId;
-	}
-	public void setCompanyId(Integer companyId) 
+	public void setCompanyId(Integer companyId)
 	{
 		this.companyId = companyId;
 	}
@@ -133,15 +112,7 @@ public class Company implements Serializable
 	{
 		return companyNotice;
 	}
-	public void setDefaultCardId(Integer defaultCardId) 
-	{
-		this.defaultCardId = defaultCardId;
-	}
 
-	public Integer getDefaultCardId() 
-	{
-		return defaultCardId;
-	}
 	public void setMacid(String macid) 
 	{
 		this.macid = macid;
@@ -151,15 +122,7 @@ public class Company implements Serializable
 	{
 		return macid;
 	}
-	public void setUserId(Integer userId) 
-	{
-		this.userId = userId;
-	}
 
-	public Integer getUserId() 
-	{
-		return userId;
-	}
 	public void setIndustryId(Integer industryId) 
 	{
 		this.industryId = industryId;
@@ -232,15 +195,7 @@ public class Company implements Serializable
 	{
 		return auditRemark;
 	}
-	public void setCertStatus(Integer certStatus) 
-	{
-		this.certStatus = certStatus;
-	}
 
-	public Integer getCertStatus() 
-	{
-		return certStatus;
-	}
 	public void setSourceUrl(String sourceUrl) 
 	{
 		this.sourceUrl = sourceUrl;
@@ -277,16 +232,8 @@ public class Company implements Serializable
 	{
 		return companyState;
 	}
-	public void setCreateTime(Date createTime) 
-	{
-		this.createTime = createTime;
-	}
 
-	public Date getCreateTime() 
-	{
-		return createTime;
-	}
-	public void setIsAgent(Integer isAgent) 
+	public void setIsAgent(Integer isAgent)
 	{
 		this.isAgent = isAgent;
 	}
@@ -331,15 +278,7 @@ public class Company implements Serializable
 	{
 		return editionCode;
 	}
-	public void setEditionName(String editionName) 
-	{
-		this.editionName = editionName;
-	}
 
-	public String getEditionName() 
-	{
-		return editionName;
-	}
 	public void setDeadline(String deadline) 
 	{
 		this.deadline = deadline;
@@ -358,24 +297,7 @@ public class Company implements Serializable
 	{
 		return agentCompanyId;
 	}
-	public void setEditionGroup(String editionGroup) 
-	{
-		this.editionGroup = editionGroup;
-	}
 
-	public String getEditionGroup() 
-	{
-		return editionGroup;
-	}
-	public void setEditionType(String editionType) 
-	{
-		this.editionType = editionType;
-	}
-
-	public String getEditionType() 
-	{
-		return editionType;
-	}
 	public void setVerifyStatus(String verifyStatus) 
 	{
 		this.verifyStatus = verifyStatus;
@@ -404,16 +326,14 @@ public class Company implements Serializable
 		return verifyId;
 	}
 
+	@Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("recordId", getRecordId())
             .append("companyId", getCompanyId())
             .append("companyName", getCompanyName())
             .append("companyLogo", getCompanyLogo())
             .append("companyNotice", getCompanyNotice())
-            .append("defaultCardId", getDefaultCardId())
             .append("macid", getMacid())
-            .append("userId", getUserId())
             .append("industryId", getIndustryId())
             .append("phone", getPhone())
             .append("recruitPhone", getRecruitPhone())
@@ -422,22 +342,23 @@ public class Company implements Serializable
             .append("companyLat", getCompanyLat())
             .append("auditState", getAuditState())
             .append("auditRemark", getAuditRemark())
-            .append("certStatus", getCertStatus())
             .append("sourceUrl", getSourceUrl())
             .append("companyKey", getCompanyKey())
             .append("companyType", getCompanyType())
             .append("companyState", getCompanyState())
             .append("createTime", getCreateTime())
+			.append("createUserId", getCreateUserId())
+            .append("createUserName", getCreateUserName())
+            .append("updateTime", getUpdateTime())
+            .append("updateUserId", getUpdateUserId())
+            .append("updateUserName", getUpdateUserName())
             .append("isAgent", getIsAgent())
             .append("isDel", getIsDel())
             .append("agentMoney", getAgentMoney())
             .append("password", getPassword())
             .append("editionCode", getEditionCode())
-            .append("editionName", getEditionName())
             .append("deadline", getDeadline())
             .append("agentCompanyId", getAgentCompanyId())
-            .append("editionGroup", getEditionGroup())
-            .append("editionType", getEditionType())
             .append("verifyStatus", getVerifyStatus())
             .append("verifyTime", getVerifyTime())
             .append("verifyId", getVerifyId())

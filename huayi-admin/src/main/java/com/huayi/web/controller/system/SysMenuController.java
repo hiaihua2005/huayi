@@ -128,7 +128,7 @@ public class SysMenuController extends BaseController
     @ResponseBody
     public AjaxResult addSave(HttpServletRequest request,@RequestBody SysMenu menu)
     {
-        menu.setCreateBy(ShiroUtils.getLoginName());
+        menu.setCreateUserName(ShiroUtils.getLoginName());
         ShiroUtils.clearCachedAuthorizationInfo();
         return toAjax(menuService.insertMenu(menu));
     }
@@ -143,7 +143,7 @@ public class SysMenuController extends BaseController
     public AjaxResult editSave(HttpServletRequest request,@RequestBody SysMenu menu)
     {
         SysUser currentUser = ShiroUtils.getSysUser(request);
-        menu.setUpdateBy(ShiroUtils.getLoginName());
+        menu.setUpdateUserName(ShiroUtils.getLoginName());
         ShiroUtils.clearCachedAuthorizationInfo();
         menu.setUpdateTime(LocalDateTime.now());
         return toAjax(menuService.updateMenu(menu));

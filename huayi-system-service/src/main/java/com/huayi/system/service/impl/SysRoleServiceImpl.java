@@ -348,7 +348,6 @@ public class SysRoleServiceImpl implements ISysRoleService
                 item.setCompanyId(companyId);
                 item.setUserId(userId);
                 item.setRoleId(roleId);
-                item.setCreateTime(LocalDateTime.now());
                 list.add(item);
             }
             return userRoleMapper.batchUserRole(list);
@@ -412,8 +411,6 @@ public class SysRoleServiceImpl implements ISysRoleService
                 item.setCompanyId(condition.getCompanyId());
                 item.setRoleId(condition.getRoleId());
                 item.setMenuId(menuId);
-                item.setCreateTime(LocalDateTime.now());
-                item.setCreateUser(condition.getCurrentUserName());
                 list.add(item);
             }
             return roleMenuMapper.batchRoleMenu(list);

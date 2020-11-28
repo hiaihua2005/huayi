@@ -14,10 +14,10 @@ public interface ICompanyServeService
 	/**
      * 查询企业账号服务信息
      * 
-     * @param recordId 企业账号服务ID
+     * @param companyId 企业账号服务ID
      * @return 企业账号服务信息
      */
-	public CompanyServe selectCompanyServeById(Integer recordId);
+	public CompanyServe selectCompanyServeById(Long companyId);
 	
 	/**
      * 查询企业账号服务列表
@@ -51,5 +51,5 @@ public interface ICompanyServeService
      */
 	public int deleteCompanyServeByIds(String ids);
 
-    CompanyServe selectStandardCompanyServe(Integer companyId);
+    CompanyServe selectStandardCompanyServe(Long companyId);
 }

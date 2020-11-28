@@ -172,9 +172,9 @@ public class SysMenu extends BaseEntity
             .append("visible", getVisible())
             .append("perms", getPerms())
             .append("icon", getIcon())
-            .append("createBy", getCreateBy())
+            .append("createUserName", getCreateUserName())
             .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
+            .append("updateUserName", getUpdateUserName())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .toString();

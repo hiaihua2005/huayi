@@ -394,14 +394,14 @@ public class SysUserServiceImpl implements ISysUserService
                 if (StringUtils.isNull(u))
                 {
                     user.setPassword(Md5Utils.hash(user.getLoginName() + password));
-                    user.setCreateBy(operName);
+                    user.setCreateUserName(operName);
                     this.insertUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 导入成功");
                 }
                 else if (isUpdateSupport)
                 {
-                    user.setUpdateBy(operName);
+                    user.setUpdateUserName(operName);
                     this.updateUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getLoginName() + " 更新成功");

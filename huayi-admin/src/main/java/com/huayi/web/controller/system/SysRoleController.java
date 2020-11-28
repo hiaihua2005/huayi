@@ -74,7 +74,7 @@ public class SysRoleController extends BaseController
     {
         SysUser currentUser = getSysUser();
         role.setCompanyId(currentUser.getCompanyId());
-        role.setUpdateBy(currentUser.getUserName());
+        role.setUpdateUserName(currentUser.getUserName());
         //更新角色信息
         if(StringUtils.isEmpty(role.getRoleSort())) {
             role.setRoleSort("0");
@@ -98,7 +98,7 @@ public class SysRoleController extends BaseController
     {
         SysUser currentUser = getSysUser();
         role.setCompanyId(currentUser.getCompanyId());
-        role.setCreateBy(currentUser.getUserName());
+        role.setCreateUserName(currentUser.getUserName());
         SysRoleCondition condition = new SysRoleCondition();
         condition.setCompanyId(currentUser.getCompanyId());
         condition.setRoleKey(role.getRoleKey());
